@@ -23,7 +23,8 @@ function fibonacciSphere(samples: number, radius: number): THREE.Vector3[] {
 
 function createTileGeometry(
   center: THREE.Vector3,
-  radius: number
+  radius: number,
+  tileSize: number = 0.95
 ): THREE.BufferGeometry {
   const geometry = new THREE.BufferGeometry();
 
@@ -37,8 +38,8 @@ function createTileGeometry(
   // Generate vertices in a grid pattern
   for (let i = 0; i <= segments; i++) {
     for (let j = 0; j <= segments; j++) {
-      const u = (i / segments - 0.5) * 0.8; // Scale down to create gaps
-      const v = (j / segments - 0.5) * 0.8;
+      const u = (i / segments - 0.5) * tileSize; // tileSize controls gap size
+      const v = (j / segments - 0.5) * tileSize;
 
       // Calculate position on tangent plane
       const up = new THREE.Vector3(0, 1, 0);
@@ -93,14 +94,14 @@ function createTileGeometry(
 
 export function TechStackSphere() {
   const groupRef = useRef<THREE.Group>(null);
-  const tileCount = 30;
+  const tileCount = 80;
   const sphereRadius = 3;
 
   // Generate sphere points and tile geometries
   const { spherePoints, tileGeometries } = useMemo(() => {
     const points = fibonacciSphere(tileCount, sphereRadius);
     const geometries = points.map((point) =>
-      createTileGeometry(point, sphereRadius)
+      createTileGeometry(point, sphereRadius, 0.98)
     );
     return { spherePoints: points, tileGeometries: geometries };
   }, [tileCount, sphereRadius]);
