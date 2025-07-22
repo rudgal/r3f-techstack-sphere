@@ -2,6 +2,14 @@ import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
+// Configuration constants
+const TILE_COUNT = 80;
+const SPHERE_RADIUS = 2;
+const TILE_SIZE = 0.98; // Controls gap size between tiles
+const TILE_SEGMENTS = 8; // Subdivision for curved tile surface
+const ROTATION_SPEED = 0.2; // Radians per second
+const TILE_SPREAD_FACTOR = 0.5; // How much tiles spread on tangent plane
+
 function fibonacciSphere(samples: number, radius: number): THREE.Vector3[] {
   const points: THREE.Vector3[] = [];
   const phi = Math.PI * (3 - Math.sqrt(5)); // golden angle
@@ -29,7 +37,7 @@ function createTileGeometry(
   const geometry = new THREE.BufferGeometry();
 
   // Create a curved quad that follows the sphere surface
-  const segments = 8;
+  const segments = TILE_SEGMENTS;
   const vertices: number[] = [];
   const normals: number[] = [];
   const uvs: number[] = [];
@@ -52,8 +60,8 @@ function createTileGeometry(
       // Create point on tangent plane
       const planePoint = center
         .clone()
-        .add(tangent.clone().multiplyScalar(u * 0.5))
-        .add(bitangent.clone().multiplyScalar(v * 0.5));
+        .add(tangent.clone().multiplyScalar(u * TILE_SPREAD_FACTOR))
+        .add(bitangent.clone().multiplyScalar(v * TILE_SPREAD_FACTOR));
 
       // Project onto sphere
       const spherePoint = planePoint.normalize().multiplyScalar(radius);
@@ -94,31 +102,29 @@ function createTileGeometry(
 
 export function TechStackSphere() {
   const groupRef = useRef<THREE.Group>(null);
-  const tileCount = 80;
-  const sphereRadius = 3;
 
   // Generate sphere points and tile geometries
   const { spherePoints, tileGeometries } = useMemo(() => {
-    const points = fibonacciSphere(tileCount, sphereRadius);
+    const points = fibonacciSphere(TILE_COUNT, SPHERE_RADIUS);
     const geometries = points.map((point) =>
-      createTileGeometry(point, sphereRadius, 0.98)
+      createTileGeometry(point, SPHERE_RADIUS, TILE_SIZE)
     );
     return { spherePoints: points, tileGeometries: geometries };
-  }, [tileCount, sphereRadius]);
+  }, []);
 
   // Auto-rotation
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.2;
+      groupRef.current.rotation.y += delta * ROTATION_SPEED;
     }
   });
 
   return (
     <group ref={groupRef}>
-      {spherePoints.map((point, index) => (
+      {spherePoints.map((_point, index) => (
         <mesh key={index} geometry={tileGeometries[index]}>
           <meshStandardMaterial
-            color={`hsl(${(index / tileCount) * 360}, 70%, 50%)`}
+            color={`hsl(${(index / TILE_COUNT) * 360}, 70%, 50%)`}
             side={THREE.DoubleSide}
           />
         </mesh>
