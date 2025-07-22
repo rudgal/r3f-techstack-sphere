@@ -1,6 +1,7 @@
 import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { Tile } from './Tile';
 
 // Configuration constants
 const TILE_COUNT = 80;
@@ -122,12 +123,12 @@ export function TechStackSphere() {
   return (
     <group ref={groupRef}>
       {spherePoints.map((_point, index) => (
-        <mesh key={index} geometry={tileGeometries[index]}>
-          <meshStandardMaterial
-            color={`hsl(${(index / TILE_COUNT) * 360}, 70%, 50%)`}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
+        <Tile
+          key={index}
+          geometry={tileGeometries[index]}
+          color={`hsl(${(index / TILE_COUNT) * 360}, 70%, 50%)`}
+          index={index}
+        />
       ))}
     </group>
   );
