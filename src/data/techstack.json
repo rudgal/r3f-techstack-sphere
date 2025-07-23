@@ -1,0 +1,598 @@
+{
+  "technologies": [
+    {
+      "id": "javascript",
+      "name": "JavaScript",
+      "abbr": "JS",
+      "categories": ["web", "languages"],
+      "icon": "/techstack/svg/javascript.svg",
+      "backgroundColor": "#F7DF1E",
+      "url": "https://developer.mozilla.org/docs/Web/JavaScript"
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "abbr": "TS",
+      "categories": ["web", "languages"],
+      "icon": "/techstack/svg/typescript.svg",
+      "backgroundColor": "#3178C6",
+      "url": "https://www.typescriptlang.org/"
+    },
+    {
+      "id": "java",
+      "name": "Java",
+      "abbr": "Java",
+      "categories": ["java/jvm", "languages"],
+      "icon": "/techstack/svg/java.svg",
+      "backgroundColor": "#007396",
+      "url": "https://www.oracle.com/de/java"
+    },
+    {
+      "id": "java-se-11",
+      "name": "Java SE 11",
+      "abbr": "SE11",
+      "categories": ["java/jvm"],
+      "icon": "/techstack/oracle_java_se_11_developer.png",
+      "backgroundColor": "#007396",
+      "url": "https://www.credly.com/badges/b9c93741-aedd-47b4-ab48-34a3fb76ec00"
+    },
+    {
+      "id": "jakarta-ee",
+      "name": "Jakarta EE",
+      "abbr": "JEE",
+      "categories": ["java/jvm"],
+      "icon": "/techstack/java_jakarta.png",
+      "backgroundColor": "#5382A1",
+      "url": "https://jakarta.ee"
+    },
+    {
+      "id": "kotlin",
+      "name": "Kotlin",
+      "abbr": "KT",
+      "categories": ["java/jvm", "languages"],
+      "icon": "/techstack/svg/kotlin.svg",
+      "backgroundColor": "#7F52FF",
+      "url": "https://kotlinlang.org/"
+    },
+    {
+      "id": "c",
+      "name": "C",
+      "abbr": "C",
+      "categories": ["languages"],
+      "icon": "/techstack/svg/c.svg",
+      "backgroundColor": "#00599C",
+      "url": "https://en.cppreference.com/w/c"
+    },
+    {
+      "id": "cpp",
+      "name": "C++",
+      "abbr": "C++",
+      "categories": ["languages"],
+      "icon": "/techstack/svg/cpp.svg",
+      "backgroundColor": "#00599C",
+      "url": "https://isocpp.org/"
+    },
+    {
+      "id": "php",
+      "name": "PHP",
+      "abbr": "PHP",
+      "categories": ["web", "languages"],
+      "icon": "/techstack/svg/php.svg",
+      "backgroundColor": "#777BB4",
+      "url": "https://www.php.net/"
+    },
+    {
+      "id": "sql",
+      "name": "SQL",
+      "abbr": "SQL",
+      "categories": ["languages"],
+      "icon": "/techstack/svg/sql.svg",
+      "backgroundColor": "#336791",
+      "url": "https://www.iso.org/standard/63555.html"
+    },
+    {
+      "id": "solidity",
+      "name": "Solidity",
+      "abbr": "Sol",
+      "categories": ["languages"],
+      "icon": "/techstack/svg/solidity.svg",
+      "backgroundColor": "#363636",
+      "url": "https://soliditylang.org/"
+    },
+    {
+      "id": "html5",
+      "name": "HTML5",
+      "abbr": "HTML",
+      "categories": ["web"],
+      "icon": "/techstack/svg/html5.svg",
+      "backgroundColor": "#E34C26",
+      "url": "https://developer.mozilla.org/docs/Web/HTML"
+    },
+    {
+      "id": "css3",
+      "name": "CSS3",
+      "abbr": "CSS",
+      "categories": ["web"],
+      "icon": "/techstack/svg/css3.svg",
+      "backgroundColor": "#1572B6",
+      "url": "https://developer.mozilla.org/docs/Web/CSS"
+    },
+    {
+      "id": "react",
+      "name": "React",
+      "abbr": "React",
+      "categories": ["web"],
+      "icon": "/techstack/svg/react.svg",
+      "backgroundColor": "#61DAFB",
+      "url": "https://react.dev/"
+    },
+    {
+      "id": "angular",
+      "name": "Angular",
+      "abbr": "NG",
+      "categories": ["web"],
+      "icon": "/techstack/svg/angular.svg",
+      "backgroundColor": "#DD0031",
+      "url": "https://angular.io"
+    },
+    {
+      "id": "vuejs",
+      "name": "Vue.js",
+      "abbr": "Vue",
+      "categories": ["web"],
+      "icon": "/techstack/svg/vuejs.svg",
+      "backgroundColor": "#4FC08D",
+      "url": "https://vuejs.org"
+    },
+    {
+      "id": "react-native",
+      "name": "React Native",
+      "abbr": "RN",
+      "categories": ["web"],
+      "icon": "/techstack/react-native.png",
+      "backgroundColor": "#61DAFB",
+      "url": "https://reactnative.dev/"
+    },
+    {
+      "id": "nextjs",
+      "name": "Next.js",
+      "abbr": "Next",
+      "categories": ["web"],
+      "icon": "/techstack/svg/next-js.svg",
+      "backgroundColor": "#000000",
+      "url": "https://nextjs.org/"
+    },
+    {
+      "id": "ionic",
+      "name": "Ionic",
+      "abbr": "Ion",
+      "categories": ["web"],
+      "icon": "/techstack/svg/ionic.svg",
+      "backgroundColor": "#3880FF",
+      "url": "https://ionicframework.com/"
+    },
+    {
+      "id": "nodejs",
+      "name": "Node.js",
+      "abbr": "Node",
+      "categories": ["web", "devops"],
+      "icon": "/techstack/svg/node.js.svg",
+      "backgroundColor": "#339933",
+      "url": "https://nodejs.org"
+    },
+    {
+      "id": "jquery",
+      "name": "jQuery",
+      "abbr": "jQ",
+      "categories": ["web"],
+      "icon": "/techstack/jquery.gif",
+      "backgroundColor": "#0769AD",
+      "url": "https://jquery.com"
+    },
+    {
+      "id": "extjs",
+      "name": "ExtJS",
+      "abbr": "Ext",
+      "categories": ["web"],
+      "icon": "/techstack/extjs.png",
+      "backgroundColor": "#167BBA",
+      "url": "https://www.sencha.com/products/extjs"
+    },
+    {
+      "id": "gwt",
+      "name": "GWT",
+      "abbr": "GWT",
+      "categories": ["web", "java/jvm"],
+      "icon": "/techstack/svg/gwt.svg",
+      "backgroundColor": "#DC3912",
+      "url": "http://www.gwtproject.org"
+    },
+    {
+      "id": "graphql",
+      "name": "GraphQL",
+      "abbr": "GQL",
+      "categories": ["web"],
+      "icon": "/techstack/svg/graphql.svg",
+      "backgroundColor": "#E10098",
+      "url": "https://graphql.org/"
+    },
+    {
+      "id": "spring",
+      "name": "Spring",
+      "abbr": "Spr",
+      "categories": ["java/jvm"],
+      "icon": "/techstack/svg/spring.svg",
+      "backgroundColor": "#6DB33F",
+      "url": "https://spring.io/"
+    },
+    {
+      "id": "spring-boot",
+      "name": "Spring Boot",
+      "abbr": "Boot",
+      "categories": ["java/jvm"],
+      "icon": "/techstack/spring_boot.png",
+      "backgroundColor": "#6DB33F",
+      "url": "https://spring.io/projects/spring-boot"
+    },
+    {
+      "id": "jsp",
+      "name": "JSP",
+      "abbr": "JSP",
+      "categories": ["java/jvm"],
+      "icon": "/techstack/svg/jsp.svg",
+      "backgroundColor": "#007396",
+      "url": "https://jakarta.ee/specifications/pages/"
+    },
+    {
+      "id": "jsf",
+      "name": "JSF",
+      "abbr": "JSF",
+      "categories": ["java/jvm"],
+      "icon": "/techstack/jsf.png",
+      "backgroundColor": "#007396",
+      "url": "https://jakarta.ee/specifications/faces/"
+    },
+    {
+      "id": "primefaces",
+      "name": "PrimeFaces",
+      "abbr": "PF",
+      "categories": ["java/jvm", "web"],
+      "icon": "/techstack/primefaces-logo.png",
+      "backgroundColor": "#1976D2",
+      "url": "https://www.primefaces.org"
+    },
+    {
+      "id": "hibernate",
+      "name": "Hibernate",
+      "abbr": "Hib",
+      "categories": ["java/jvm"],
+      "icon": "/techstack/svg/hibernate.svg",
+      "backgroundColor": "#59666C",
+      "url": "https://hibernate.org"
+    },
+    {
+      "id": "mysql",
+      "name": "MySQL",
+      "abbr": "MySQL",
+      "categories": ["devops"],
+      "icon": "/techstack/svg/mysql.svg",
+      "backgroundColor": "#4479A1",
+      "url": "https://www.mysql.com"
+    },
+    {
+      "id": "oracle-db",
+      "name": "Oracle DB",
+      "abbr": "ORA",
+      "categories": ["devops"],
+      "icon": "/techstack/oracle_db.png",
+      "backgroundColor": "#F80000",
+      "url": "https://www.oracle.com/de/database/technologies"
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "abbr": "Git",
+      "categories": ["devops", "tools"],
+      "icon": "/techstack/svg/git.svg",
+      "backgroundColor": "#F05032",
+      "url": "https://git-scm.com"
+    },
+    {
+      "id": "svn",
+      "name": "SVN",
+      "abbr": "SVN",
+      "categories": ["devops", "tools"],
+      "icon": "/techstack/svg/svn.svg",
+      "backgroundColor": "#809CC9",
+      "url": "https://subversion.apache.org"
+    },
+    {
+      "id": "docker",
+      "name": "Docker",
+      "abbr": "Dock",
+      "categories": ["devops"],
+      "icon": "/techstack/svg/docker.svg",
+      "backgroundColor": "#2496ED",
+      "url": "https://www.docker.com"
+    },
+    {
+      "id": "jenkins",
+      "name": "Jenkins",
+      "abbr": "Jenk",
+      "categories": ["devops"],
+      "icon": "/techstack/svg/jenkins.svg",
+      "backgroundColor": "#D24939",
+      "url": "https://www.jenkins.io"
+    },
+    {
+      "id": "aws",
+      "name": "AWS",
+      "abbr": "AWS",
+      "categories": ["devops", "web"],
+      "icon": "/techstack/svg/aws.svg",
+      "backgroundColor": "#FF9900",
+      "url": "https://aws.amazon.com/"
+    },
+    {
+      "id": "firebase",
+      "name": "Firebase",
+      "abbr": "FB",
+      "categories": ["devops", "web"],
+      "icon": "/techstack/svg/firebase.svg",
+      "backgroundColor": "#FFCA28",
+      "url": "https://firebase.google.com/"
+    },
+    {
+      "id": "openshift",
+      "name": "OpenShift",
+      "abbr": "OS",
+      "categories": ["devops"],
+      "icon": "/techstack/svg/openshift.svg",
+      "backgroundColor": "#EE0000",
+      "url": "https://www.openshift.com"
+    },
+    {
+      "id": "maven",
+      "name": "Maven",
+      "abbr": "Mvn",
+      "categories": ["java/jvm", "devops", "tools"],
+      "icon": "/techstack/svg/apache_maven.svg",
+      "backgroundColor": "#C71A36",
+      "url": "https://maven.apache.org"
+    },
+    {
+      "id": "gradle",
+      "name": "Gradle",
+      "abbr": "Grad",
+      "categories": ["java/jvm", "devops", "tools"],
+      "icon": "/techstack/svg/gradle.svg",
+      "backgroundColor": "#02303A",
+      "url": "https://gradle.org/"
+    },
+    {
+      "id": "ant",
+      "name": "Apache Ant",
+      "abbr": "Ant",
+      "categories": ["java/jvm", "devops", "tools"],
+      "icon": "/techstack/svg/apache_ant.svg",
+      "backgroundColor": "#A81C7D",
+      "url": "https://ant.apache.org"
+    },
+    {
+      "id": "grunt",
+      "name": "Grunt",
+      "abbr": "Grnt",
+      "categories": ["web", "devops", "tools"],
+      "icon": "/techstack/svg/grunt.svg",
+      "backgroundColor": "#FBA919",
+      "url": "https://gruntjs.com"
+    },
+    {
+      "id": "gulp",
+      "name": "Gulp",
+      "abbr": "Gulp",
+      "categories": ["web", "devops", "tools"],
+      "icon": "/techstack/svg/gulp.svg",
+      "backgroundColor": "#CF4647",
+      "url": "https://gulpjs.com"
+    },
+    {
+      "id": "jest",
+      "name": "Jest",
+      "abbr": "Jest",
+      "categories": ["quality", "web"],
+      "icon": "/techstack/svg/jest.svg",
+      "backgroundColor": "#C21325",
+      "url": "https://jestjs.io/"
+    },
+    {
+      "id": "cypress",
+      "name": "Cypress",
+      "abbr": "Cy",
+      "categories": ["quality", "web"],
+      "icon": "/techstack/svg/cypress.svg",
+      "backgroundColor": "#17202C",
+      "url": "https://cypress.io/"
+    },
+    {
+      "id": "selenium",
+      "name": "Selenium",
+      "abbr": "Se",
+      "categories": ["quality", "java/jvm"],
+      "icon": "/techstack/selenium.png",
+      "backgroundColor": "#43B02A",
+      "url": "https://www.selenium.dev"
+    },
+    {
+      "id": "junit",
+      "name": "JUnit",
+      "abbr": "JU",
+      "categories": ["quality", "java/jvm"],
+      "icon": "/techstack/junit.png",
+      "backgroundColor": "#25A162",
+      "url": "https://junit.org/"
+    },
+    {
+      "id": "testng",
+      "name": "TestNG",
+      "abbr": "TNG",
+      "categories": ["quality", "java/jvm"],
+      "icon": "/techstack/test-ng.png",
+      "backgroundColor": "#DC3912",
+      "url": "https://testng.org/"
+    },
+    {
+      "id": "rest-assured",
+      "name": "REST Assured",
+      "abbr": "RA",
+      "categories": ["quality", "java/jvm"],
+      "icon": "/techstack/rest_assured.png",
+      "backgroundColor": "#73C925",
+      "url": "https://rest-assured.io"
+    },
+    {
+      "id": "detox",
+      "name": "Detox",
+      "abbr": "Dtx",
+      "categories": ["quality"],
+      "icon": "/techstack/detox.png",
+      "backgroundColor": "#B3E5FC",
+      "url": "https://wix.github.io/Detox/"
+    },
+    {
+      "id": "postman",
+      "name": "Postman",
+      "abbr": "PM",
+      "categories": ["quality", "tools"],
+      "icon": "/techstack/postman.png",
+      "backgroundColor": "#FF6C37",
+      "url": "https://www.postman.com"
+    },
+    {
+      "id": "browserstack",
+      "name": "BrowserStack",
+      "abbr": "BS",
+      "categories": ["quality"],
+      "icon": "/techstack/browserstack.png",
+      "backgroundColor": "#F5A623",
+      "url": "https://www.browserstack.com"
+    },
+    {
+      "id": "sonarqube",
+      "name": "SonarQube",
+      "abbr": "SQ",
+      "categories": ["quality", "devops"],
+      "icon": "/techstack/sonarqube.png",
+      "backgroundColor": "#4E9BCD",
+      "url": "https://www.sonarqube.org"
+    },
+    {
+      "id": "newrelic",
+      "name": "New Relic",
+      "abbr": "NR",
+      "categories": ["quality", "devops"],
+      "icon": "/techstack/newrelic.png",
+      "backgroundColor": "#008C99",
+      "url": "https://newrelic.com/"
+    },
+    {
+      "id": "dynatrace",
+      "name": "Dynatrace",
+      "abbr": "DT",
+      "categories": ["quality", "devops"],
+      "icon": "/techstack/svg/dynatrace.svg",
+      "backgroundColor": "#1496FF",
+      "url": "https://www.dynatrace.com/"
+    },
+    {
+      "id": "splunk",
+      "name": "Splunk",
+      "abbr": "Splk",
+      "categories": ["quality", "devops"],
+      "icon": "/techstack/splunk.png",
+      "backgroundColor": "#000000",
+      "url": "https://www.splunk.com"
+    },
+    {
+      "id": "whitesource",
+      "name": "WhiteSource",
+      "abbr": "WS",
+      "categories": ["devops", "quality"],
+      "icon": "/techstack/svg/whitesource-software.svg",
+      "backgroundColor": "#161D6F",
+      "url": "https://www.whitesourcesoftware.com"
+    },
+    {
+      "id": "swagger",
+      "name": "Swagger",
+      "abbr": "Swag",
+      "categories": ["web", "tools"],
+      "icon": "/techstack/svg/swagger.svg",
+      "backgroundColor": "#85EA2D",
+      "url": "https://swagger.io"
+    },
+    {
+      "id": "vscode",
+      "name": "VS Code",
+      "abbr": "VSC",
+      "categories": ["tools"],
+      "icon": "/techstack/svg/vscode.svg",
+      "backgroundColor": "#007ACC",
+      "url": "https://code.visualstudio.com"
+    },
+    {
+      "id": "intellij",
+      "name": "IntelliJ IDEA",
+      "abbr": "IJ",
+      "categories": ["tools", "java/jvm"],
+      "icon": "/techstack/svg/jetbrains_intellij.svg",
+      "backgroundColor": "#000000",
+      "url": "https://www.jetbrains.com/idea/"
+    },
+    {
+      "id": "webstorm",
+      "name": "WebStorm",
+      "abbr": "WS",
+      "categories": ["tools", "web"],
+      "icon": "/techstack/svg/jetbrains_webstorm.svg",
+      "backgroundColor": "#000000",
+      "url": "https://www.jetbrains.com/webstorm/"
+    },
+    {
+      "id": "eclipse",
+      "name": "Eclipse",
+      "abbr": "Ecl",
+      "categories": ["tools", "java/jvm"],
+      "icon": "/techstack/svg/eclipse.svg",
+      "backgroundColor": "#2C2255",
+      "url": "https://www.eclipse.org/ide"
+    },
+    {
+      "id": "wordpress",
+      "name": "WordPress",
+      "abbr": "WP",
+      "categories": ["web"],
+      "icon": "/techstack/svg/wordpress.svg",
+      "backgroundColor": "#21759B",
+      "url": "https://wordpress.com"
+    },
+    {
+      "id": "typo3",
+      "name": "TYPO3",
+      "abbr": "T3",
+      "categories": ["web"],
+      "icon": "/techstack/svg/typo3.svg",
+      "backgroundColor": "#FF8700",
+      "url": "https://typo3.org"
+    },
+    {
+      "id": "contao",
+      "name": "Contao",
+      "abbr": "Cont",
+      "categories": ["web"],
+      "icon": "/techstack/svg/contao.svg",
+      "backgroundColor": "#F47C00",
+      "url": "https://contao.org"
+    }
+  ]
+}

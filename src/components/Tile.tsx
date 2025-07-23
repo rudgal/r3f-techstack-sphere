@@ -1,14 +1,15 @@
 import { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import type { Technology } from '../types/techstack';
 
 interface TileProps {
   geometry: THREE.BufferGeometry;
-  color: string;
+  technology: Technology;
   index: number;
 }
 
-export function Tile({ geometry, color }: TileProps) {
+export function Tile({ geometry, technology }: TileProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
   const [currentScale, setCurrentScale] = useState(1);
@@ -24,16 +25,11 @@ export function Tile({ geometry, color }: TileProps) {
     meshRef.current.scale.setScalar(newScale);
   });
 
-  // Parse HSL color to get components
-  const hslMatch = color.match(/hsl\((\d+), (\d+)%, (\d+)%\)/);
-  const hue = hslMatch ? parseInt(hslMatch[1]) : 0;
-  const saturation = hslMatch ? parseInt(hslMatch[2]) : 70;
-  const lightness = hslMatch ? parseInt(hslMatch[3]) : 50;
-
-  // Brighten color on hover
-  const displayColor = hovered
-    ? `hsl(${hue}, ${saturation}%, ${Math.min(lightness + 20, 80)}%)`
-    : color;
+  const handleClick = () => {
+    if (technology.url) {
+      window.open(technology.url, '_blank', 'noopener,noreferrer');
+    }
+  };
 
   return (
     <mesh
@@ -49,12 +45,13 @@ export function Tile({ geometry, color }: TileProps) {
         setHovered(false);
         document.body.style.cursor = 'auto';
       }}
+      onClick={handleClick}
     >
       <meshStandardMaterial
-        color={displayColor}
+        color={technology.backgroundColor}
         side={THREE.DoubleSide}
-        emissive={hovered ? displayColor : 'black'}
-        emissiveIntensity={hovered ? 0.2 : 0}
+        emissive={hovered ? technology.backgroundColor : 'black'}
+        emissiveIntensity={hovered ? 0.3 : 0}
       />
     </mesh>
   );

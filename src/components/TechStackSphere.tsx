@@ -2,9 +2,12 @@ import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Tile } from './Tile';
+import techStackDataRaw from '../data/techstack.json';
+import type { Technology, TechStackData } from '../types/techstack';
+
+const techStackData = techStackDataRaw as TechStackData;
 
 // Configuration constants
-const TILE_COUNT = 80;
 const SPHERE_RADIUS = 2;
 const TILE_SIZE = 0.98; // Controls gap size between tiles
 const TILE_SEGMENTS = 8; // Subdivision for curved tile surface
@@ -103,15 +106,16 @@ function createTileGeometry(
 
 export function TechStackSphere() {
   const groupRef = useRef<THREE.Group>(null);
+  const technologies: Technology[] = techStackData.technologies;
 
   // Generate sphere points and tile geometries
   const { spherePoints, tileGeometries } = useMemo(() => {
-    const points = fibonacciSphere(TILE_COUNT, SPHERE_RADIUS);
+    const points = fibonacciSphere(technologies.length, SPHERE_RADIUS);
     const geometries = points.map((point) =>
       createTileGeometry(point, SPHERE_RADIUS, TILE_SIZE)
     );
     return { spherePoints: points, tileGeometries: geometries };
-  }, []);
+  }, [technologies.length]);
 
   // Auto-rotation
   useFrame((_state, delta) => {
@@ -122,14 +126,17 @@ export function TechStackSphere() {
 
   return (
     <group ref={groupRef}>
-      {spherePoints.map((_point, index) => (
-        <Tile
-          key={index}
-          geometry={tileGeometries[index]}
-          color={`hsl(${(index / TILE_COUNT) * 360}, 70%, 50%)`}
-          index={index}
-        />
-      ))}
+      {spherePoints.map((_point, index) => {
+        const technology = technologies[index];
+        return (
+          <Tile
+            key={technology.id}
+            geometry={tileGeometries[index]}
+            technology={technology}
+            index={index}
+          />
+        );
+      })}
     </group>
   );
 }
