@@ -1,3 +1,14 @@
+export const CATEGORIES = [
+  'web',
+  'java/jvm',
+  'languages',
+  'quality',
+  'devops',
+  'tools',
+] as const;
+
+export type Category = (typeof CATEGORIES)[number];
+
 export interface Technology {
   id: string;
   name: string;
@@ -7,14 +18,6 @@ export interface Technology {
   backgroundColor: string;
   url: string;
 }
-
-export type Category =
-  | 'web'
-  | 'java/jvm'
-  | 'languages'
-  | 'quality'
-  | 'devops'
-  | 'tools';
 
 export interface TechStackData {
   technologies: Technology[];

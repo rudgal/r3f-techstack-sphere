@@ -3,9 +3,13 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Tile } from './Tile';
 import techStackDataRaw from '../data/techstack.json';
-import type { Technology, TechStackData } from '../types/techstack';
+import type { Technology, TechStackData, Category } from '../types/techstack';
 
 const techStackData = techStackDataRaw as TechStackData;
+
+interface TechStackSphereProps {
+  selectedCategory: Category | null;
+}
 
 // Configuration constants
 const SPHERE_RADIUS = 2;
@@ -105,11 +109,20 @@ function createTileGeometry(
   return geometry;
 }
 
-export function TechStackSphere() {
+export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
   const groupRef = useRef<THREE.Group>(null);
   const [hoveredTileIndex, setHoveredTileIndex] = useState<number | null>(null);
   const currentSpeedRef = useRef(ROTATION_SPEED);
-  const technologies: Technology[] = techStackData.technologies;
+  
+  // Filter technologies based on selected category
+  const technologies: Technology[] = useMemo(() => {
+    if (!selectedCategory) {
+      return techStackData.technologies;
+    }
+    return techStackData.technologies.filter((tech) =>
+      tech.categories.includes(selectedCategory)
+    );
+  }, [selectedCategory]);
 
   // Generate sphere points and tile geometries
   const { spherePoints, tileGeometries } = useMemo(() => {
