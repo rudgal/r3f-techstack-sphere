@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { RoundedBox } from '@react-three/drei';
+import { RoundedBox, Edges } from '@react-three/drei';
 import * as THREE from 'three';
 import type { Technology } from '../types/techstack';
 
@@ -15,10 +15,11 @@ interface TileProps {
   rotation: THREE.Euler;
   technology: Technology;
   index: number;
+  isBlank?: boolean;
   onHover?: (isHovered: boolean) => void;
 }
 
-export function Tile({ position, rotation, technology, onHover }: TileProps) {
+export function Tile({ position, rotation, technology, isBlank = false, onHover }: TileProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
   const [currentScale, setCurrentScale] = useState(1);
@@ -35,7 +36,7 @@ export function Tile({ position, rotation, technology, onHover }: TileProps) {
   });
 
   const handleClick = () => {
-    if (technology.url) {
+    if (!isBlank && technology.url) {
       window.open(technology.url, '_blank', 'noopener,noreferrer');
     }
   };
@@ -52,7 +53,7 @@ export function Tile({ position, rotation, technology, onHover }: TileProps) {
         e.stopPropagation();
         setHovered(true);
         onHover?.(true);
-        document.body.style.cursor = 'pointer';
+        document.body.style.cursor = isBlank ? 'default' : 'pointer';
       }}
       onPointerOut={(e) => {
         e.stopPropagation();
@@ -64,13 +65,26 @@ export function Tile({ position, rotation, technology, onHover }: TileProps) {
       castShadow
       receiveShadow
     >
-      <meshStandardMaterial
-        color={technology.backgroundColor}
-        emissive={hovered ? technology.backgroundColor : 'black'}
-        emissiveIntensity={hovered ? 0.3 : 0}
-        roughness={0.4}
-        metalness={0.1}
-      />
+      {isBlank ? (
+        <>
+          <meshBasicMaterial
+            transparent={true}
+            opacity={0}
+          />
+          <Edges
+            color={technology.backgroundColor}
+            lineWidth={2}
+          />
+        </>
+      ) : (
+        <meshStandardMaterial
+          color={technology.backgroundColor}
+          emissive={hovered ? technology.backgroundColor : 'black'}
+          emissiveIntensity={hovered ? 0.3 : 0}
+          roughness={0.4}
+          metalness={0.1}
+        />
+      )}
     </RoundedBox>
   );
 }
