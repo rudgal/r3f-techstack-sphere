@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import type { Technology } from '../types/techstack';
 
 // Tile dimensions
-const TILE_SIZE = 0.4;
+export const TILE_SIZE = 0.4;
 export const TILE_DEPTH = 0.03;
 const TILE_RADIUS = 0.02; // Rounded corner radius
 const TILE_HOVERED_SCALE_FACTOR = 1.3;
@@ -19,7 +19,13 @@ interface TileProps {
   onHover?: (isHovered: boolean) => void;
 }
 
-export function Tile({ position, rotation, technology, isBlank = false, onHover }: TileProps) {
+export function Tile({
+  position,
+  rotation,
+  technology,
+  isBlank = false,
+  onHover,
+}: TileProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
   const [currentScale, setCurrentScale] = useState(1);
@@ -67,14 +73,8 @@ export function Tile({ position, rotation, technology, isBlank = false, onHover 
     >
       {isBlank ? (
         <>
-          <meshBasicMaterial
-            transparent={true}
-            opacity={0}
-          />
-          <Edges
-            color={technology.backgroundColor}
-            lineWidth={2}
-          />
+          <meshBasicMaterial transparent={true} opacity={0} />
+          <Edges color={technology.backgroundColor} lineWidth={2} />
         </>
       ) : (
         <meshStandardMaterial
