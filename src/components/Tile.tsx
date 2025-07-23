@@ -3,14 +3,24 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { Technology } from '../types/techstack';
 
+// Tile dimensions
+const TILE_SIZE = 0.3;
+export const TILE_DEPTH = 0.03;
+
 interface TileProps {
-  geometry: THREE.BufferGeometry;
+  position: THREE.Vector3;
+  rotation: THREE.Euler;
   technology: Technology;
   index: number;
   onHover?: (isHovered: boolean) => void;
 }
 
-export function Tile({ geometry, technology, onHover }: TileProps) {
+export function Tile({
+  position,
+  rotation,
+  technology,
+  onHover,
+}: TileProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
   const [currentScale, setCurrentScale] = useState(1);
@@ -35,7 +45,8 @@ export function Tile({ geometry, technology, onHover }: TileProps) {
   return (
     <mesh
       ref={meshRef}
-      geometry={geometry}
+      position={position}
+      rotation={rotation}
       onPointerOver={(e) => {
         e.stopPropagation();
         setHovered(true);
@@ -49,12 +60,16 @@ export function Tile({ geometry, technology, onHover }: TileProps) {
         document.body.style.cursor = 'auto';
       }}
       onClick={handleClick}
+      castShadow
+      receiveShadow
     >
+      <boxGeometry args={[TILE_SIZE, TILE_SIZE, TILE_DEPTH]} />
       <meshStandardMaterial
         color={technology.backgroundColor}
-        side={THREE.DoubleSide}
         emissive={hovered ? technology.backgroundColor : 'black'}
         emissiveIntensity={hovered ? 0.3 : 0}
+        roughness={0.4}
+        metalness={0.1}
       />
     </mesh>
   );
