@@ -7,9 +7,10 @@ interface TileProps {
   geometry: THREE.BufferGeometry;
   technology: Technology;
   index: number;
+  onHover?: (isHovered: boolean) => void;
 }
 
-export function Tile({ geometry, technology }: TileProps) {
+export function Tile({ geometry, technology, onHover }: TileProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
   const [currentScale, setCurrentScale] = useState(1);
@@ -38,11 +39,13 @@ export function Tile({ geometry, technology }: TileProps) {
       onPointerOver={(e) => {
         e.stopPropagation();
         setHovered(true);
+        onHover?.(true);
         document.body.style.cursor = 'pointer';
       }}
       onPointerOut={(e) => {
         e.stopPropagation();
         setHovered(false);
+        onHover?.(false);
         document.body.style.cursor = 'auto';
       }}
       onClick={handleClick}

@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Tile } from './Tile';
@@ -12,6 +12,7 @@ const SPHERE_RADIUS = 2;
 const TILE_SIZE = 0.98; // Controls gap size between tiles
 const TILE_SEGMENTS = 8; // Subdivision for curved tile surface
 const ROTATION_SPEED = 0.2; // Radians per second
+const ROTATION_SPEED_TILE_HOVERED = 0.05; // Slower rotation when tile is hovered
 const TILE_SPREAD_FACTOR = 0.5; // How much tiles spread on tangent plane
 
 function fibonacciSphere(samples: number, radius: number): THREE.Vector3[] {
@@ -106,6 +107,8 @@ function createTileGeometry(
 
 export function TechStackSphere() {
   const groupRef = useRef<THREE.Group>(null);
+  const [hoveredTileIndex, setHoveredTileIndex] = useState<number | null>(null);
+  const currentSpeedRef = useRef(ROTATION_SPEED);
   const technologies: Technology[] = techStackData.technologies;
 
   // Generate sphere points and tile geometries
@@ -117,10 +120,20 @@ export function TechStackSphere() {
     return { spherePoints: points, tileGeometries: geometries };
   }, [technologies.length]);
 
-  // Auto-rotation
+  // Auto-rotation with smooth speed transition when hovering
   useFrame((_state, delta) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y += delta * ROTATION_SPEED;
+      const targetSpeed =
+        hoveredTileIndex !== null
+          ? ROTATION_SPEED_TILE_HOVERED
+          : ROTATION_SPEED;
+      // Smooth transition using lerp
+      currentSpeedRef.current = THREE.MathUtils.lerp(
+        currentSpeedRef.current,
+        targetSpeed,
+        delta * 3
+      );
+      groupRef.current.rotation.y += delta * currentSpeedRef.current;
     }
   });
 
@@ -134,6 +147,9 @@ export function TechStackSphere() {
             geometry={tileGeometries[index]}
             technology={technology}
             index={index}
+            onHover={(isHovered) =>
+              setHoveredTileIndex(isHovered ? index : null)
+            }
           />
         );
       })}
