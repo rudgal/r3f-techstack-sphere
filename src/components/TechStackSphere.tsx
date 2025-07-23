@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState, useEffect } from 'react';
+import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Tile, TILE_DEPTH, TILE_SIZE } from './Tile';
@@ -18,7 +18,116 @@ const MAX_SPHERE_RADIUS = 3.0; // Maximum sphere radius to prevent excessive siz
 const ROTATION_SPEED = 0.2; // Radians per second
 const ROTATION_SPEED_TILE_HOVERED = 0.05; // Slower rotation when tile is hovered
 
-// Calculate optimal sphere radius based on tile count
+export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
+  const groupRef = useRef<THREE.Group>(null);
+  const hoveredTileIndexRef = useRef<number | null>(null);
+  const currentSpeedRef = useRef(ROTATION_SPEED);
+  const currentRadiusRef = useRef(BASE_SPHERE_RADIUS);
+  const tilePositionsRef = useRef<THREE.Vector3[]>([]);
+
+  // Filter technologies based on selected category
+  const technologies: Technology[] = useMemo(() => {
+    if (!selectedCategory) {
+      return techStackData.technologies;
+    }
+    return techStackData.technologies.filter((tech) =>
+      tech.categories.includes(selectedCategory)
+    );
+  }, [selectedCategory]);
+
+  // Calculate target sphere radius based on tile count
+  const targetRadius = useMemo(() => {
+    return calculateSphereRadius(technologies.length, TILE_SIZE);
+  }, [technologies.length]);
+
+  // Generate tile data with positions and rotations
+  const tilesData = useMemo(() => {
+    const points = fibonacciSphere(technologies.length, 1); // Use unit sphere for base calculations
+    const radius = targetRadius;
+    currentRadiusRef.current = radius;
+
+    const tiles = points.map((point, index) => {
+      const normal = point.clone().normalize();
+      const rotation = calculateTileRotation(normal);
+      const position = calculateTilePosition(point, normal, radius);
+
+      return {
+        position,
+        rotation,
+        technology: technologies[index],
+      };
+    });
+
+    // Store positions for smooth transitions
+    tilePositionsRef.current = tiles.map((tile) => tile.position.clone());
+
+    return tiles;
+  }, [technologies, targetRadius]);
+
+  // Auto-rotation and smooth radius transitions
+  useFrame((_state, delta) => {
+    if (!groupRef.current) return;
+
+    // Handle rotation speed
+    const targetSpeed =
+      hoveredTileIndexRef.current !== null
+        ? ROTATION_SPEED_TILE_HOVERED
+        : ROTATION_SPEED;
+
+    currentSpeedRef.current = THREE.MathUtils.lerp(
+      currentSpeedRef.current,
+      targetSpeed,
+      delta * 3
+    );
+    groupRef.current.rotation.y += delta * currentSpeedRef.current;
+
+    // Handle sphere radius transitions
+    const currentRadius = currentRadiusRef.current;
+    const newRadius = THREE.MathUtils.lerp(
+      currentRadius,
+      targetRadius,
+      delta * 2
+    );
+
+    if (Math.abs(newRadius - currentRadius) > 0.001) {
+      currentRadiusRef.current = newRadius;
+
+      // Update tile positions smoothly
+      tilesData.forEach((tileData, index) => {
+        if (tilePositionsRef.current[index]) {
+          const basePosition = tileData.position.clone().normalize();
+          const normal = basePosition.clone();
+          const newPosition = calculateTilePosition(
+            basePosition,
+            normal,
+            newRadius
+          );
+          tilePositionsRef.current[index] = newPosition;
+        }
+      });
+    }
+  });
+
+  const handleTileHover = (index: number, isHovered: boolean) => {
+    hoveredTileIndexRef.current = isHovered ? index : null;
+  };
+
+  return (
+    <group ref={groupRef}>
+      {tilesData.map((tileData, index) => (
+        <Tile
+          key={tileData.technology.id}
+          position={tilePositionsRef.current[index] || tileData.position}
+          rotation={tileData.rotation}
+          technology={tileData.technology}
+          onHover={(isHovered) => handleTileHover(index, isHovered)}
+        />
+      ))}
+    </group>
+  );
+}
+
+// Utility functions
 function calculateSphereRadius(tileCount: number, tileSize: number): number {
   if (tileCount === 0) return BASE_SPHERE_RADIUS;
   if (tileCount === 1) return BASE_SPHERE_RADIUS;
@@ -56,149 +165,37 @@ function fibonacciSphere(samples: number, radius: number): THREE.Vector3[] {
   return points;
 }
 
-export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
-  const groupRef = useRef<THREE.Group>(null);
-  const [hoveredTileIndex, setHoveredTileIndex] = useState<number | null>(null);
-  const currentSpeedRef = useRef(ROTATION_SPEED);
-  const currentRadiusRef = useRef(BASE_SPHERE_RADIUS);
+function calculateTileRotation(normal: THREE.Vector3): THREE.Euler {
+  const rotation = new THREE.Euler();
+  const quaternion = new THREE.Quaternion();
+  const up = new THREE.Vector3(0, 1, 0);
 
-  // Filter technologies based on selected category
-  const technologies: Technology[] = useMemo(() => {
-    if (!selectedCategory) {
-      return techStackData.technologies;
-    }
-    return techStackData.technologies.filter((tech) =>
-      tech.categories.includes(selectedCategory)
-    );
-  }, [selectedCategory]);
+  // If the point is at the poles, use a different reference vector
+  if (Math.abs(normal.y) > 0.999) {
+    quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
+  } else {
+    // Calculate the rotation that aligns Z-axis with normal and keeps Y-axis pointing toward equator
+    const tangent = new THREE.Vector3().crossVectors(up, normal).normalize();
+    const bitangent = new THREE.Vector3()
+      .crossVectors(normal, tangent)
+      .normalize();
 
-  // Calculate target sphere radius based on tile count
-  const targetRadius = useMemo(() => {
-    return calculateSphereRadius(technologies.length, TILE_SIZE);
-  }, [technologies.length]);
+    const matrix = new THREE.Matrix4();
+    matrix.makeBasis(tangent, bitangent, normal);
+    quaternion.setFromRotationMatrix(matrix);
+  }
 
-  // Generate base tile data with positions and rotations
-  const baseTilesData = useMemo(() => {
-    const points = fibonacciSphere(technologies.length, 1); // Use unit sphere for base calculations
+  rotation.setFromQuaternion(quaternion);
+  return rotation;
+}
 
-    return points.map((point, index) => {
-      // Calculate normal vector (from center to surface point)
-      const normal = point.clone().normalize();
-
-      // Create rotation to face outward and align with equator
-      const rotation = new THREE.Euler();
-
-      // First, create a quaternion to rotate the tile to face outward
-      const quaternion = new THREE.Quaternion();
-      const up = new THREE.Vector3(0, 1, 0);
-
-      // If the point is at the poles, use a different reference vector
-      if (Math.abs(normal.y) > 0.999) {
-        quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
-      } else {
-        // Calculate the rotation that aligns Z-axis with normal and keeps Y-axis pointing toward equator
-        const tangent = new THREE.Vector3()
-          .crossVectors(up, normal)
-          .normalize();
-        const bitangent = new THREE.Vector3()
-          .crossVectors(normal, tangent)
-          .normalize();
-
-        const matrix = new THREE.Matrix4();
-        matrix.makeBasis(tangent, bitangent, normal);
-        quaternion.setFromRotationMatrix(matrix);
-      }
-
-      rotation.setFromQuaternion(quaternion);
-
-      return {
-        basePosition: point, // Normalized position on unit sphere
-        normal,
-        rotation,
-        technology: technologies[index],
-      };
-    });
-  }, [technologies]);
-
-  // Current tile positions that will be animated
-  const [tilesData, setTilesData] = useState<
-    Array<{
-      position: THREE.Vector3;
-      rotation: THREE.Euler;
-      technology: Technology;
-    }>
-  >([]);
-
-  // Initialize tilesData when baseTilesData changes
-  useEffect(() => {
-    const initialRadius = targetRadius;
-    currentRadiusRef.current = initialRadius;
-
-    const initialTilesData = baseTilesData.map((data) => ({
-      position: data.basePosition
-        .clone()
-        .multiplyScalar(initialRadius)
-        .add(data.normal.clone().multiplyScalar(TILE_DEPTH / 2)),
-      rotation: data.rotation,
-      technology: data.technology,
-    }));
-
-    setTilesData(initialTilesData);
-  }, [baseTilesData, targetRadius]);
-
-  // Auto-rotation and smooth radius transitions
-  useFrame((_state, delta) => {
-    if (groupRef.current) {
-      // Handle rotation speed
-      const targetSpeed =
-        hoveredTileIndex !== null
-          ? ROTATION_SPEED_TILE_HOVERED
-          : ROTATION_SPEED;
-      currentSpeedRef.current = THREE.MathUtils.lerp(
-        currentSpeedRef.current,
-        targetSpeed,
-        delta * 3
-      );
-      groupRef.current.rotation.y += delta * currentSpeedRef.current;
-
-      // Handle sphere radius transitions
-      const currentRadius = currentRadiusRef.current;
-      const newRadius = THREE.MathUtils.lerp(
-        currentRadius,
-        targetRadius,
-        delta * 2
-      );
-
-      if (Math.abs(newRadius - currentRadius) > 0.001) {
-        currentRadiusRef.current = newRadius;
-
-        // Update tile positions based on new radius
-        const updatedTilesData = baseTilesData.map((data) => ({
-          position: data.basePosition
-            .clone()
-            .multiplyScalar(newRadius)
-            .add(data.normal.clone().multiplyScalar(TILE_DEPTH / 2)),
-          rotation: data.rotation,
-          technology: data.technology,
-        }));
-
-        setTilesData(updatedTilesData);
-      }
-    }
-  });
-
-  return (
-    <group ref={groupRef}>
-      {tilesData.map((tileData, index) => (
-        <Tile
-          key={tileData.technology.id}
-          position={tileData.position}
-          rotation={tileData.rotation}
-          technology={tileData.technology}
-          index={index}
-          onHover={(isHovered) => setHoveredTileIndex(isHovered ? index : null)}
-        />
-      ))}
-    </group>
-  );
+function calculateTilePosition(
+  basePosition: THREE.Vector3,
+  normal: THREE.Vector3,
+  radius: number
+): THREE.Vector3 {
+  return basePosition
+    .clone()
+    .multiplyScalar(radius)
+    .add(normal.clone().multiplyScalar(TILE_DEPTH / 2));
 }

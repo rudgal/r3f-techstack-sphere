@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, type ThreeEvent } from '@react-three/fiber';
 import { RoundedBox, Edges } from '@react-three/drei';
 import * as THREE from 'three';
 import type { Technology } from '../types/techstack';
@@ -14,7 +14,6 @@ interface TileProps {
   position: THREE.Vector3;
   rotation: THREE.Euler;
   technology: Technology;
-  index: number;
   isBlank?: boolean;
   onHover?: (isHovered: boolean) => void;
 }
@@ -47,6 +46,41 @@ export function Tile({
     }
   };
 
+  const handlePointerOver = (e: ThreeEvent<PointerEvent>) => {
+    e.stopPropagation();
+    setHovered(true);
+    onHover?.(true);
+    document.body.style.cursor = isBlank ? 'default' : 'pointer';
+  };
+
+  const handlePointerOut = (e: ThreeEvent<PointerEvent>) => {
+    e.stopPropagation();
+    setHovered(false);
+    onHover?.(false);
+    document.body.style.cursor = 'auto';
+  };
+
+  const renderMaterial = () => {
+    if (isBlank) {
+      return (
+        <>
+          <meshBasicMaterial transparent opacity={0} />
+          <Edges color={technology.backgroundColor} lineWidth={2} />
+        </>
+      );
+    }
+
+    return (
+      <meshStandardMaterial
+        color={technology.backgroundColor}
+        emissive={hovered ? technology.backgroundColor : 'black'}
+        emissiveIntensity={hovered ? 0.3 : 0}
+        roughness={0.4}
+        metalness={0.1}
+      />
+    );
+  };
+
   return (
     <RoundedBox
       ref={meshRef}
@@ -55,36 +89,13 @@ export function Tile({
       smoothness={4}
       position={position}
       rotation={rotation}
-      onPointerOver={(e) => {
-        e.stopPropagation();
-        setHovered(true);
-        onHover?.(true);
-        document.body.style.cursor = isBlank ? 'default' : 'pointer';
-      }}
-      onPointerOut={(e) => {
-        e.stopPropagation();
-        setHovered(false);
-        onHover?.(false);
-        document.body.style.cursor = 'auto';
-      }}
+      onPointerOver={handlePointerOver}
+      onPointerOut={handlePointerOut}
       onClick={handleClick}
       castShadow
       receiveShadow
     >
-      {isBlank ? (
-        <>
-          <meshBasicMaterial transparent={true} opacity={0} />
-          <Edges color={technology.backgroundColor} lineWidth={2} />
-        </>
-      ) : (
-        <meshStandardMaterial
-          color={technology.backgroundColor}
-          emissive={hovered ? technology.backgroundColor : 'black'}
-          emissiveIntensity={hovered ? 0.3 : 0}
-          roughness={0.4}
-          metalness={0.1}
-        />
-      )}
+      {renderMaterial()}
     </RoundedBox>
   );
 }
