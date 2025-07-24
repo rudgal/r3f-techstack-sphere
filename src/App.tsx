@@ -2,6 +2,7 @@ import './App.css';
 import { Canvas } from '@react-three/fiber';
 import * as THREE from 'three';
 import Experience from './Experience';
+import { Perf } from 'r3f-perf';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         position: [3, 2, 6],
       }}
     >
+      <Perf showGraph={true} chart={{ hz: 60, length: 240 }} />
       <Experience />
     </Canvas>
   );
