@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useCallback } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Tile, TILE_DEPTH, TILE_SIZE } from './Tile';
@@ -48,12 +48,13 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
     const tiles = points.map((point, index) => {
       const normal = point.clone().normalize();
       const rotation = calculateTileRotation(normal);
-      const position = calculateTilePosition(point, normal, radius);
+      const position = calculateTilePosition(normal, radius);
 
       return {
         position,
         rotation,
         technology: technologies[index],
+        normalizedPosition: normal, // Store normalized position to avoid recalculating
       };
     });
 
@@ -90,18 +91,15 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
     }
   });
 
-  const handleTileHover = (index: number, isHovered: boolean) => {
+  const handleTileHover = useCallback((index: number, isHovered: boolean) => {
     hoveredTileIndexRef.current = isHovered ? index : null;
-  };
+  }, []);
 
   return (
     <group ref={groupRef}>
       {tilesData.map((tileData, index) => {
-        const basePosition = tileData.position.clone().normalize();
-        const normal = basePosition.clone();
         const position = calculateTilePosition(
-          basePosition,
-          normal,
+          tileData.normalizedPosition,
           currentRadiusRef.current
         );
 
@@ -182,12 +180,11 @@ function calculateTileRotation(normal: THREE.Vector3): THREE.Euler {
 }
 
 function calculateTilePosition(
-  basePosition: THREE.Vector3,
   normal: THREE.Vector3,
   radius: number
 ): THREE.Vector3 {
-  return basePosition
+  // For a sphere, the normal is the same as the normalized position
+  return normal
     .clone()
-    .multiplyScalar(radius)
-    .add(normal.clone().multiplyScalar(TILE_DEPTH / 2));
+    .multiplyScalar(radius + TILE_DEPTH / 2);
 }
