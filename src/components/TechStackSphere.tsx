@@ -145,6 +145,9 @@ function calculateSphereRadius(tileCount: number, tileSize: number): number {
 }
 
 function fibonacciSphere(samples: number, radius: number): THREE.Vector3[] {
+  if (samples === 0) return [];
+  if (samples === 1) return [new THREE.Vector3(0, radius, 0)];
+
   const points: THREE.Vector3[] = [];
   const phi = Math.PI * (3 - Math.sqrt(5)); // golden angle
 
