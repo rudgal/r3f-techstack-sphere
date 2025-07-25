@@ -17,6 +17,9 @@ const BASE_SPHERE_RADIUS = 1.5; // Minimum sphere radius
 const MAX_SPHERE_RADIUS = 3.0; // Maximum sphere radius to prevent excessive size
 const ROTATION_SPEED = 0.2; // Radians per second
 const ROTATION_SPEED_TILE_HOVERED = 0.05; // Slower rotation when tile is hovered
+const SPEED_LERP_FACTOR = 3; // How quickly rotation speed changes
+const RADIUS_LERP_FACTOR = 2; // How quickly radius changes
+const RADIUS_THRESHOLD = 0.001; // Minimum change to update radius
 
 export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
   const groupRef = useRef<THREE.Group>(null);
@@ -45,7 +48,7 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
     const radius = targetRadius;
     currentRadiusRef.current = radius;
 
-    const tiles = points.map((point, index) => {
+    return points.map((point, index) => {
       const normal = point.clone().normalize();
       const rotation = calculateTileRotation(normal);
       const position = calculateTilePosition(normal, radius);
@@ -57,15 +60,10 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
         normalizedPosition: normal, // Store normalized position to avoid recalculating
       };
     });
-
-    return tiles;
   }, [technologies, targetRadius]);
 
-  // Auto-rotation and smooth radius transitions
-  useFrame((_state, delta) => {
-    if (!groupRef.current) return;
-
-    // Handle rotation speed
+  // Animation helpers
+  const animateRotationSpeed = (delta: number) => {
     const targetSpeed =
       hoveredTileIndexRef.current !== null
         ? ROTATION_SPEED_TILE_HOVERED
@@ -74,21 +72,31 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
     currentSpeedRef.current = THREE.MathUtils.lerp(
       currentSpeedRef.current,
       targetSpeed,
-      delta * 3
+      delta * SPEED_LERP_FACTOR
     );
-    groupRef.current.rotation.y += delta * currentSpeedRef.current;
+  };
 
-    // Handle sphere radius transitions
+  const animateRadius = (delta: number) => {
     const currentRadius = currentRadiusRef.current;
     const newRadius = THREE.MathUtils.lerp(
       currentRadius,
       targetRadius,
-      delta * 2
+      delta * RADIUS_LERP_FACTOR
     );
 
-    if (Math.abs(newRadius - currentRadius) > 0.001) {
+    if (Math.abs(newRadius - currentRadius) > RADIUS_THRESHOLD) {
       currentRadiusRef.current = newRadius;
     }
+  };
+
+  // Auto-rotation and smooth radius transitions
+  useFrame((_state, delta) => {
+    if (!groupRef.current) return;
+
+    animateRotationSpeed(delta);
+    animateRadius(delta);
+
+    groupRef.current.rotation.y += delta * currentSpeedRef.current;
   });
 
   const handleTileHover = useCallback((index: number, isHovered: boolean) => {
@@ -184,7 +192,5 @@ function calculateTilePosition(
   radius: number
 ): THREE.Vector3 {
   // For a sphere, the normal is the same as the normalized position
-  return normal
-    .clone()
-    .multiplyScalar(radius + TILE_DEPTH / 2);
+  return normal.clone().multiplyScalar(radius + TILE_DEPTH / 2);
 }
