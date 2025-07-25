@@ -23,7 +23,6 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
   const hoveredTileIndexRef = useRef<number | null>(null);
   const currentSpeedRef = useRef(ROTATION_SPEED);
   const currentRadiusRef = useRef(BASE_SPHERE_RADIUS);
-  const tilePositionsRef = useRef<THREE.Vector3[]>([]);
 
   // Filter technologies based on selected category
   const technologies: Technology[] = useMemo(() => {
@@ -58,9 +57,6 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
       };
     });
 
-    // Store positions for smooth transitions
-    tilePositionsRef.current = tiles.map((tile) => tile.position.clone());
-
     return tiles;
   }, [technologies, targetRadius]);
 
@@ -91,20 +87,6 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
 
     if (Math.abs(newRadius - currentRadius) > 0.001) {
       currentRadiusRef.current = newRadius;
-
-      // Update tile positions smoothly
-      tilesData.forEach((tileData, index) => {
-        if (tilePositionsRef.current[index]) {
-          const basePosition = tileData.position.clone().normalize();
-          const normal = basePosition.clone();
-          const newPosition = calculateTilePosition(
-            basePosition,
-            normal,
-            newRadius
-          );
-          tilePositionsRef.current[index] = newPosition;
-        }
-      });
     }
   });
 
@@ -114,15 +96,25 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
 
   return (
     <group ref={groupRef}>
-      {tilesData.map((tileData, index) => (
-        <Tile
-          key={tileData.technology.id}
-          position={tilePositionsRef.current[index] || tileData.position}
-          rotation={tileData.rotation}
-          technology={tileData.technology}
-          onHover={(isHovered) => handleTileHover(index, isHovered)}
-        />
-      ))}
+      {tilesData.map((tileData, index) => {
+        const basePosition = tileData.position.clone().normalize();
+        const normal = basePosition.clone();
+        const position = calculateTilePosition(
+          basePosition,
+          normal,
+          currentRadiusRef.current
+        );
+
+        return (
+          <Tile
+            key={tileData.technology.id}
+            position={position}
+            rotation={tileData.rotation}
+            technology={tileData.technology}
+            onHover={(isHovered) => handleTileHover(index, isHovered)}
+          />
+        );
+      })}
     </group>
   );
 }
