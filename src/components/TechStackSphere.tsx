@@ -2,6 +2,7 @@ import { useRef, useMemo, useCallback } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Tile, TILE_DEPTH, TILE_SIZE } from './Tile';
+import { useTechnologyTextures } from '../utils/textureLoader';
 import techStackDataRaw from '../data/techstack.json';
 import type { Technology, TechStackData, Category } from '../types/techstack';
 
@@ -36,6 +37,9 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
       tech.categories.includes(selectedCategory)
     );
   }, [selectedCategory]);
+
+  // Load textures for all technologies
+  const { getTexture } = useTechnologyTextures(technologies);
 
   // Calculate target sphere radius based on tile count
   const targetRadius = useMemo(() => {
@@ -111,12 +115,15 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
           currentRadiusRef.current
         );
 
+        const texture = getTexture(tileData.technology);
+
         return (
           <Tile
             key={tileData.technology.id}
             position={position}
             rotation={tileData.rotation}
             technology={tileData.technology}
+            texture={texture}
             onHover={(isHovered) => handleTileHover(index, isHovered)}
           />
         );

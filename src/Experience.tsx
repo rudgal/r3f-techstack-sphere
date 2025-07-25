@@ -3,7 +3,7 @@ import { Html } from '@react-three/drei';
 import { TechStackSphere } from './components/TechStackSphere';
 import { CategoryFilter } from './components/CategoryFilter';
 import type { Category } from './types/techstack';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 
 export default function Experience() {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
@@ -32,7 +32,9 @@ export default function Experience() {
       <directionalLight position={[1, 2, 3]} intensity={4.5} />
       <ambientLight intensity={1.5} />
 
-      <TechStackSphere selectedCategory={selectedCategory} />
+      <Suspense fallback={null}>
+        <TechStackSphere selectedCategory={selectedCategory} />
+      </Suspense>
     </>
   );
 }

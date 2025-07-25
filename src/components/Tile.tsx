@@ -3,6 +3,7 @@ import { useFrame, type ThreeEvent } from '@react-three/fiber';
 import { RoundedBox, Edges } from '@react-three/drei';
 import * as THREE from 'three';
 import type { Technology } from '../types/techstack';
+import type { Texture } from 'three';
 
 // Tile dimensions
 export const TILE_SIZE = 0.4;
@@ -14,6 +15,7 @@ interface TileProps {
   position: THREE.Vector3;
   rotation: THREE.Euler;
   technology: Technology;
+  texture?: Texture | null;
   isBlank?: boolean;
   onHover?: (isHovered: boolean) => void;
 }
@@ -22,22 +24,23 @@ export function Tile({
   position,
   rotation,
   technology,
+  texture,
   isBlank = false,
   onHover,
 }: TileProps) {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const groupRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
   const [currentScale, setCurrentScale] = useState(1);
 
   // Smooth scale animation
   useFrame((_state, delta) => {
-    if (!meshRef.current) return;
+    if (!groupRef.current) return;
 
     const targetScale = hovered ? TILE_HOVERED_SCALE_FACTOR : 1;
     const newScale = THREE.MathUtils.lerp(currentScale, targetScale, delta * 8);
     setCurrentScale(newScale);
 
-    meshRef.current.scale.setScalar(newScale);
+    groupRef.current.scale.setScalar(newScale);
   });
 
   const handleClick = () => {
@@ -70,6 +73,21 @@ export function Tile({
       );
     }
 
+    // Use texture if available, otherwise fall back to color
+    if (texture) {
+      return (
+        <meshStandardMaterial
+          map={texture}
+          emissive={hovered ? technology.backgroundColor : 'black'}
+          emissiveIntensity={hovered ? 0.2 : 0}
+          roughness={0.3}
+          metalness={0.0}
+          transparent={true}
+        />
+      );
+    }
+
+    // Fallback to color-based material
     return (
       <meshStandardMaterial
         color={technology.backgroundColor}
@@ -81,21 +99,50 @@ export function Tile({
     );
   };
 
+  // Use a group to better handle textures
   return (
-    <RoundedBox
-      ref={meshRef}
-      args={[TILE_SIZE, TILE_SIZE, TILE_DEPTH]}
-      radius={TILE_RADIUS}
-      smoothness={4}
-      position={position}
-      rotation={rotation}
-      onPointerOver={handlePointerOver}
-      onPointerOut={handlePointerOut}
-      onClick={handleClick}
-      castShadow
-      receiveShadow
-    >
-      {renderMaterial()}
-    </RoundedBox>
+    <group ref={groupRef} position={position} rotation={rotation}>
+      {/* Main tile body */}
+      <RoundedBox
+        args={[TILE_SIZE, TILE_SIZE, TILE_DEPTH]}
+        radius={TILE_RADIUS}
+        smoothness={4}
+        onPointerOver={handlePointerOver}
+        onPointerOut={handlePointerOut}
+        onClick={handleClick}
+        castShadow
+        receiveShadow
+      >
+        {isBlank ? (
+          <>
+            <meshBasicMaterial transparent opacity={0} />
+            <Edges color={technology.backgroundColor} lineWidth={2} />
+          </>
+        ) : texture ? (
+          // For textured tiles, use a simple colored background
+          <meshStandardMaterial
+            color={technology.backgroundColor}
+            roughness={0.4}
+            metalness={0.1}
+          />
+        ) : (
+          // Original material for non-textured tiles
+          renderMaterial()
+        )}
+      </RoundedBox>
+
+      {/* Texture overlay - only render if we have a texture and not blank */}
+      {texture && !isBlank && (
+        <mesh position={[0, 0, TILE_DEPTH / 2 + 0.001]}>
+          <planeGeometry args={[TILE_SIZE * 0.85, TILE_SIZE * 0.85]} />
+          <meshBasicMaterial
+            map={texture}
+            transparent={true}
+            alphaTest={0.1}
+            opacity={hovered ? 1.0 : 0.9}
+          />
+        </mesh>
+      )}
+    </group>
   );
 }
