@@ -1,16 +1,17 @@
 import { useRef, useState } from 'react';
-import { useFrame, type ThreeEvent } from '@react-three/fiber';
-import { RoundedBox, Edges } from '@react-three/drei';
+import { type ThreeEvent, useFrame } from '@react-three/fiber';
+import { Edges, RoundedBox } from '@react-three/drei';
+import type { Texture } from 'three';
 import * as THREE from 'three';
 import type { Technology } from '../types/techstack';
-import type { Texture } from 'three';
 
 // Tile dimensions
 export const TILE_SIZE = 0.4;
-export const TILE_DEPTH = 0.03;
+export const TILE_DEPTH = 0.04;
 const TILE_RADIUS = 0.02; // Rounded corner radius
 const TILE_HOVERED_SCALE_FACTOR = 1.3;
 const DEFAULT_BACKGROUND_COLOR = '#dee2e6';
+const TEXTURE_SIZE_RATIO = 0.85; // Texture size relative to tile size
 
 interface TileProps {
   position: THREE.Vector3;
@@ -139,7 +140,7 @@ export function Tile({
       {/* Texture overlay - only render if we have a texture and not blank */}
       {texture && !isBlank && (
         <mesh position={[0, 0, TILE_DEPTH / 2 + 0.001]}>
-          <planeGeometry args={[TILE_SIZE * 0.85, TILE_SIZE * 0.85]} />
+          <planeGeometry args={calculateTextureDimensions(texture)} />
           <meshBasicMaterial
             map={texture}
             transparent={true}
@@ -150,4 +151,29 @@ export function Tile({
       )}
     </group>
   );
+}
+
+/**
+ * Calculate plane dimensions to maintain texture aspect ratio
+ * while fitting within the tile bounds (similar to CSS object-fit: contain)
+ */
+function calculateTextureDimensions(texture: Texture): [number, number] {
+  if (!texture.image)
+    return [TILE_SIZE * TEXTURE_SIZE_RATIO, TILE_SIZE * TEXTURE_SIZE_RATIO];
+
+  const imageAspect = texture.image.width / texture.image.height;
+  const maxSize = TILE_SIZE * TEXTURE_SIZE_RATIO;
+
+  let width, height;
+  if (imageAspect > 1) {
+    // Wider than tall
+    width = maxSize;
+    height = maxSize / imageAspect;
+  } else {
+    // Taller than wide or square
+    width = maxSize * imageAspect;
+    height = maxSize;
+  }
+
+  return [width, height];
 }

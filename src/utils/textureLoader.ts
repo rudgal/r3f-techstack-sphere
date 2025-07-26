@@ -30,20 +30,16 @@ export function useTechnologyTextures(technologies: Technology[]): {
       const textureArray = Array.isArray(textures) ? textures : [textures];
       const texture = textureArray[index] || null;
 
-      if (texture) {
+      if (texture && texture.image) {
         // Configure texture to show full image (similar to objectFit: 'contain')
         texture.wrapS = THREE.ClampToEdgeWrapping;
         texture.wrapT = THREE.ClampToEdgeWrapping;
 
-        // Ensure texture shows full image
+        // Reset to defaults first
         texture.repeat.set(1, 1);
         texture.offset.set(0, 0);
-
-        // Center the texture
         texture.center.set(0.5, 0.5);
-
-        // Keep flipY as true (default) for correct orientation
-        // texture.flipY = true; // This is the default, so we don't need to set it
+        texture.rotation = 0;
 
         // Update texture
         texture.needsUpdate = true;
