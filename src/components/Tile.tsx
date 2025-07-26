@@ -4,6 +4,7 @@ import { Edges, RoundedBox } from '@react-three/drei';
 import type { Texture } from 'three';
 import * as THREE from 'three';
 import type { Technology } from '../types/techstack';
+import { HoverLabel } from './HoverLabel';
 
 // Tile dimensions
 export const TILE_SIZE = 0.4;
@@ -149,6 +150,13 @@ export function Tile({
           />
         </mesh>
       )}
+
+      {/* Hover label */}
+      <HoverLabel
+        label={technology.name}
+        visible={hovered && !isBlank}
+        position={[0, TILE_SIZE * 0.7, 0]}
+      />
     </group>
   );
 }
