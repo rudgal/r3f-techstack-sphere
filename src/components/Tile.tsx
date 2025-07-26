@@ -142,11 +142,14 @@ export function Tile({
       {texture && !isBlank && (
         <mesh position={[0, 0, TILE_DEPTH / 2 + 0.001]}>
           <planeGeometry args={calculateTextureDimensions(texture)} />
-          <meshBasicMaterial
+          <meshStandardMaterial
             map={texture}
             transparent={true}
-            alphaTest={0.1}
-            opacity={hovered ? 1.0 : 0.9}
+            // alphaTest={0.1}
+            roughness={0.4}
+            metalness={0.1}
+            // emissive={backgroundColor}
+            // emissiveIntensity={hovered ? 0.2 : 0}
           />
         </mesh>
       )}

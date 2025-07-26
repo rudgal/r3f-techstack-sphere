@@ -17,7 +17,7 @@ function App() {
         // depth: false,
         // powerPreference: "high-performance",
         // preserveDrawingBuffer: true,
-        // toneMapping: THREE.CineonToneMapping,
+        toneMapping: THREE.CineonToneMapping,
         outputColorSpace: THREE.SRGBColorSpace,
       }}
       camera={{
