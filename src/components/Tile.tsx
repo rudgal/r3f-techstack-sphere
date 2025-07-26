@@ -10,6 +10,7 @@ export const TILE_SIZE = 0.4;
 export const TILE_DEPTH = 0.03;
 const TILE_RADIUS = 0.02; // Rounded corner radius
 const TILE_HOVERED_SCALE_FACTOR = 1.3;
+const DEFAULT_BACKGROUND_COLOR = '#dee2e6';
 
 interface TileProps {
   position: THREE.Vector3;
@@ -31,6 +32,10 @@ export function Tile({
   const groupRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
   const [currentScale, setCurrentScale] = useState(1);
+
+  // Determine background color once
+  const backgroundColor =
+    technology.backgroundColor || DEFAULT_BACKGROUND_COLOR;
 
   // Smooth scale animation
   useFrame((_state, delta) => {
@@ -68,7 +73,7 @@ export function Tile({
       return (
         <>
           <meshBasicMaterial transparent opacity={0} />
-          <Edges color={technology.backgroundColor} lineWidth={2} />
+          <Edges color={backgroundColor} lineWidth={2} />
         </>
       );
     }
@@ -78,7 +83,7 @@ export function Tile({
       return (
         <meshStandardMaterial
           map={texture}
-          emissive={hovered ? technology.backgroundColor : 'black'}
+          emissive={hovered ? backgroundColor : 'black'}
           emissiveIntensity={hovered ? 0.2 : 0}
           roughness={0.3}
           metalness={0.0}
@@ -90,8 +95,8 @@ export function Tile({
     // Fallback to color-based material
     return (
       <meshStandardMaterial
-        color={technology.backgroundColor}
-        emissive={hovered ? technology.backgroundColor : 'black'}
+        color={backgroundColor}
+        emissive={hovered ? backgroundColor : 'black'}
         emissiveIntensity={hovered ? 0.3 : 0}
         roughness={0.4}
         metalness={0.1}
@@ -116,12 +121,12 @@ export function Tile({
         {isBlank ? (
           <>
             <meshBasicMaterial transparent opacity={0} />
-            <Edges color={technology.backgroundColor} lineWidth={2} />
+            <Edges color={backgroundColor} lineWidth={2} />
           </>
         ) : texture ? (
           // For textured tiles, use a simple colored background
           <meshStandardMaterial
-            color={technology.backgroundColor}
+            color={backgroundColor}
             roughness={0.4}
             metalness={0.1}
           />

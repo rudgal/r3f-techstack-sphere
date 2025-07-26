@@ -15,7 +15,7 @@ export interface Technology {
   abbr: string;
   categories: Category[];
   icon: string;
-  backgroundColor: string;
+  backgroundColor?: string;
   url: string;
 }
 
