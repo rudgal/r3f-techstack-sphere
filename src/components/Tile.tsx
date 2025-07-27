@@ -10,7 +10,8 @@ import { HoverLabel } from './HoverLabel';
 export const TILE_SIZE = 0.4;
 export const TILE_DEPTH = 0.04;
 const TILE_RADIUS = 0.02; // Rounded corner radius
-const TILE_HOVERED_SCALE_FACTOR = 1.3;
+const TILE_HOVER_SCALE_FACTOR = 1.4;
+const TILE_HOVER_DISTANCE = 0.1; // Distance to move away from center on hover
 const DEFAULT_BACKGROUND_COLOR = '#dee2e6';
 const TEXTURE_SIZE_RATIO = 0.85; // Texture size relative to tile size
 
@@ -34,20 +35,37 @@ export function Tile({
   const groupRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
   const [currentScale, setCurrentScale] = useState(1);
+  const [currentOffset, setCurrentOffset] = useState(0);
 
   // Determine background color once
   const backgroundColor =
     technology.backgroundColor || DEFAULT_BACKGROUND_COLOR;
 
-  // Smooth scale animation
+  // Smooth scale and position animation
   useFrame((_state, delta) => {
     if (!groupRef.current) return;
 
-    const targetScale = hovered ? TILE_HOVERED_SCALE_FACTOR : 1;
+    const targetScale = hovered ? TILE_HOVER_SCALE_FACTOR : 1;
+    const targetOffset = hovered ? TILE_HOVER_DISTANCE : 0;
+
     const newScale = THREE.MathUtils.lerp(currentScale, targetScale, delta * 8);
+    const newOffset = THREE.MathUtils.lerp(
+      currentOffset,
+      targetOffset,
+      delta * 8
+    );
+
     setCurrentScale(newScale);
+    setCurrentOffset(newOffset);
 
     groupRef.current.scale.setScalar(newScale);
+
+    // Move along the normal vector (away from center)
+    const normalizedPosition = position.clone().normalize();
+    const offsetPosition = position
+      .clone()
+      .add(normalizedPosition.multiplyScalar(newOffset));
+    groupRef.current.position.copy(offsetPosition);
   });
 
   const handleClick = () => {
@@ -108,7 +126,7 @@ export function Tile({
 
   // Use a group to better handle textures
   return (
-    <group ref={groupRef} position={position} rotation={rotation}>
+    <group ref={groupRef} rotation={rotation}>
       {/* Main tile body */}
       <RoundedBox
         args={[TILE_SIZE, TILE_SIZE, TILE_DEPTH]}
