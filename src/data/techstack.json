@@ -423,7 +423,7 @@
       "name": "BrowserStack",
       "abbr": "BS",
       "categories": ["quality"],
-      "icon": "/techstack/browserstack.png",
+      "icon": "/techstack/svg/browserstack.svg",
       "url": "https://www.browserstack.com"
     },
     {
