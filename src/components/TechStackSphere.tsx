@@ -60,6 +60,7 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
         const normal = point.clone().normalize();
         const rotation = calculateTileRotation(normal);
 
+
         mapping.set(index, tech); // Assign technology to tile position `index`
         positionMapping.set(index, normal); // Store normalized position for this tile
         rotationMapping.set(index, rotation); // Store rotation for this tile
@@ -73,7 +74,7 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
     };
   }, [visibleTechnologies, filteredFibonacciPoints]);
 
-  // Load textures for all technologies
+  // Load textures for all technologies (with atlas optimization)
   const { getTexture } = useTechnologyTextures(ALL_TECHNOLOGIES);
 
   // Calculate target sphere radius based on VISIBLE tile count
@@ -154,6 +155,7 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
 
         // Use assigned technology or fallback to original (for texture loading)
         const technologyToUse = assignedTechnology || tileData.technology;
+        
         const texture = getTexture(technologyToUse);
 
         return (
