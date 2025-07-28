@@ -21,6 +21,8 @@ const ROTATION_SPEED_TILE_HOVERED = 0.05; // Slower rotation when tile is hovere
 const SPEED_LERP_FACTOR = 3; // How quickly rotation speed changes
 const RADIUS_LERP_FACTOR = 2; // How quickly radius changes
 const RADIUS_THRESHOLD = 0.001; // Minimum change to update radius
+const POLE_EXCLUSION_PERCENTAGE_TOP = 0.2;
+const POLE_EXCLUSION_PERCENTAGE_BOTTOM = 0.5;
 
 export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
   const groupRef = useRef<THREE.Group>(null);
@@ -199,16 +201,29 @@ function fibonacciSphere(samples: number, radius: number): THREE.Vector3[] {
   const points: THREE.Vector3[] = [];
   const phi = Math.PI * (3 - Math.sqrt(5)); // golden angle
 
-  for (let i = 0; i < samples; i++) {
-    const y = 1 - (i / (samples - 1)) * 2; // y from 1 to -1
-    const radiusAtY = Math.sqrt(1 - y * y);
+  // Exclude poles based on configuration
+  const yMax = 1 - POLE_EXCLUSION_PERCENTAGE_TOP; // Top exclusion
+  const yMin = -(1 - POLE_EXCLUSION_PERCENTAGE_BOTTOM); // Bottom exclusion
 
+  // Generate more points than needed to filter out poles
+  const oversample = Math.ceil(samples * 1.5); // Generate 50% more points
+
+  for (let i = 0; i < oversample; i++) {
+    const y = 1 - (i / (oversample - 1)) * 2; // y from 1 to -1
+
+    // Skip points in the polar regions
+    if (y > yMax || y < yMin) continue;
+
+    const radiusAtY = Math.sqrt(1 - y * y);
     const theta = phi * i; // golden angle increment
 
     const x = Math.cos(theta) * radiusAtY;
     const z = Math.sin(theta) * radiusAtY;
 
     points.push(new THREE.Vector3(x * radius, y * radius, z * radius));
+
+    // Stop when we have enough valid points
+    if (points.length >= samples) break;
   }
 
   return points;
