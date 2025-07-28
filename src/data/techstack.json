@@ -139,6 +139,14 @@
       "url": "https://reactnative.dev/"
     },
     {
+      "id": "three-js",
+      "name": "Three.js",
+      "abbr": "3js",
+      "categories": ["web"],
+      "icon": "/techstack/svg/threejs.svg",
+      "url": "https://threejs.org"
+    },
+    {
       "id": "nextjs",
       "name": "Next.js",
       "abbr": "Next",
@@ -259,6 +267,14 @@
       "url": "https://www.oracle.com/de/database/technologies"
     },
     {
+      "id": "mongodb",
+      "name": "MongoDB",
+      "abbr": "Mongo",
+      "categories": ["devops"],
+      "icon": "/techstack/svg/mongodb.svg",
+      "url": "https://www.mongodb.com"
+    },
+    {
       "id": "git",
       "name": "Git",
       "abbr": "Git",
@@ -316,10 +332,10 @@
     },
     {
       "id": "maven",
-      "name": "Maven",
+      "name": "Apache Maven",
       "abbr": "Mvn",
       "categories": ["java/jvm", "devops", "tools"],
-      "icon": "/techstack/svg/apache_maven.svg",
+      "icon": "/techstack/apache_maven.png",
       "url": "https://maven.apache.org"
     },
     {
@@ -371,6 +387,14 @@
       "url": "https://cypress.io/"
     },
     {
+      "id": "playwright",
+      "name": "Playwright",
+      "abbr": "PW",
+      "categories": ["quality", "web"],
+      "icon": "/techstack/svg/playwright.svg",
+      "url": "https://playwright.dev"
+    },
+    {
       "id": "selenium",
       "name": "Selenium",
       "abbr": "Se",
@@ -399,7 +423,7 @@
       "name": "REST Assured",
       "abbr": "RA",
       "categories": ["quality", "java/jvm"],
-      "icon": "/techstack/rest_assured.png",
+      "icon": "/techstack/svg/rest-assured.svg",
       "url": "https://rest-assured.io"
     },
     {
@@ -419,6 +443,14 @@
       "url": "https://www.postman.com"
     },
     {
+      "id": "insomnia",
+      "name": "Insomnia",
+      "abbr": "Ins",
+      "categories": ["quality", "tools"],
+      "icon": "/techstack/svg/insomnia.svg",
+      "url": "https://insomnia.rest"
+    },
+    {
       "id": "browserstack",
       "name": "BrowserStack",
       "abbr": "BS",
@@ -431,7 +463,7 @@
       "name": "SonarQube",
       "abbr": "SQ",
       "categories": ["quality", "devops"],
-      "icon": "/techstack/sonarqube.png",
+      "icon": "/techstack/svg/sonarqube.svg",
       "url": "https://www.sonarqube.org"
     },
     {
@@ -449,6 +481,14 @@
       "categories": ["quality", "devops"],
       "icon": "/techstack/svg/dynatrace.svg",
       "url": "https://www.dynatrace.com/"
+    },
+    {
+      "id": "sentry",
+      "name": "Sentry",
+      "abbr": "Sentry",
+      "categories": ["quality", "devops"],
+      "icon": "/techstack/svg/sentry.svg",
+      "url": "https://sentry.io"
     },
     {
       "id": "splunk",
@@ -527,7 +567,7 @@
       "name": "Contao",
       "abbr": "Cont",
       "categories": ["web"],
-      "icon": "/techstack/svg/contao.svg",
+      "icon": "/techstack/contao.png",
       "url": "https://contao.org"
     }
   ]
