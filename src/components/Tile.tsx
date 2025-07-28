@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { type ThreeEvent, useFrame } from '@react-three/fiber';
 import { Edges, RoundedBox } from '@react-three/drei';
 import type { Texture } from 'three';
@@ -16,20 +16,24 @@ const DEFAULT_BACKGROUND_COLOR = '#dee2e6';
 const TEXTURE_SIZE_RATIO = 0.85; // Texture size relative to tile size
 
 interface TileProps {
-  position: THREE.Vector3;
   rotation: THREE.Euler;
   technology: Technology;
   texture?: Texture | null;
   isBlank?: boolean;
+  visible?: boolean;
+  sphereRadius?: number; // For dynamic sphere radius
+  normalizedPosition?: THREE.Vector3; // For base position calculation
   onHover?: (isHovered: boolean) => void;
 }
 
 export function Tile({
-  position,
   rotation,
   technology,
   texture,
   isBlank = false,
+  visible = true,
+  sphereRadius,
+  normalizedPosition,
   onHover,
 }: TileProps) {
   const groupRef = useRef<THREE.Group>(null);
@@ -40,6 +44,19 @@ export function Tile({
   // Determine background color once
   const backgroundColor =
     technology.backgroundColor || DEFAULT_BACKGROUND_COLOR;
+
+  // Calculate target position based on sphere radius and normalized position
+  const targetPosition = useMemo(() => {
+    // Calculate position from normalized position and sphere radius
+    if (normalizedPosition && sphereRadius !== undefined) {
+      return normalizedPosition
+        .clone()
+        .multiplyScalar(sphereRadius + TILE_DEPTH / 2);
+    }
+
+    // Fallback to origin if no position data
+    return new THREE.Vector3(0, 0, 0);
+  }, [normalizedPosition, sphereRadius]);
 
   // Smooth scale and position animation
   useFrame((_state, delta) => {
@@ -60,12 +77,14 @@ export function Tile({
 
     groupRef.current.scale.setScalar(newScale);
 
-    // Move along the normal vector (away from center)
-    const normalizedPosition = position.clone().normalize();
-    const offsetPosition = position
-      .clone()
-      .add(normalizedPosition.multiplyScalar(newOffset));
-    groupRef.current.position.copy(offsetPosition);
+    // Calculate final position with hover offset applied to the base position
+    const normalizedDirection = targetPosition.clone().normalize();
+    const finalPosition = targetPosition.clone().add(
+      normalizedDirection.multiplyScalar(newOffset)
+    );
+
+    // Set position (smoothly lerp to new position when sphere radius changes)
+    groupRef.current.position.lerp(finalPosition, delta * 5);
   });
 
   const handleClick = () => {
@@ -126,7 +145,7 @@ export function Tile({
 
   // Use a group to better handle textures
   return (
-    <group ref={groupRef} rotation={rotation}>
+    <group ref={groupRef} rotation={rotation} visible={visible}>
       {/* Main tile body */}
       <RoundedBox
         args={[TILE_SIZE, TILE_SIZE, TILE_DEPTH]}

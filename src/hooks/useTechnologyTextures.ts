@@ -2,7 +2,7 @@ import { useTexture } from '@react-three/drei';
 import { useMemo } from 'react';
 import * as THREE from 'three';
 import type { Texture } from 'three';
-import type { Technology } from '../types/techstack';
+import type { Technology } from '../types/techstack.ts';
 
 /**
  * Hook to load textures for technology logos with fallback handling
