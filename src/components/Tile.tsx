@@ -105,33 +105,6 @@ export function Tile({
     document.body.style.cursor = 'auto';
   };
 
-  const renderMaterial = () => {
-    // Use texture if available, otherwise fall back to color
-    if (texture) {
-      return (
-        <meshStandardMaterial
-          map={texture}
-          emissive={hovered ? backgroundColor : 'black'}
-          emissiveIntensity={hovered ? 0.2 : 0}
-          roughness={0.3}
-          metalness={0.0}
-          transparent={true}
-        />
-      );
-    }
-
-    // Fallback to color-based material
-    return (
-      <meshStandardMaterial
-        color={backgroundColor}
-        emissive={hovered ? backgroundColor : 'black'}
-        emissiveIntensity={hovered ? 0.3 : 0}
-        roughness={0.4}
-        metalness={0.1}
-      />
-    );
-  };
-
   // Use a group to better handle textures
   return (
     <group ref={groupRef} rotation={rotation} visible={visible}>
@@ -146,17 +119,11 @@ export function Tile({
         castShadow
         receiveShadow
       >
-        {texture ? (
-          // For textured tiles, use a simple colored background
-          <meshStandardMaterial
-            color={backgroundColor}
-            roughness={0.4}
-            metalness={0.1}
-          />
-        ) : (
-          // Original material for non-textured tiles
-          renderMaterial()
-        )}
+        <meshStandardMaterial
+          color={backgroundColor}
+          roughness={0.4}
+          metalness={0.1}
+        />
       </RoundedBox>
 
       {/* Texture overlay - only render if we have a texture */}
