@@ -1,9 +1,9 @@
-import { OrbitControls } from '@react-three/drei';
-import { Html } from '@react-three/drei';
+import { Helper, Html, OrbitControls } from '@react-three/drei';
 import { TechStackSphere } from './components/TechStackSphere';
 import { CategoryFilter } from './components/CategoryFilter';
 import type { Category } from './types/techstack';
-import { useState, Suspense } from 'react';
+import { Suspense, useState } from 'react';
+import { DirectionalLightHelper } from 'three';
 
 export default function Experience() {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
@@ -29,7 +29,9 @@ export default function Experience() {
 
       <OrbitControls />
 
-      <directionalLight position={[1, 2, 3]} intensity={4.5} />
+      <directionalLight position={[1, 2, 3]} intensity={4.5}>
+        <Helper type={DirectionalLightHelper} args={[1]} />
+      </directionalLight>
       <ambientLight intensity={1.5} />
 
       <Suspense fallback={null}>
