@@ -1,6 +1,6 @@
-import { useRef, useState, useMemo } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { type ThreeEvent, useFrame } from '@react-three/fiber';
-import { Edges, RoundedBox } from '@react-three/drei';
+import { RoundedBox } from '@react-three/drei';
 import type { Texture } from 'three';
 import * as THREE from 'three';
 import type { Technology } from '../types/techstack';
@@ -19,7 +19,6 @@ interface TileProps {
   rotation: THREE.Euler;
   technology: Technology;
   texture?: Texture | null;
-  isBlank?: boolean;
   visible?: boolean;
   sphereRadius?: number; // For dynamic sphere radius
   normalizedPosition?: THREE.Vector3; // For base position calculation
@@ -30,7 +29,6 @@ export function Tile({
   rotation,
   technology,
   texture,
-  isBlank = false,
   visible = true,
   sphereRadius,
   normalizedPosition,
@@ -79,16 +77,16 @@ export function Tile({
 
     // Calculate final position with hover offset applied to the base position
     const normalizedDirection = targetPosition.clone().normalize();
-    const finalPosition = targetPosition.clone().add(
-      normalizedDirection.multiplyScalar(newOffset)
-    );
+    const finalPosition = targetPosition
+      .clone()
+      .add(normalizedDirection.multiplyScalar(newOffset));
 
     // Set position (smoothly lerp to new position when sphere radius changes)
     groupRef.current.position.lerp(finalPosition, delta * 5);
   });
 
   const handleClick = () => {
-    if (!isBlank && technology.url) {
+    if (technology.url) {
       window.open(technology.url, '_blank', 'noopener,noreferrer');
     }
   };
@@ -97,7 +95,7 @@ export function Tile({
     e.stopPropagation();
     setHovered(true);
     onHover?.(true);
-    document.body.style.cursor = isBlank ? 'default' : 'pointer';
+    document.body.style.cursor = 'pointer';
   };
 
   const handlePointerOut = (e: ThreeEvent<PointerEvent>) => {
@@ -108,15 +106,6 @@ export function Tile({
   };
 
   const renderMaterial = () => {
-    if (isBlank) {
-      return (
-        <>
-          <meshBasicMaterial transparent opacity={0} />
-          <Edges color={backgroundColor} lineWidth={2} />
-        </>
-      );
-    }
-
     // Use texture if available, otherwise fall back to color
     if (texture) {
       return (
@@ -157,12 +146,7 @@ export function Tile({
         castShadow
         receiveShadow
       >
-        {isBlank ? (
-          <>
-            <meshBasicMaterial transparent opacity={0} />
-            <Edges color={backgroundColor} lineWidth={2} />
-          </>
-        ) : texture ? (
+        {texture ? (
           // For textured tiles, use a simple colored background
           <meshStandardMaterial
             color={backgroundColor}
@@ -175,8 +159,8 @@ export function Tile({
         )}
       </RoundedBox>
 
-      {/* Texture overlay - only render if we have a texture and not blank */}
-      {texture && !isBlank && (
+      {/* Texture overlay - only render if we have a texture */}
+      {texture && (
         <mesh position={[0, 0, TILE_DEPTH / 2 + 0.001]}>
           <planeGeometry args={calculateTextureDimensions(texture)} />
           <meshStandardMaterial
@@ -194,7 +178,7 @@ export function Tile({
       {/* Hover label */}
       <HoverLabel
         label={technology.name}
-        visible={hovered && !isBlank}
+        visible={hovered}
         position={[0, TILE_SIZE * 0.7, 0]}
       />
     </group>
