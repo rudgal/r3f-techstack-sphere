@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "npm run build:atlas && tsc -b && vite build",
     "build:atlas": "node scripts/generateTextureAtlas.js",
     "lint": "eslint .",
