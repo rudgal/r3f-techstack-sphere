@@ -38,6 +38,7 @@ function App() {
         {/* Three.js Canvas */}
         <Canvas
           className="three-canvas"
+          shadows
           // orthographic
           // flat
           dpr={[1, 2]}
@@ -51,13 +52,15 @@ function App() {
             toneMapping: THREE.CineonToneMapping,
             outputColorSpace: THREE.SRGBColorSpace,
           }}
+          onCreated={({ gl }) => {
+            gl.shadowMap.type = THREE.VSMShadowMap;
+          }}
           camera={{
             fov: 55,
             // zoom: 100,
             near: 0.1,
             far: 200,
             position: [0, 0, 4.5],
-            // position: [0, 0, 4.5],
           }}
         >
           <Perf

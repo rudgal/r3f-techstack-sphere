@@ -1,24 +1,54 @@
-import { Helper, OrbitControls, PresentationControls } from '@react-three/drei';
+import {
+  OrbitControls,
+  PresentationControls,
+  useHelper,
+} from '@react-three/drei';
 import { TechStackSphere } from './components/TechStackSphere';
+import { Suspense, useRef } from 'react';
 import type { Category } from './types/techstack';
-import { Suspense } from 'react';
-import { DirectionalLightHelper } from 'three';
+import type { DirectionalLight, OrthographicCamera } from 'three';
+import { CameraHelper, DirectionalLightHelper } from 'three';
 
 interface ExperienceProps {
   selectedCategory: Category | null;
   viewMode: 'sphere' | 'flat';
+  showHelpers?: boolean;
 }
 
 export default function Experience({
   selectedCategory,
   viewMode,
+  showHelpers = false,
 }: ExperienceProps) {
+  const lightRef = useRef<DirectionalLight>(null!);
+  const shadowCameraRef = useRef<OrthographicCamera>(null!);
+
+  useHelper(showHelpers ? lightRef : null, DirectionalLightHelper, 1);
+  useHelper(showHelpers ? shadowCameraRef : null, CameraHelper);
+
   return (
     <>
-      <directionalLight position={[1, 2, 3]} intensity={4.5}>
-        <Helper type={DirectionalLightHelper} args={[1]} />
+      <directionalLight
+        ref={lightRef}
+        position={[6, 2, 4]}
+        intensity={4}
+        castShadow
+        shadow-mapSize={[512, 512]}
+        shadow-radius={8}
+        shadow-blurSamples={10}
+      >
+        <orthographicCamera
+          ref={shadowCameraRef}
+          attach="shadow-camera"
+          near={5.5}
+          far={9.5}
+          left={-1.5}
+          right={1.5}
+          top={1.5}
+          bottom={-1.5}
+        />
       </directionalLight>
-      <ambientLight intensity={1.5} />
+      <ambientLight intensity={4} />
 
       <OrbitControls enabled={false} />
 

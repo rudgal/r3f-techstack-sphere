@@ -14,6 +14,8 @@ const TILE_HOVER_SCALE_FACTOR = 1.4;
 const TILE_HOVER_DISTANCE = 0.1; // Distance to move away from center on hover
 const DEFAULT_BACKGROUND_COLOR = '#dee2e6';
 const TEXTURE_SIZE_RATIO = 0.85; // Texture size relative to tile size
+const TEXTURE_ROUGHNESS = 0.2;
+const TEXTURE_METALNESS = 0.3;
 
 interface TileProps {
   rotation: THREE.Euler;
@@ -137,21 +139,25 @@ export function Tile({
       >
         <meshStandardMaterial
           color={backgroundColor}
-          roughness={0.4}
-          metalness={0.1}
+          roughness={TEXTURE_ROUGHNESS}
+          metalness={TEXTURE_METALNESS}
         />
       </RoundedBox>
 
       {/* Texture overlay - only render if we have a texture */}
       {texture && (
-        <mesh position={[0, 0, TILE_DEPTH / 2 + 0.001]}>
+        <mesh
+          position={[0, 0, TILE_DEPTH / 2 + 0.001]}
+          // receiveShadow
+          // castShadow
+        >
           <planeGeometry args={calculateTextureDimensions(texture)} />
           <meshStandardMaterial
             map={texture}
             transparent={true}
             // alphaTest={0.1}
-            roughness={0.4}
-            metalness={0.1}
+            roughness={TEXTURE_ROUGHNESS}
+            metalness={TEXTURE_METALNESS}
             // emissive={backgroundColor}
             // emissiveIntensity={hovered ? 0.2 : 0}
           />

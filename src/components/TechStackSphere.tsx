@@ -17,7 +17,7 @@ interface TechStackSphereProps {
 const MIN_TILE_SEPARATION = 0.3; // Minimum distance between tile centers
 const BASE_SPHERE_RADIUS = 0.3; // Minimum sphere radius
 const MAX_SPHERE_RADIUS = 3.0; // Maximum sphere radius to prevent excessive size
-const ROTATION_SPEED = 0.2; // Radians per second
+const ROTATION_SPEED = 0.25; // Radians per second
 const ROTATION_SPEED_TILE_HOVERED = 0.05; // Slower rotation when tile is hovered
 const SPEED_LERP_FACTOR = 3; // How quickly rotation speed changes
 const RADIUS_LERP_FACTOR = 2; // How quickly radius changes
