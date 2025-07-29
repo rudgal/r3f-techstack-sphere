@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import Experience from './Experience';
 import { Perf } from 'r3f-perf';
 import { StrictMode } from 'react';
+import { TailwindBreakpointsHelper } from './components/TailwindBreakpointsHelper.tsx';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Perf showGraph={true} chart={{ hz: 60, length: 240 }} />
         <Experience />
       </Canvas>
+      {import.meta.env.DEV && <TailwindBreakpointsHelper />}
     </StrictMode>
   );
 }
