@@ -31,7 +31,11 @@ function App() {
           position: [3, 2, 6],
         }}
       >
-        <Perf showGraph={true} chart={{ hz: 60, length: 240 }} />
+        <Perf
+          showGraph={true}
+          chart={{ hz: 60, length: 240 }}
+          position="top-left"
+        />
         <Experience />
       </Canvas>
       {import.meta.env.DEV && <TailwindBreakpointsHelper />}
