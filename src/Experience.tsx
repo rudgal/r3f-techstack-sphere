@@ -8,30 +8,31 @@ import { Suspense, useRef } from 'react';
 import type { Category } from './types/techstack';
 import type { DirectionalLight, OrthographicCamera } from 'three';
 import { CameraHelper, DirectionalLightHelper } from 'three';
+import { useAppConfig } from './hooks/useAppConfig';
 
 interface ExperienceProps {
   selectedCategory: Category | null;
   viewMode: 'sphere' | 'flat';
-  showHelpers?: boolean;
 }
 
 export default function Experience({
   selectedCategory,
   viewMode,
-  showHelpers = false,
 }: ExperienceProps) {
+  const { scene, lighting } = useAppConfig();
   const lightRef = useRef<DirectionalLight>(null!);
   const shadowCameraRef = useRef<OrthographicCamera>(null!);
 
-  useHelper(showHelpers ? lightRef : null, DirectionalLightHelper, 1);
-  useHelper(showHelpers ? shadowCameraRef : null, CameraHelper);
+  useHelper(scene.showHelpers ? lightRef : null, DirectionalLightHelper, 1);
+  useHelper(scene.showHelpers ? shadowCameraRef : null, CameraHelper);
 
   return (
     <>
       <directionalLight
         ref={lightRef}
-        position={[6, 2, 4]}
-        intensity={4}
+        position={lighting.directionalLightPosition}
+        intensity={lighting.directionalLightIntensity}
+        color={lighting.directionalLightColor}
         castShadow
         shadow-mapSize={[512, 512]}
         shadow-radius={8}
@@ -48,14 +49,17 @@ export default function Experience({
           bottom={-1.5}
         />
       </directionalLight>
-      <ambientLight intensity={4} />
+      <ambientLight 
+        intensity={lighting.ambientLightIntensity} 
+        color={lighting.ambientLightColor} 
+      />
 
-      <OrbitControls enabled={false} />
+      <OrbitControls enabled={scene.enableOrbitControls} />
 
       <Suspense fallback={null}>
         <PresentationControls
           // key={controlsKey}
-          enabled={true}
+          enabled={!scene.enableOrbitControls}
           global={true}
           cursor={false}
           snap={viewMode === 'flat'}

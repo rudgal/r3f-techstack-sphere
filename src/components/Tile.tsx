@@ -5,17 +5,11 @@ import type { Texture } from 'three';
 import * as THREE from 'three';
 import type { Technology } from '../types/techstack';
 import { HoverLabel } from './HoverLabel';
+import { useAppConfig } from '../hooks/useAppConfig';
+import type { TileConfig } from '../constants/appConfig';
 
-// Tile dimensions
+// Export TILE_SIZE for backwards compatibility (used by TechStackSphere)
 export const TILE_SIZE = 0.4;
-export const TILE_DEPTH = 0.04;
-const TILE_RADIUS = 0.02; // Rounded corner radius
-const TILE_HOVER_SCALE_FACTOR = 1.4;
-const TILE_HOVER_DISTANCE = 0.1; // Distance to move away from center on hover
-const DEFAULT_BACKGROUND_COLOR = '#dee2e6';
-const TEXTURE_SIZE_RATIO = 0.85; // Texture size relative to tile size
-const TEXTURE_ROUGHNESS = 0.2;
-const TEXTURE_METALNESS = 0.3;
 
 interface TileProps {
   rotation: THREE.Euler;
@@ -38,6 +32,7 @@ export function Tile({
   onHover,
   viewMode = 'sphere',
 }: TileProps) {
+  const { tile, animation } = useAppConfig();
   const groupRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
   const [currentScale, setCurrentScale] = useState(1);
@@ -45,7 +40,7 @@ export function Tile({
 
   // Determine background color once
   const backgroundColor =
-    technology.backgroundColor || DEFAULT_BACKGROUND_COLOR;
+    technology.backgroundColor || tile.defaultBackgroundColor;
 
   // Calculate target position based on view mode
   const targetPosition = useMemo(() => {
@@ -57,26 +52,26 @@ export function Tile({
       if (normalizedPosition && sphereRadius !== undefined) {
         return normalizedPosition
           .clone()
-          .multiplyScalar(sphereRadius + TILE_DEPTH / 2);
+          .multiplyScalar(sphereRadius + tile.depth / 2);
       }
     }
 
     // Fallback to origin if no position data
     return new THREE.Vector3(0, 0, 0);
-  }, [normalizedPosition, sphereRadius, viewMode]);
+  }, [normalizedPosition, sphereRadius, viewMode, tile.depth]);
 
   // Smooth scale and position animation
   useFrame((_state, delta) => {
     if (!groupRef.current) return;
 
-    const targetScale = hovered ? TILE_HOVER_SCALE_FACTOR : 1;
-    const targetOffset = hovered ? TILE_HOVER_DISTANCE : 0;
+    const targetScale = hovered ? tile.hoverScaleFactor : 1;
+    const targetOffset = hovered ? tile.hoverDistance : 0;
 
-    const newScale = THREE.MathUtils.lerp(currentScale, targetScale, delta * 8);
+    const newScale = THREE.MathUtils.lerp(currentScale, targetScale, delta * animation.lerpSpeed);
     const newOffset = THREE.MathUtils.lerp(
       currentOffset,
       targetOffset,
-      delta * 8
+      delta * animation.lerpSpeed
     );
 
     setCurrentScale(newScale);
@@ -100,7 +95,7 @@ export function Tile({
     }
 
     // Set position (smoothly lerp to new position when sphere radius changes)
-    groupRef.current.position.lerp(finalPosition, delta * 5);
+    groupRef.current.position.lerp(finalPosition, delta * animation.positionLerpSpeed);
   });
 
   const handleClick = () => {
@@ -128,8 +123,8 @@ export function Tile({
     <group ref={groupRef} rotation={rotation} visible={visible}>
       {/* Main tile body */}
       <RoundedBox
-        args={[TILE_SIZE, TILE_SIZE, TILE_DEPTH]}
-        radius={TILE_RADIUS}
+        args={[tile.size, tile.size, tile.depth]}
+        radius={tile.radius}
         smoothness={4}
         onPointerOver={handlePointerOver}
         onPointerOut={handlePointerOut}
@@ -139,25 +134,25 @@ export function Tile({
       >
         <meshStandardMaterial
           color={backgroundColor}
-          roughness={TEXTURE_ROUGHNESS}
-          metalness={TEXTURE_METALNESS}
+          roughness={tile.textureRoughness}
+          metalness={tile.textureMetalness}
         />
       </RoundedBox>
 
       {/* Texture overlay - only render if we have a texture */}
       {texture && (
         <mesh
-          position={[0, 0, TILE_DEPTH / 2 + 0.001]}
+          position={[0, 0, tile.depth / 2 + 0.001]}
           // receiveShadow
           // castShadow
         >
-          <planeGeometry args={calculateTextureDimensions(texture)} />
+          <planeGeometry args={calculateTextureDimensions(texture, tile)} />
           <meshStandardMaterial
             map={texture}
             transparent={true}
             // alphaTest={0.1}
-            roughness={TEXTURE_ROUGHNESS}
-            metalness={TEXTURE_METALNESS}
+            roughness={tile.textureRoughness}
+            metalness={tile.textureMetalness}
             // emissive={backgroundColor}
             // emissiveIntensity={hovered ? 0.2 : 0}
           />
@@ -168,7 +163,7 @@ export function Tile({
       <HoverLabel
         label={technology.name}
         visible={hovered}
-        position={[0, TILE_SIZE * 0.7, 0]}
+        position={[0, tile.size * 0.7, 0]}
       />
     </group>
   );
@@ -178,12 +173,12 @@ export function Tile({
  * Calculate plane dimensions to maintain texture aspect ratio
  * while fitting within the tile bounds (similar to CSS object-fit: contain)
  */
-function calculateTextureDimensions(texture: Texture): [number, number] {
+function calculateTextureDimensions(texture: Texture, tile: TileConfig): [number, number] {
   if (!texture.image)
-    return [TILE_SIZE * TEXTURE_SIZE_RATIO, TILE_SIZE * TEXTURE_SIZE_RATIO];
+    return [tile.size * tile.textureSizeRatio, tile.size * tile.textureSizeRatio];
 
   const imageAspect = texture.image.width / texture.image.height;
-  const maxSize = TILE_SIZE * TEXTURE_SIZE_RATIO;
+  const maxSize = tile.size * tile.textureSizeRatio;
 
   let width, height;
   if (imageAspect > 1) {

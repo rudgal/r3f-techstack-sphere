@@ -1,10 +1,12 @@
 import { useCallback, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { Tile, TILE_SIZE } from './Tile';
+import { Tile } from './Tile';
 import { useTechnologyTextures } from '../hooks/useTechnologyTextures';
 import type { Category, Technology } from '../types/techstack';
 import techStackDataRaw from '../data/techstack.json';
+import { useAppConfig } from '../hooks/useAppConfig';
+import type { SphereConfig } from '../constants/appConfig';
 
 const ALL_TECHNOLOGIES = techStackDataRaw.technologies as Technology[];
 
@@ -13,28 +15,15 @@ interface TechStackSphereProps {
   viewMode: 'sphere' | 'flat';
 }
 
-// Configuration constants
-const MIN_TILE_SEPARATION = 0.3; // Minimum distance between tile centers
-const BASE_SPHERE_RADIUS = 0.3; // Minimum sphere radius
-const MAX_SPHERE_RADIUS = 3.0; // Maximum sphere radius to prevent excessive size
-const ROTATION_SPEED = 0.25; // Radians per second
-const ROTATION_SPEED_TILE_HOVERED = 0.05; // Slower rotation when tile is hovered
-const SPEED_LERP_FACTOR = 3; // How quickly rotation speed changes
-const RADIUS_LERP_FACTOR = 2; // How quickly radius changes
-const RADIUS_THRESHOLD = 0.001; // Minimum change to update radius
-const POLE_EXCLUSION_PERCENTAGE_TOP = 0.3;
-const POLE_EXCLUSION_PERCENTAGE_BOTTOM = 0.3;
-const FLAT_WALL_SPACING = 0.5; // Spacing between tiles in flat view
-const FLAT_WALL_Z = 0; // Z position of the wall
-
 export function TechStackSphere({
   selectedCategory,
   viewMode,
 }: TechStackSphereProps) {
+  const { sphere, flatView, tile } = useAppConfig();
   const groupRef = useRef<THREE.Group>(null);
   const hoveredTileIndexRef = useRef<number | null>(null);
-  const currentSpeedRef = useRef(ROTATION_SPEED);
-  const currentRadiusRef = useRef(BASE_SPHERE_RADIUS);
+  const currentSpeedRef = useRef(sphere.rotationSpeed);
+  const currentRadiusRef = useRef(sphere.baseSphereRadius);
 
   // Filter technologies for sphere size calculation only
   const visibleTechnologies: Technology[] = useMemo(() => {
@@ -48,8 +37,8 @@ export function TechStackSphere({
 
   // Calculate Fibonacci points for the VISIBLE technology count (proper sphere distribution)
   const filteredFibonacciPoints = useMemo(() => {
-    return fibonacciSphere(visibleTechnologies.length, 1);
-  }, [visibleTechnologies.length]);
+    return fibonacciSphere(visibleTechnologies.length, 1, sphere);
+  }, [visibleTechnologies.length, sphere]);
 
   // Calculate flat wall positions for visible technologies
   const flatWallPositions = useMemo(() => {
@@ -63,14 +52,14 @@ export function TechStackSphere({
       const totalRows = Math.ceil(visibleTechnologies.length / cols);
 
       // Center the grid
-      const x = (col - (totalCols - 1) / 2) * FLAT_WALL_SPACING;
-      const y = (row - (totalRows - 1) / 2) * FLAT_WALL_SPACING * -1; // Negative to flip Y
+      const x = (col - (totalCols - 1) / 2) * flatView.wallSpacing;
+      const y = (row - (totalRows - 1) / 2) * flatView.wallSpacing * -1; // Negative to flip Y
 
-      positions.push(new THREE.Vector3(x, y, FLAT_WALL_Z));
+      positions.push(new THREE.Vector3(x, y, flatView.wallZ));
     });
 
     return positions;
-  }, [visibleTechnologies.length]);
+  }, [visibleTechnologies, flatView.wallSpacing, flatView.wallZ]);
 
   // Create content mapping: assign visible technologies to properly distributed positions
   const tileContentMapping = useMemo(() => {
@@ -127,12 +116,12 @@ export function TechStackSphere({
 
   // Calculate target sphere radius based on VISIBLE tile count
   const targetRadius = useMemo(() => {
-    return calculateSphereRadius(visibleTechnologies.length, TILE_SIZE);
-  }, [visibleTechnologies.length]);
+    return calculateSphereRadius(visibleTechnologies.length, tile.size, sphere);
+  }, [visibleTechnologies.length, tile.size, sphere]);
 
   // Generate tile data for ALL technologies (positions will be calculated later per tile)
   const allTilesData = useMemo(() => {
-    const points = fibonacciSphere(ALL_TECHNOLOGIES.length, 1); // Use unit sphere for base calculations
+    const points = fibonacciSphere(ALL_TECHNOLOGIES.length, 1, sphere); // Use unit sphere for base calculations
 
     return points.map((point, index) => {
       const normal = point.clone().normalize();
@@ -145,19 +134,19 @@ export function TechStackSphere({
         index, // Store index for stable positioning
       };
     });
-  }, []); // Only calculate once - never changes!
+  }, [sphere]); // Depend on sphere config for pole exclusion settings
 
   // Animation helpers
   const animateRotationSpeed = (delta: number) => {
     const targetSpeed =
       hoveredTileIndexRef.current !== null
-        ? ROTATION_SPEED_TILE_HOVERED
-        : ROTATION_SPEED;
+        ? sphere.rotationSpeedTileHovered
+        : sphere.rotationSpeed;
 
     currentSpeedRef.current = THREE.MathUtils.lerp(
       currentSpeedRef.current,
       targetSpeed,
-      delta * SPEED_LERP_FACTOR
+      delta * sphere.speedLerpFactor
     );
   };
 
@@ -166,10 +155,10 @@ export function TechStackSphere({
     const newRadius = THREE.MathUtils.lerp(
       currentRadius,
       targetRadius,
-      delta * RADIUS_LERP_FACTOR
+      delta * sphere.radiusLerpFactor
     );
 
-    if (Math.abs(newRadius - currentRadius) > RADIUS_THRESHOLD) {
+    if (Math.abs(newRadius - currentRadius) > sphere.radiusThreshold) {
       currentRadiusRef.current = newRadius;
     }
   };
@@ -235,12 +224,12 @@ export function TechStackSphere({
 }
 
 // Utility functions
-function calculateSphereRadius(tileCount: number, tileSize: number): number {
-  if (tileCount === 0) return BASE_SPHERE_RADIUS;
-  if (tileCount === 1) return BASE_SPHERE_RADIUS;
+function calculateSphereRadius(tileCount: number, tileSize: number, sphereConfig: SphereConfig): number {
+  if (tileCount === 0) return sphereConfig.baseSphereRadius;
+  if (tileCount === 1) return sphereConfig.baseSphereRadius;
 
   // Calculate required surface area per tile (including separation)
-  const areaPerTile = Math.pow(tileSize + MIN_TILE_SEPARATION, 2);
+  const areaPerTile = Math.pow(tileSize + sphereConfig.minTileSeparation, 2);
   const totalRequiredArea = tileCount * areaPerTile;
 
   // Calculate radius from surface area: Surface Area = 4πr²
@@ -248,21 +237,21 @@ function calculateSphereRadius(tileCount: number, tileSize: number): number {
 
   // Apply reasonable bounds
   return Math.max(
-    BASE_SPHERE_RADIUS,
-    Math.min(MAX_SPHERE_RADIUS, calculatedRadius)
+    sphereConfig.baseSphereRadius,
+    Math.min(sphereConfig.maxSphereRadius, calculatedRadius)
   );
 }
 
-function fibonacciSphere(samples: number, radius: number): THREE.Vector3[] {
+function fibonacciSphere(samples: number, radius: number, sphereConfig?: SphereConfig): THREE.Vector3[] {
   if (samples === 0) return [];
   if (samples === 1) return [new THREE.Vector3(0, radius, 0)];
 
   const points: THREE.Vector3[] = [];
   const phi = Math.PI * (3 - Math.sqrt(5)); // golden angle
 
-  // Exclude poles based on configuration
-  const yMax = 1 - POLE_EXCLUSION_PERCENTAGE_TOP; // Top exclusion
-  const yMin = -(1 - POLE_EXCLUSION_PERCENTAGE_BOTTOM); // Bottom exclusion
+  // Exclude poles based on configuration (only if config is provided)
+  const yMax = sphereConfig ? 1 - sphereConfig.poleExclusionPercentageTop : 0.7; // Top exclusion
+  const yMin = sphereConfig ? -(1 - sphereConfig.poleExclusionPercentageBottom) : -0.7; // Bottom exclusion
 
   // Generate more points than needed to filter out poles
   const oversample = Math.ceil(samples * 1.5); // Generate 50% more points
