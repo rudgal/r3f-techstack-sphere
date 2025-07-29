@@ -10,10 +10,11 @@ const ALL_TECHNOLOGIES = techStackDataRaw.technologies as Technology[];
 
 interface TechStackSphereProps {
   selectedCategory: Category | null;
+  viewMode: 'sphere' | 'flat';
 }
 
 // Configuration constants
-const MIN_TILE_SEPARATION = 0.6; // Minimum distance between tile centers
+const MIN_TILE_SEPARATION = 0.3; // Minimum distance between tile centers
 const BASE_SPHERE_RADIUS = 0.3; // Minimum sphere radius
 const MAX_SPHERE_RADIUS = 3.0; // Maximum sphere radius to prevent excessive size
 const ROTATION_SPEED = 0.2; // Radians per second
@@ -21,10 +22,15 @@ const ROTATION_SPEED_TILE_HOVERED = 0.05; // Slower rotation when tile is hovere
 const SPEED_LERP_FACTOR = 3; // How quickly rotation speed changes
 const RADIUS_LERP_FACTOR = 2; // How quickly radius changes
 const RADIUS_THRESHOLD = 0.001; // Minimum change to update radius
-const POLE_EXCLUSION_PERCENTAGE_TOP = 0.2;
-const POLE_EXCLUSION_PERCENTAGE_BOTTOM = 0.5;
+const POLE_EXCLUSION_PERCENTAGE_TOP = 0.3;
+const POLE_EXCLUSION_PERCENTAGE_BOTTOM = 0.3;
+const FLAT_WALL_SPACING = 0.5; // Spacing between tiles in flat view
+const FLAT_WALL_Z = 0; // Z position of the wall
 
-export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
+export function TechStackSphere({
+  selectedCategory,
+  viewMode,
+}: TechStackSphereProps) {
   const groupRef = useRef<THREE.Group>(null);
   const hoveredTileIndexRef = useRef<number | null>(null);
   const currentSpeedRef = useRef(ROTATION_SPEED);
@@ -45,34 +51,76 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
     return fibonacciSphere(visibleTechnologies.length, 1);
   }, [visibleTechnologies.length]);
 
+  // Calculate flat wall positions for visible technologies
+  const flatWallPositions = useMemo(() => {
+    const positions: THREE.Vector3[] = [];
+    const cols = Math.ceil(Math.sqrt(visibleTechnologies.length * 1.5)); // More columns than rows for better aspect ratio
+
+    visibleTechnologies.forEach((_, index) => {
+      const col = index % cols;
+      const row = Math.floor(index / cols);
+      const totalCols = Math.min(cols, visibleTechnologies.length);
+      const totalRows = Math.ceil(visibleTechnologies.length / cols);
+
+      // Center the grid
+      const x = (col - (totalCols - 1) / 2) * FLAT_WALL_SPACING;
+      const y = (row - (totalRows - 1) / 2) * FLAT_WALL_SPACING * -1; // Negative to flip Y
+
+      positions.push(new THREE.Vector3(x, y, FLAT_WALL_Z));
+    });
+
+    return positions;
+  }, [visibleTechnologies.length]);
+
   // Create content mapping: assign visible technologies to properly distributed positions
   const tileContentMapping = useMemo(() => {
     const mapping = new Map<number, Technology>();
     const positionMapping = new Map<number, THREE.Vector3>(); // Map tile index to new position
     const rotationMapping = new Map<number, THREE.Euler>(); // Map tile index to new rotation
 
-    visibleTechnologies.forEach((tech, index) => {
-      if (
-        index < ALL_TECHNOLOGIES.length &&
-        index < filteredFibonacciPoints.length
-      ) {
-        const point = filteredFibonacciPoints[index];
-        const normal = point.clone().normalize();
-        const rotation = calculateTileRotation(normal);
+    if (viewMode === 'sphere') {
+      visibleTechnologies.forEach((tech, index) => {
+        if (
+          index < ALL_TECHNOLOGIES.length &&
+          index < filteredFibonacciPoints.length
+        ) {
+          const point = filteredFibonacciPoints[index];
+          const normal = point.clone().normalize();
+          const rotation = calculateTileRotation(normal);
 
+          mapping.set(index, tech); // Assign technology to tile position `index`
+          positionMapping.set(index, normal); // Store normalized position for this tile
+          rotationMapping.set(index, rotation); // Store rotation for this tile
+        }
+      });
+    } else {
+      // Flat view mapping
+      visibleTechnologies.forEach((tech, index) => {
+        if (
+          index < ALL_TECHNOLOGIES.length &&
+          index < flatWallPositions.length
+        ) {
+          const position = flatWallPositions[index];
+          const rotation = new THREE.Euler(0, 0, 0); // No rotation for flat view
 
-        mapping.set(index, tech); // Assign technology to tile position `index`
-        positionMapping.set(index, normal); // Store normalized position for this tile
-        rotationMapping.set(index, rotation); // Store rotation for this tile
-      }
-    });
+          mapping.set(index, tech);
+          positionMapping.set(index, position); // Store flat position
+          rotationMapping.set(index, rotation);
+        }
+      });
+    }
 
     return {
       technologyMapping: mapping,
       positionMapping,
       rotationMapping,
     };
-  }, [visibleTechnologies, filteredFibonacciPoints]);
+  }, [
+    visibleTechnologies,
+    filteredFibonacciPoints,
+    flatWallPositions,
+    viewMode,
+  ]);
 
   // Load textures for all technologies (with atlas optimization)
   const { getTexture } = useTechnologyTextures(ALL_TECHNOLOGIES);
@@ -130,10 +178,18 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
   useFrame((_state, delta) => {
     if (!groupRef.current) return;
 
-    animateRotationSpeed(delta);
-    animateRadius(delta);
-
-    groupRef.current.rotation.y += delta * currentSpeedRef.current;
+    if (viewMode === 'sphere') {
+      animateRotationSpeed(delta);
+      animateRadius(delta);
+      groupRef.current.rotation.y += delta * currentSpeedRef.current;
+    } else {
+      // Reset rotation smoothly when in flat view
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(
+        groupRef.current.rotation.y,
+        0,
+        delta * 5
+      );
+    }
   });
 
   const handleTileHover = useCallback((index: number, isHovered: boolean) => {
@@ -155,7 +211,7 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
 
         // Use assigned technology or fallback to original (for texture loading)
         const technologyToUse = assignedTechnology || tileData.technology;
-        
+
         const texture = getTexture(technologyToUse);
 
         return (
@@ -170,6 +226,7 @@ export function TechStackSphere({ selectedCategory }: TechStackSphereProps) {
               filteredNormalizedPosition || tileData.normalizedPosition
             } // Use filtered position or fallback
             onHover={(isHovered) => handleTileHover(index, isHovered)}
+            viewMode={viewMode}
           />
         );
       })}

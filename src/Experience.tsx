@@ -1,50 +1,45 @@
-import { Helper, Html, PresentationControls } from '@react-three/drei';
+import { Helper, OrbitControls, PresentationControls } from '@react-three/drei';
 import { TechStackSphere } from './components/TechStackSphere';
-import { CategoryFilter } from './components/CategoryFilter';
 import type { Category } from './types/techstack';
-import { Suspense, useState } from 'react';
+import { Suspense } from 'react';
 import { DirectionalLightHelper } from 'three';
 
-export default function Experience() {
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    null
-  );
+interface ExperienceProps {
+  selectedCategory: Category | null;
+  viewMode: 'sphere' | 'flat';
+}
 
-  const handleCategoryToggle = (category: Category | null) => {
-    if (category === null) {
-      setSelectedCategory(null);
-    } else {
-      setSelectedCategory((prev) => (prev === category ? null : category));
-    }
-  };
-
+export default function Experience({
+  selectedCategory,
+  viewMode,
+}: ExperienceProps) {
   return (
     <>
-      <Html fullscreen>
-        <CategoryFilter
-          selectedCategory={selectedCategory}
-          onCategoryToggle={handleCategoryToggle}
-        />
-      </Html>
-
       <directionalLight position={[1, 2, 3]} intensity={4.5}>
         <Helper type={DirectionalLightHelper} args={[1]} />
       </directionalLight>
       <ambientLight intensity={1.5} />
 
+      <OrbitControls enabled={false} />
+
       <Suspense fallback={null}>
         <PresentationControls
+          // key={controlsKey}
           enabled={true}
-          global={true} // Only rotate when dragging on the sphere
-          cursor={true} // Show grab cursor
-          snap={false} // Don't snap back to center
-          speed={1} // Rotation speed
-          rotation={[0, 0, 0]} // Initial rotation
-          polar={[-0.1, 0.01]} // Limit vertical rotation to ±5.7 degrees
-          azimuth={[-Infinity, Infinity]} // Unlimited horizontal rotation
-          damping={0.15} // Spring config
+          global={true}
+          cursor={false}
+          snap={viewMode === 'flat'}
+          speed={1}
+          // zoom={1.05} // seems to have very negative impact on performance
+          rotation={[0, 0, 0]}
+          polar={[-0.1, 0.2]}
+          azimuth={viewMode === 'flat' ? [-0.1, 0.1] : [-Infinity, Infinity]}
+          damping={0.15}
         >
-          <TechStackSphere selectedCategory={selectedCategory} />
+          <TechStackSphere
+            selectedCategory={selectedCategory}
+            viewMode={viewMode}
+          />
         </PresentationControls>
       </Suspense>
     </>

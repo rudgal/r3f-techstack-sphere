@@ -23,6 +23,7 @@ interface TileProps {
   sphereRadius?: number; // For dynamic sphere radius
   normalizedPosition?: THREE.Vector3; // For base position calculation
   onHover?: (isHovered: boolean) => void;
+  viewMode?: 'sphere' | 'flat';
 }
 
 export function Tile({
@@ -33,6 +34,7 @@ export function Tile({
   sphereRadius,
   normalizedPosition,
   onHover,
+  viewMode = 'sphere',
 }: TileProps) {
   const groupRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
@@ -43,18 +45,23 @@ export function Tile({
   const backgroundColor =
     technology.backgroundColor || DEFAULT_BACKGROUND_COLOR;
 
-  // Calculate target position based on sphere radius and normalized position
+  // Calculate target position based on view mode
   const targetPosition = useMemo(() => {
-    // Calculate position from normalized position and sphere radius
-    if (normalizedPosition && sphereRadius !== undefined) {
-      return normalizedPosition
-        .clone()
-        .multiplyScalar(sphereRadius + TILE_DEPTH / 2);
+    if (viewMode === 'flat') {
+      // In flat mode, normalizedPosition is already the final position
+      return normalizedPosition || new THREE.Vector3(0, 0, 0);
+    } else {
+      // In sphere mode, calculate position from normalized position and sphere radius
+      if (normalizedPosition && sphereRadius !== undefined) {
+        return normalizedPosition
+          .clone()
+          .multiplyScalar(sphereRadius + TILE_DEPTH / 2);
+      }
     }
 
     // Fallback to origin if no position data
     return new THREE.Vector3(0, 0, 0);
-  }, [normalizedPosition, sphereRadius]);
+  }, [normalizedPosition, sphereRadius, viewMode]);
 
   // Smooth scale and position animation
   useFrame((_state, delta) => {
@@ -75,11 +82,20 @@ export function Tile({
 
     groupRef.current.scale.setScalar(newScale);
 
-    // Calculate final position with hover offset applied to the base position
-    const normalizedDirection = targetPosition.clone().normalize();
-    const finalPosition = targetPosition
-      .clone()
-      .add(normalizedDirection.multiplyScalar(newOffset));
+    // Calculate final position with hover offset
+    let finalPosition: THREE.Vector3;
+
+    if (viewMode === 'flat') {
+      // In flat mode, move forward on Z axis when hovered
+      finalPosition = targetPosition.clone();
+      finalPosition.z += newOffset;
+    } else {
+      // In sphere mode, move away from center
+      const normalizedDirection = targetPosition.clone().normalize();
+      finalPosition = targetPosition
+        .clone()
+        .add(normalizedDirection.multiplyScalar(newOffset));
+    }
 
     // Set position (smoothly lerp to new position when sphere radius changes)
     groupRef.current.position.lerp(finalPosition, delta * 5);
@@ -102,7 +118,7 @@ export function Tile({
     e.stopPropagation();
     setHovered(false);
     onHover?.(false);
-    document.body.style.cursor = 'auto';
+    document.body.style.cursor = 'grab';
   };
 
   // Use a group to better handle textures

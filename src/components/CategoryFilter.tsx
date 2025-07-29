@@ -16,15 +16,6 @@ const CATEGORY_LABELS: Record<Category, string> = {
   tools: 'Tools',
 };
 
-const CATEGORY_COLORS: Record<Category, string> = {
-  web: '#61DAFB',
-  'java/jvm': '#007396',
-  languages: '#F7DF1E',
-  quality: '#4CAF50',
-  devops: '#FF9800',
-  tools: '#9C27B0',
-};
-
 export function CategoryFilter({
   selectedCategory,
   onCategoryToggle,
@@ -34,14 +25,9 @@ export function CategoryFilter({
       <div className={styles.buttons}>
         <button
           className={`${styles.button} ${!selectedCategory ? styles.selected : ''}`}
-          style={{
-            backgroundColor: !selectedCategory ? '#666' : 'transparent',
-            borderColor: '#666',
-            color: !selectedCategory ? '#fff' : '#666',
-          }}
           onClick={() => onCategoryToggle(null)}
         >
-          Show All
+          SHOW ALL
         </button>
         {CATEGORIES.map((category) => {
           const isSelected = selectedCategory === category;
@@ -49,16 +35,9 @@ export function CategoryFilter({
             <button
               key={category}
               className={`${styles.button} ${isSelected ? styles.selected : ''}`}
-              style={{
-                backgroundColor: isSelected
-                  ? CATEGORY_COLORS[category]
-                  : 'transparent',
-                borderColor: CATEGORY_COLORS[category],
-                color: isSelected ? '#fff' : CATEGORY_COLORS[category],
-              }}
               onClick={() => onCategoryToggle(category)}
             >
-              {CATEGORY_LABELS[category]}
+              {CATEGORY_LABELS[category].toUpperCase()}
             </button>
           );
         })}
