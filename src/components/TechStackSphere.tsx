@@ -2,7 +2,7 @@ import { useCallback, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Tile } from './Tile';
-import { useTechnologyTextures } from '../hooks/useTechnologyTextures';
+import { useTechnologyTextures } from '../hooks/useTextureAtlas';
 import type { Category, Technology } from '../types/techstack';
 import techStackDataRaw from '../data/techstack.json';
 import { useAppConfig } from '../hooks/useAppConfig';
@@ -112,7 +112,7 @@ export function TechStackSphere({
   ]);
 
   // Load textures for all technologies (with atlas optimization)
-  const { getTexture } = useTechnologyTextures(ALL_TECHNOLOGIES);
+  const { getTexture } = useTechnologyTextures();
 
   // Calculate target sphere radius based on VISIBLE tile count
   const targetRadius = useMemo(() => {
@@ -201,7 +201,7 @@ export function TechStackSphere({
         // Use assigned technology or fallback to original (for texture loading)
         const technologyToUse = assignedTechnology || tileData.technology;
 
-        const texture = getTexture(technologyToUse);
+        const texture = getTexture(technologyToUse.id);
 
         return (
           <Tile
@@ -224,7 +224,11 @@ export function TechStackSphere({
 }
 
 // Utility functions
-function calculateSphereRadius(tileCount: number, tileSize: number, sphereConfig: SphereConfig): number {
+function calculateSphereRadius(
+  tileCount: number,
+  tileSize: number,
+  sphereConfig: SphereConfig
+): number {
   if (tileCount === 0) return sphereConfig.baseSphereRadius;
   if (tileCount === 1) return sphereConfig.baseSphereRadius;
 
@@ -242,7 +246,11 @@ function calculateSphereRadius(tileCount: number, tileSize: number, sphereConfig
   );
 }
 
-function fibonacciSphere(samples: number, radius: number, sphereConfig?: SphereConfig): THREE.Vector3[] {
+function fibonacciSphere(
+  samples: number,
+  radius: number,
+  sphereConfig?: SphereConfig
+): THREE.Vector3[] {
   if (samples === 0) return [];
   if (samples === 1) return [new THREE.Vector3(0, radius, 0)];
 
@@ -251,7 +259,9 @@ function fibonacciSphere(samples: number, radius: number, sphereConfig?: SphereC
 
   // Exclude poles based on configuration (only if config is provided)
   const yMax = sphereConfig ? 1 - sphereConfig.poleExclusionPercentageTop : 0.7; // Top exclusion
-  const yMin = sphereConfig ? -(1 - sphereConfig.poleExclusionPercentageBottom) : -0.7; // Bottom exclusion
+  const yMin = sphereConfig
+    ? -(1 - sphereConfig.poleExclusionPercentageBottom)
+    : -0.7; // Bottom exclusion
 
   // Generate more points than needed to filter out poles
   const oversample = Math.ceil(samples * 1.5); // Generate 50% more points
