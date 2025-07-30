@@ -49,19 +49,31 @@ export function CustomTileMaterial({
         uniform float texturePadding;`
       );
 
-      // Add vertex shader modification to pass position and UV transform to fragment shader
+      // Add vertex shader modification to pass position, UV transform, and pre-calculated constants
       shader.vertexShader = shader.vertexShader.replace(
         '#include <common>',
         `#include <common>
+        uniform float tileSize;
+        uniform float texturePadding;
         varying vec3 vPosition;
-        varying mat3 vMapTransform;`
+        varying mat3 vMapTransform;
+        varying float vHalfTileSize;
+        varying vec2 vInvTileSize;
+        varying float vOneMinusPadding;
+        varying float vInvPaddingRange;`
       );
 
       shader.vertexShader = shader.vertexShader.replace(
         '#include <worldpos_vertex>',
         `#include <worldpos_vertex>
         vPosition = position;
-        vMapTransform = mapTransform;`
+        vMapTransform = mapTransform;
+        
+        // Pre-calculate constants that don't change per fragment
+        vHalfTileSize = tileSize * 0.5;
+        vInvTileSize = vec2(1.0 / tileSize);
+        vOneMinusPadding = 1.0 - texturePadding;
+        vInvPaddingRange = 1.0 / (vOneMinusPadding - texturePadding);`
       );
 
       // Modify fragment shader to detect the front face using position
@@ -69,7 +81,11 @@ export function CustomTileMaterial({
         '#include <common>',
         `#include <common>
         varying vec3 vPosition;
-        varying mat3 vMapTransform;`
+        varying mat3 vMapTransform;
+        varying float vHalfTileSize;
+        varying vec2 vInvTileSize;
+        varying float vOneMinusPadding;
+        varying float vInvPaddingRange;`
       );
 
       shader.fragmentShader = shader.fragmentShader.replace(
@@ -82,52 +98,34 @@ export function CustomTileMaterial({
           vec4 sampledDiffuseColor;
           
           if (isFrontFace) {
-            // For ExtrudeGeometry (RoundedBox), UV coordinates are based on world coordinates
-            // and need to be normalized to 0-1 range to work with our texture atlas
+            // Use pre-calculated constants from vertex shader
+            vec2 normalizedUV = clamp((vPosition.xy + vHalfTileSize) * vInvTileSize, 0.0, 1.0);
             
-            // ExtrudeGeometry front face uses world X,Y coordinates directly
-            // We need to normalize them to 0-1 range based on the tile size
-            vec2 normalizedUV = (vPosition.xy + tileSize * 0.5) / tileSize;
+            // Check if we're in the texture region using simple box test
+            vec2 paddingBounds = step(texturePadding, normalizedUV) * step(normalizedUV, vec2(vOneMinusPadding));
+            bool inTextureRegion = paddingBounds.x * paddingBounds.y > 0.5;
             
-            // Clamp to ensure we stay within bounds
-            normalizedUV = clamp(normalizedUV, 0.0, 1.0);
-            
-            // Apply padding by checking if we're in the texture region
-            vec2 textureStart = vec2(texturePadding);
-            vec2 textureEnd = vec2(1.0 - texturePadding);
-            
-            // If we're outside the texture region, use background color
-            if (normalizedUV.x < textureStart.x || normalizedUV.x > textureEnd.x ||
-                normalizedUV.y < textureStart.y || normalizedUV.y > textureEnd.y) {
-              sampledDiffuseColor = vec4(backgroundColor, 1.0);
-            } else {
-              // Scale and center the UV to fit within the non-padded area
-              vec2 paddedUV = (normalizedUV - textureStart) / (textureEnd - textureStart);
+            if (inTextureRegion) {
+              // Scale UV to non-padded area using pre-calculated inverse
+              vec2 paddedUV = (normalizedUV - texturePadding) * vInvPaddingRange;
               
-              // Now we need to apply the texture atlas transformation
-              // The vMapTransform matrix contains offset and repeat values
+              // Apply texture atlas transformation
               vec2 transformedUV = (vMapTransform * vec3(paddedUV, 1.0)).xy;
-              
               sampledDiffuseColor = texture2D(map, transformedUV);
+            } else {
+              sampledDiffuseColor = vec4(backgroundColor, 1.0);
             }
+            
           } else {
-            // Other faces: just sample normally
             sampledDiffuseColor = texture2D(map, vMapUv);
           }
           
-          // Apply the color
-          vec3 finalColor;
-          if (isFrontFace && sampledDiffuseColor.a > 0.1) {
-            // Front face with texture: show texture
-            finalColor = sampledDiffuseColor.rgb;
-          } else {
-            // Other faces or no texture: show background color
-            finalColor = backgroundColor;
-          }
+          // Determine final color based on face and alpha
+          vec3 finalColor = (isFrontFace && sampledDiffuseColor.a > 0.1) ? 
+                           sampledDiffuseColor.rgb : backgroundColor;
           
           diffuseColor.rgb *= finalColor;
         #else
-          // No texture case - all faces get background color
           diffuseColor.rgb *= backgroundColor;
         #endif
         `
@@ -138,7 +136,15 @@ export function CustomTileMaterial({
     };
 
     return mat;
-  }, [map, color, roughness, metalness, transparent, tile.size, tile.texturePadding]);
+  }, [
+    map,
+    color,
+    roughness,
+    metalness,
+    transparent,
+    tile.size,
+    tile.texturePadding,
+  ]);
 
   // Update color when it changes
   useMemo(() => {
