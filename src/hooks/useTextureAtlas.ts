@@ -38,9 +38,13 @@ export function useTechnologyTextures(): {
       return () => null;
     }
 
-    // Configure atlas texture
+    // Configure atlas texture to prevent bleeding and artifacts
     atlasTexture.wrapS = THREE.ClampToEdgeWrapping;
     atlasTexture.wrapT = THREE.ClampToEdgeWrapping;
+    atlasTexture.magFilter = THREE.LinearFilter; // Use linear for better quality
+    atlasTexture.minFilter = THREE.LinearFilter; // Use linear for better quality
+    atlasTexture.generateMipmaps = false; // Disable mipmaps to prevent bleeding between atlas regions
+    atlasTexture.colorSpace = THREE.SRGBColorSpace; // Use sRGB color space for correct color rendering
     atlasTexture.needsUpdate = true;
 
     return (technologyId: string): Texture | null => {

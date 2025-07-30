@@ -8,9 +8,6 @@ import { HoverLabel } from './HoverLabel';
 import { useAppConfig } from '../hooks/useAppConfig';
 import { CustomTileMaterial } from './CustomTileMaterial';
 
-// Export TILE_SIZE for backwards compatibility (used by TechStackSphere)
-export const TILE_SIZE = 0.4;
-
 interface TileProps {
   rotation: THREE.Euler;
   technology: Technology;
@@ -130,14 +127,14 @@ export function Tile({
     <group ref={groupRef} rotation={rotation} visible={visible}>
       {/* Main tile body */}
       <RoundedBox
-        args={[tile.size, tile.size, tile.depth]}
-        radius={tile.radius}
-        smoothness={4}
         onPointerOver={handlePointerOver}
         onPointerOut={handlePointerOut}
         onClick={handleClick}
         castShadow
         receiveShadow
+        args={[tile.size, tile.size, tile.depth]}
+        radius={0.02}
+        smoothness={4}
       >
         <CustomTileMaterial
           map={texture}
