@@ -94,6 +94,13 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
           step: 0.01,
           label: 'Size Ratio',
         },
+        texturePadding: {
+          value: DEFAULT_CONFIG.tile.texturePadding,
+          min: 0.0,
+          max: 0.3,
+          step: 0.01,
+          label: 'Padding',
+        },
         textureRoughness: {
           value: DEFAULT_CONFIG.tile.textureRoughness,
           min: 0.0,
@@ -244,6 +251,7 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
       hoverDistance: config.hoverDistance,
       defaultBackgroundColor: config.defaultBackgroundColor,
       textureSizeRatio: config.textureSizeRatio,
+      texturePadding: config.texturePadding,
       textureRoughness: config.textureRoughness,
       textureMetalness: config.textureMetalness,
     },

@@ -9,6 +9,7 @@ export interface TileConfig {
   textureSizeRatio: number;
   textureRoughness: number;
   textureMetalness: number;
+  texturePadding: number;
 }
 
 // Sphere configuration interface
@@ -72,9 +73,9 @@ export const DEFAULT_CONFIG: AppConfig = {
   },
   lighting: {
     directionalLightPosition: [6, 2, 4],
-    directionalLightIntensity: 4,
+    directionalLightIntensity: 2.5,
     directionalLightColor: '#ffffff',
-    ambientLightIntensity: 4,
+    ambientLightIntensity: 4.5,
     ambientLightColor: '#ffffff',
   },
   tile: {
@@ -87,6 +88,7 @@ export const DEFAULT_CONFIG: AppConfig = {
     textureSizeRatio: 0.85,
     textureRoughness: 0.2,
     textureMetalness: 0.3,
+    texturePadding: 0.1,
   },
   sphere: {
     minTileSeparation: 0.3,

@@ -1,5 +1,6 @@
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
+import { useAppConfig } from '../hooks/useAppConfig';
 
 interface CustomTileMaterialProps {
   map?: THREE.Texture | null;
@@ -17,6 +18,7 @@ export function CustomTileMaterial({
   transparent = false,
 }: CustomTileMaterialProps) {
   const materialRef = useRef<THREE.MeshStandardMaterial>(null);
+  const { tile } = useAppConfig();
 
   const material = useMemo(() => {
     const mat = new THREE.MeshStandardMaterial({
@@ -33,13 +35,15 @@ export function CustomTileMaterial({
     mat.onBeforeCompile = (shader) => {
       // Add custom uniforms
       shader.uniforms.backgroundColor = { value: new THREE.Color(color) };
-      shader.uniforms.tileSize = { value: 0.4 }; // Make tile size configurable (should match actual tile size)
-      shader.uniforms.texturePadding = { value: 0.1 };
+      shader.uniforms.tileSize = { value: tile.size };
+      shader.uniforms.texturePadding = { value: tile.texturePadding };
 
       // Add the uniform declaration to the fragment shader
       shader.fragmentShader = shader.fragmentShader.replace(
         'uniform float opacity;',
         `uniform float opacity;
+        
+        
         uniform vec3 backgroundColor;
         uniform float tileSize;
         uniform float texturePadding;`
@@ -134,7 +138,7 @@ export function CustomTileMaterial({
     };
 
     return mat;
-  }, [map, color, roughness, metalness, transparent]);
+  }, [map, color, roughness, metalness, transparent, tile.size, tile.texturePadding]);
 
   // Update color when it changes
   useMemo(() => {
