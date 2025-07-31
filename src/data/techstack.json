@@ -4,7 +4,10 @@
       "id": "javascript",
       "name": "JavaScript",
       "abbr": "JS",
-      "categories": ["web", "languages"],
+      "categories": [
+        "web",
+        "languages"
+      ],
       "icon": "/techstack/svg/javascript.svg",
       "backgroundColor": "#F7DF1E",
       "url": "https://developer.mozilla.org/docs/Web/JavaScript"
@@ -13,7 +16,10 @@
       "id": "typescript",
       "name": "TypeScript",
       "abbr": "TS",
-      "categories": ["web", "languages"],
+      "categories": [
+        "web",
+        "languages"
+      ],
       "icon": "/techstack/svg/typescript.svg",
       "backgroundColor": "#007acc",
       "url": "https://www.typescriptlang.org/"
@@ -22,7 +28,10 @@
       "id": "java",
       "name": "Java",
       "abbr": "Java",
-      "categories": ["java/jvm", "languages"],
+      "categories": [
+        "java/jvm",
+        "languages"
+      ],
       "icon": "/techstack/svg/java.svg",
       "backgroundColor": "#1A1A1A",
       "url": "https://www.oracle.com/de/java"
@@ -31,7 +40,9 @@
       "id": "java-se-11",
       "name": "Java SE 11",
       "abbr": "SE11",
-      "categories": ["java/jvm"],
+      "categories": [
+        "java/jvm"
+      ],
       "icon": "/techstack/oracle_java_se_11_developer.png",
       "backgroundColor": "#F5F5F5",
       "url": "https://www.credly.com/badges/b9c93741-aedd-47b4-ab48-34a3fb76ec00"
@@ -40,7 +51,9 @@
       "id": "jakarta-ee",
       "name": "Jakarta EE",
       "abbr": "JEE",
-      "categories": ["java/jvm"],
+      "categories": [
+        "java/jvm"
+      ],
       "icon": "/techstack/java_jakarta.png",
       "backgroundColor": "#2C2C2C",
       "url": "https://jakarta.ee"
@@ -49,7 +62,10 @@
       "id": "kotlin",
       "name": "Kotlin",
       "abbr": "KT",
-      "categories": ["java/jvm", "languages"],
+      "categories": [
+        "java/jvm",
+        "languages"
+      ],
       "icon": "/techstack/svg/kotlin.svg",
       "backgroundColor": "#1C1C1E",
       "url": "https://kotlinlang.org/"
@@ -58,7 +74,9 @@
       "id": "c",
       "name": "C",
       "abbr": "C",
-      "categories": ["languages"],
+      "categories": [
+        "languages"
+      ],
       "icon": "/techstack/svg/c.svg",
       "backgroundColor": "#4A4A4A",
       "url": "https://en.cppreference.com/w/c"
@@ -67,7 +85,9 @@
       "id": "cpp",
       "name": "C++",
       "abbr": "C++",
-      "categories": ["languages"],
+      "categories": [
+        "languages"
+      ],
       "icon": "/techstack/svg/cpp.svg",
       "backgroundColor": "#00599C",
       "url": "https://isocpp.org/"
@@ -76,7 +96,10 @@
       "id": "php",
       "name": "PHP",
       "abbr": "PHP",
-      "categories": ["web", "languages"],
+      "categories": [
+        "web",
+        "languages"
+      ],
       "icon": "/techstack/svg/php.svg",
       "backgroundColor": "#777BB4",
       "url": "https://www.php.net/"
@@ -85,15 +108,20 @@
       "id": "sql",
       "name": "SQL",
       "abbr": "SQL",
-      "categories": ["languages"],
+      "categories": [
+        "languages"
+      ],
       "icon": "/techstack/svg/sql.svg",
+      "backgroundColor": "#ACACAC",
       "url": "https://www.iso.org/standard/63555.html"
     },
     {
       "id": "solidity",
       "name": "Solidity",
       "abbr": "Sol",
-      "categories": ["languages"],
+      "categories": [
+        "languages"
+      ],
       "icon": "/techstack/svg/solidity.svg",
       "backgroundColor": "#F0F0F0",
       "url": "https://soliditylang.org/"
@@ -102,7 +130,9 @@
       "id": "html5",
       "name": "HTML5",
       "abbr": "HTML",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/svg/html5.svg",
       "backgroundColor": "#FF5722",
       "url": "https://developer.mozilla.org/docs/Web/HTML"
@@ -111,7 +141,9 @@
       "id": "css3",
       "name": "CSS3",
       "abbr": "CSS",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/svg/css3.svg",
       "backgroundColor": "#1572B6",
       "url": "https://developer.mozilla.org/docs/Web/CSS"
@@ -120,7 +152,9 @@
       "id": "react",
       "name": "React",
       "abbr": "React",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/svg/react.svg",
       "backgroundColor": "#20232A",
       "url": "https://react.dev/"
@@ -129,7 +163,9 @@
       "id": "angular",
       "name": "Angular",
       "abbr": "NG",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/svg/angular.svg",
       "backgroundColor": "#DD1B16",
       "url": "https://angular.io"
@@ -138,7 +174,9 @@
       "id": "vuejs",
       "name": "Vue.js",
       "abbr": "Vue",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/svg/vuejs.svg",
       "backgroundColor": "#2C3E50",
       "url": "https://vuejs.org"
@@ -147,7 +185,9 @@
       "id": "react-native",
       "name": "React Native",
       "abbr": "RN",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/react-native.png",
       "backgroundColor": "#1B1B1D",
       "url": "https://reactnative.dev/"
@@ -156,7 +196,9 @@
       "id": "three-js",
       "name": "Three.js",
       "abbr": "3js",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/svg/threejs.svg",
       "backgroundColor": "#FFFFFF",
       "url": "https://threejs.org"
@@ -165,7 +207,9 @@
       "id": "nextjs",
       "name": "Next.js",
       "abbr": "Next",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/svg/next-js.svg",
       "backgroundColor": "#FFFFFF",
       "url": "https://nextjs.org/"
@@ -174,7 +218,9 @@
       "id": "ionic",
       "name": "Ionic",
       "abbr": "Ion",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/svg/ionic.svg",
       "backgroundColor": "#F8F8F8",
       "url": "https://ionicframework.com/"
@@ -183,7 +229,10 @@
       "id": "nodejs",
       "name": "Node.js",
       "abbr": "Node",
-      "categories": ["web", "devops"],
+      "categories": [
+        "web",
+        "devops"
+      ],
       "icon": "/techstack/svg/node.js.svg",
       "backgroundColor": "#ffffff",
       "url": "https://nodejs.org"
@@ -192,7 +241,9 @@
       "id": "jquery",
       "name": "jQuery",
       "abbr": "jQ",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/jquery.gif",
       "backgroundColor": "#F8F8F8",
       "url": "https://jquery.com"
@@ -201,7 +252,9 @@
       "id": "extjs",
       "name": "ExtJS",
       "abbr": "Ext",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/extjs.png",
       "backgroundColor": "#2C2C2C",
       "url": "https://www.sencha.com/products/extjs"
@@ -210,7 +263,10 @@
       "id": "gwt",
       "name": "GWT",
       "abbr": "GWT",
-      "categories": ["web", "java/jvm"],
+      "categories": [
+        "web",
+        "java/jvm"
+      ],
       "icon": "/techstack/svg/gwt.svg",
       "backgroundColor": "#2C2C2C",
       "url": "http://www.gwtproject.org"
@@ -219,7 +275,9 @@
       "id": "graphql",
       "name": "GraphQL",
       "abbr": "GQL",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/svg/graphql.svg",
       "backgroundColor": "#F8F8F8",
       "url": "https://graphql.org/"
@@ -228,7 +286,9 @@
       "id": "spring",
       "name": "Spring",
       "abbr": "Spr",
-      "categories": ["java/jvm"],
+      "categories": [
+        "java/jvm"
+      ],
       "icon": "/techstack/svg/spring.svg",
       "backgroundColor": "#F8F8F8",
       "url": "https://spring.io/"
@@ -237,7 +297,9 @@
       "id": "spring-boot",
       "name": "Spring Boot",
       "abbr": "Boot",
-      "categories": ["java/jvm"],
+      "categories": [
+        "java/jvm"
+      ],
       "icon": "/techstack/spring_boot.png",
       "backgroundColor": "#1A1A1A",
       "url": "https://spring.io/projects/spring-boot"
@@ -246,7 +308,9 @@
       "id": "jsp",
       "name": "JSP",
       "abbr": "JSP",
-      "categories": ["java/jvm"],
+      "categories": [
+        "java/jvm"
+      ],
       "icon": "/techstack/svg/jsp.svg",
       "backgroundColor": "#7A7A7A",
       "url": "https://jakarta.ee/specifications/pages/"
@@ -255,7 +319,9 @@
       "id": "jsf",
       "name": "JSF",
       "abbr": "JSF",
-      "categories": ["java/jvm"],
+      "categories": [
+        "java/jvm"
+      ],
       "icon": "/techstack/jsf.png",
       "backgroundColor": "#2C2C2C",
       "url": "https://jakarta.ee/specifications/faces/"
@@ -264,7 +330,10 @@
       "id": "primefaces",
       "name": "PrimeFaces",
       "abbr": "PF",
-      "categories": ["java/jvm", "web"],
+      "categories": [
+        "java/jvm",
+        "web"
+      ],
       "icon": "/techstack/primefaces-logo.png",
       "backgroundColor": "#007AD9",
       "url": "https://www.primefaces.org"
@@ -273,7 +342,9 @@
       "id": "hibernate",
       "name": "Hibernate",
       "abbr": "Hib",
-      "categories": ["java/jvm"],
+      "categories": [
+        "java/jvm"
+      ],
       "icon": "/techstack/svg/hibernate.svg",
       "backgroundColor": "#F0F0F0",
       "url": "https://hibernate.org"
@@ -282,7 +353,9 @@
       "id": "mysql",
       "name": "MySQL",
       "abbr": "MySQL",
-      "categories": ["devops"],
+      "categories": [
+        "devops"
+      ],
       "icon": "/techstack/svg/mysql.svg",
       "backgroundColor": "#1A1A1A",
       "url": "https://www.mysql.com"
@@ -291,7 +364,9 @@
       "id": "oracle-db",
       "name": "Oracle DB",
       "abbr": "ORA",
-      "categories": ["devops"],
+      "categories": [
+        "devops"
+      ],
       "icon": "/techstack/oracle_db.png",
       "backgroundColor": "#302D2A",
       "url": "https://www.oracle.com/de/database/technologies"
@@ -300,7 +375,9 @@
       "id": "mongodb",
       "name": "MongoDB",
       "abbr": "Mongo",
-      "categories": ["devops"],
+      "categories": [
+        "devops"
+      ],
       "icon": "/techstack/svg/mongodb.svg",
       "backgroundColor": "#F8F8F8",
       "url": "https://www.mongodb.com"
@@ -309,7 +386,10 @@
       "id": "git",
       "name": "Git",
       "abbr": "Git",
-      "categories": ["devops", "tools"],
+      "categories": [
+        "devops",
+        "tools"
+      ],
       "icon": "/techstack/svg/git.svg",
       "backgroundColor": "#2A2A2A",
       "url": "https://git-scm.com"
@@ -318,7 +398,10 @@
       "id": "svn",
       "name": "SVN",
       "abbr": "SVN",
-      "categories": ["devops", "tools"],
+      "categories": [
+        "devops",
+        "tools"
+      ],
       "icon": "/techstack/svg/svn.svg",
       "backgroundColor": "#809CC9",
       "url": "https://subversion.apache.org"
@@ -327,7 +410,9 @@
       "id": "docker",
       "name": "Docker",
       "abbr": "Dock",
-      "categories": ["devops"],
+      "categories": [
+        "devops"
+      ],
       "icon": "/techstack/svg/docker.svg",
       "backgroundColor": "#2496ED",
       "url": "https://www.docker.com"
@@ -336,7 +421,9 @@
       "id": "jenkins",
       "name": "Jenkins",
       "abbr": "Jenk",
-      "categories": ["devops"],
+      "categories": [
+        "devops"
+      ],
       "icon": "/techstack/svg/jenkins.svg",
       "backgroundColor": "#D33833",
       "url": "https://www.jenkins.io"
@@ -345,7 +432,10 @@
       "id": "aws",
       "name": "AWS",
       "abbr": "AWS",
-      "categories": ["devops", "web"],
+      "categories": [
+        "devops",
+        "web"
+      ],
       "icon": "/techstack/svg/aws.svg",
       "backgroundColor": "#FFFFFF",
       "url": "https://aws.amazon.com/"
@@ -354,7 +444,10 @@
       "id": "firebase",
       "name": "Firebase",
       "abbr": "FB",
-      "categories": ["devops", "web"],
+      "categories": [
+        "devops",
+        "web"
+      ],
       "icon": "/techstack/svg/firebase.svg",
       "backgroundColor": "#2C2C2C",
       "url": "https://firebase.google.com/"
@@ -363,7 +456,9 @@
       "id": "openshift",
       "name": "OpenShift",
       "abbr": "OS",
-      "categories": ["devops"],
+      "categories": [
+        "devops"
+      ],
       "icon": "/techstack/svg/openshift.svg",
       "backgroundColor": "#F8F8F8",
       "url": "https://www.openshift.com"
@@ -372,7 +467,11 @@
       "id": "maven",
       "name": "Apache Maven",
       "abbr": "Mvn",
-      "categories": ["java/jvm", "devops", "tools"],
+      "categories": [
+        "java/jvm",
+        "devops",
+        "tools"
+      ],
       "icon": "/techstack/apache_maven.png",
       "backgroundColor": "#F0F0F0",
       "url": "https://maven.apache.org"
@@ -381,7 +480,11 @@
       "id": "gradle",
       "name": "Gradle",
       "abbr": "Grad",
-      "categories": ["java/jvm", "devops", "tools"],
+      "categories": [
+        "java/jvm",
+        "devops",
+        "tools"
+      ],
       "icon": "/techstack/svg/gradle.svg",
       "backgroundColor": "#F0F0F0",
       "url": "https://gradle.org/"
@@ -390,7 +493,11 @@
       "id": "ant",
       "name": "Apache Ant",
       "abbr": "Ant",
-      "categories": ["java/jvm", "devops", "tools"],
+      "categories": [
+        "java/jvm",
+        "devops",
+        "tools"
+      ],
       "icon": "/techstack/svg/apache_ant.svg",
       "backgroundColor": "#F0F0F0",
       "url": "https://ant.apache.org"
@@ -399,7 +506,11 @@
       "id": "grunt",
       "name": "Grunt",
       "abbr": "Grnt",
-      "categories": ["web", "devops", "tools"],
+      "categories": [
+        "web",
+        "devops",
+        "tools"
+      ],
       "icon": "/techstack/svg/grunt.svg",
       "backgroundColor": "#2C2C2C",
       "url": "https://gruntjs.com"
@@ -408,7 +519,11 @@
       "id": "gulp",
       "name": "Gulp",
       "abbr": "Gulp",
-      "categories": ["web", "devops", "tools"],
+      "categories": [
+        "web",
+        "devops",
+        "tools"
+      ],
       "icon": "/techstack/svg/gulp.svg",
       "backgroundColor": "#F8F8F8",
       "url": "https://gulpjs.com"
@@ -417,7 +532,10 @@
       "id": "jest",
       "name": "Jest",
       "abbr": "Jest",
-      "categories": ["quality", "web"],
+      "categories": [
+        "quality",
+        "web"
+      ],
       "icon": "/techstack/svg/jest.svg",
       "backgroundColor": "#C21325",
       "url": "https://jestjs.io/"
@@ -426,7 +544,10 @@
       "id": "cypress",
       "name": "Cypress",
       "abbr": "Cy",
-      "categories": ["quality", "web"],
+      "categories": [
+        "quality",
+        "web"
+      ],
       "icon": "/techstack/svg/cypress.svg",
       "backgroundColor": "#F8F8F8",
       "url": "https://cypress.io/"
@@ -435,7 +556,10 @@
       "id": "playwright",
       "name": "Playwright",
       "abbr": "PW",
-      "categories": ["quality", "web"],
+      "categories": [
+        "quality",
+        "web"
+      ],
       "icon": "/techstack/svg/playwright.svg",
       "backgroundColor": "#242526",
       "url": "https://playwright.dev"
@@ -444,7 +568,10 @@
       "id": "selenium",
       "name": "Selenium",
       "abbr": "Se",
-      "categories": ["quality", "java/jvm"],
+      "categories": [
+        "quality",
+        "java/jvm"
+      ],
       "icon": "/techstack/selenium.png",
       "backgroundColor": "#43B02A",
       "url": "https://www.selenium.dev"
@@ -453,7 +580,10 @@
       "id": "junit",
       "name": "JUnit",
       "abbr": "JU",
-      "categories": ["quality", "java/jvm"],
+      "categories": [
+        "quality",
+        "java/jvm"
+      ],
       "icon": "/techstack/junit.png",
       "backgroundColor": "#F8F8F8",
       "url": "https://junit.org/"
@@ -462,7 +592,10 @@
       "id": "testng",
       "name": "TestNG",
       "abbr": "TNG",
-      "categories": ["quality", "java/jvm"],
+      "categories": [
+        "quality",
+        "java/jvm"
+      ],
       "icon": "/techstack/test-ng.png",
       "backgroundColor": "#4A4A4A",
       "url": "https://testng.org/"
@@ -471,7 +604,10 @@
       "id": "rest-assured",
       "name": "REST Assured",
       "abbr": "RA",
-      "categories": ["quality", "java/jvm"],
+      "categories": [
+        "quality",
+        "java/jvm"
+      ],
       "icon": "/techstack/svg/rest-assured.svg",
       "backgroundColor": "#F8F8F8",
       "url": "https://rest-assured.io"
@@ -480,7 +616,9 @@
       "id": "detox",
       "name": "Detox",
       "abbr": "Dtx",
-      "categories": ["quality"],
+      "categories": [
+        "quality"
+      ],
       "icon": "/techstack/detox.png",
       "backgroundColor": "#2C2C2C",
       "url": "https://wix.github.io/Detox/"
@@ -489,7 +627,10 @@
       "id": "postman",
       "name": "Postman",
       "abbr": "PM",
-      "categories": ["quality", "tools"],
+      "categories": [
+        "quality",
+        "tools"
+      ],
       "icon": "/techstack/postman.png",
       "backgroundColor": "#1A1A1A",
       "url": "https://www.postman.com"
@@ -498,7 +639,10 @@
       "id": "insomnia",
       "name": "Insomnia",
       "abbr": "Ins",
-      "categories": ["quality", "tools"],
+      "categories": [
+        "quality",
+        "tools"
+      ],
       "icon": "/techstack/svg/insomnia.svg",
       "backgroundColor": "#4000BF",
       "url": "https://insomnia.rest"
@@ -507,7 +651,9 @@
       "id": "browserstack",
       "name": "BrowserStack",
       "abbr": "BS",
-      "categories": ["quality"],
+      "categories": [
+        "quality"
+      ],
       "icon": "/techstack/svg/browserstack.svg",
       "backgroundColor": "#2C2C2C",
       "url": "https://www.browserstack.com"
@@ -516,15 +662,22 @@
       "id": "sonarqube",
       "name": "SonarQube",
       "abbr": "SQ",
-      "categories": ["quality", "devops"],
+      "categories": [
+        "quality",
+        "devops"
+      ],
       "icon": "/techstack/svg/sonarqube.svg",
+      "backgroundColor": "#1A1A1A",
       "url": "https://www.sonarqube.org"
     },
     {
       "id": "newrelic",
       "name": "New Relic",
       "abbr": "NR",
-      "categories": ["quality", "devops"],
+      "categories": [
+        "quality",
+        "devops"
+      ],
       "icon": "/techstack/newrelic.png",
       "backgroundColor": "#F8F8F8",
       "url": "https://newrelic.com/"
@@ -533,7 +686,10 @@
       "id": "dynatrace",
       "name": "Dynatrace",
       "abbr": "DT",
-      "categories": ["quality", "devops"],
+      "categories": [
+        "quality",
+        "devops"
+      ],
       "icon": "/techstack/svg/dynatrace.svg",
       "backgroundColor": "#F8F8F8",
       "url": "https://www.dynatrace.com/"
@@ -542,7 +698,10 @@
       "id": "sentry",
       "name": "Sentry",
       "abbr": "Sentry",
-      "categories": ["quality", "devops"],
+      "categories": [
+        "quality",
+        "devops"
+      ],
       "icon": "/techstack/svg/sentry.svg",
       "backgroundColor": "#754C87",
       "url": "https://sentry.io"
@@ -551,7 +710,10 @@
       "id": "splunk",
       "name": "Splunk",
       "abbr": "Splk",
-      "categories": ["quality", "devops"],
+      "categories": [
+        "quality",
+        "devops"
+      ],
       "icon": "/techstack/splunk.png",
       "backgroundColor": "#FFFFFF",
       "url": "https://www.splunk.com"
@@ -560,7 +722,10 @@
       "id": "whitesource",
       "name": "WhiteSource",
       "abbr": "WS",
-      "categories": ["devops", "quality"],
+      "categories": [
+        "devops",
+        "quality"
+      ],
       "icon": "/techstack/svg/whitesource-software.svg",
       "backgroundColor": "#F8F8F8",
       "url": "https://www.whitesourcesoftware.com"
@@ -569,7 +734,10 @@
       "id": "swagger",
       "name": "Swagger",
       "abbr": "Swag",
-      "categories": ["web", "tools"],
+      "categories": [
+        "web",
+        "tools"
+      ],
       "icon": "/techstack/svg/swagger.svg",
       "backgroundColor": "#2C2C2C",
       "url": "https://swagger.io"
@@ -578,7 +746,9 @@
       "id": "vscode",
       "name": "VS Code",
       "abbr": "VSC",
-      "categories": ["tools"],
+      "categories": [
+        "tools"
+      ],
       "icon": "/techstack/svg/vscode.svg",
       "backgroundColor": "lightgrey",
       "url": "https://code.visualstudio.com"
@@ -587,7 +757,10 @@
       "id": "intellij",
       "name": "IntelliJ IDEA",
       "abbr": "IJ",
-      "categories": ["tools", "java/jvm"],
+      "categories": [
+        "tools",
+        "java/jvm"
+      ],
       "icon": "/techstack/svg/jetbrains_intellij.svg",
       "backgroundColor": "#1A1A1A",
       "url": "https://www.jetbrains.com/idea/"
@@ -596,7 +769,10 @@
       "id": "webstorm",
       "name": "WebStorm",
       "abbr": "WS",
-      "categories": ["tools", "web"],
+      "categories": [
+        "tools",
+        "web"
+      ],
       "icon": "/techstack/svg/jetbrains_webstorm.svg",
       "backgroundColor": "#1A1A1A",
       "url": "https://www.jetbrains.com/webstorm/"
@@ -605,7 +781,10 @@
       "id": "eclipse",
       "name": "Eclipse",
       "abbr": "Ecl",
-      "categories": ["tools", "java/jvm"],
+      "categories": [
+        "tools",
+        "java/jvm"
+      ],
       "icon": "/techstack/svg/eclipse.svg",
       "backgroundColor": "#F0F0F0",
       "url": "https://www.eclipse.org/ide"
@@ -614,16 +793,20 @@
       "id": "wordpress",
       "name": "WordPress",
       "abbr": "WP",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/svg/wordpress.svg",
-      "backgroundColor": "white",
+      "backgroundColor": "#FFFFFF",
       "url": "https://wordpress.com"
     },
     {
       "id": "typo3",
       "name": "TYPO3",
       "abbr": "T3",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/svg/typo3.svg",
       "backgroundColor": "#2C2C2C",
       "url": "https://typo3.org"
@@ -632,7 +815,9 @@
       "id": "contao",
       "name": "Contao",
       "abbr": "Cont",
-      "categories": ["web"],
+      "categories": [
+        "web"
+      ],
       "icon": "/techstack/contao.png",
       "backgroundColor": "#213346",
       "url": "https://contao.org"

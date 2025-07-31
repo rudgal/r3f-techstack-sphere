@@ -1,0 +1,72 @@
+id;name;abbr;categories;icon;backgroundColor;url;active
+javascript;JavaScript;JS;web, languages;/techstack/svg/javascript.svg;#F7DF1E;https://developer.mozilla.org/docs/Web/JavaScript;1
+typescript;TypeScript;TS;web, languages;/techstack/svg/typescript.svg;#007acc;https://www.typescriptlang.org/;1
+java;Java;Java;java/jvm, languages;/techstack/svg/java.svg;#1A1A1A;https://www.oracle.com/de/java;1
+java-se-11;Java SE 11;SE11;java/jvm;/techstack/oracle_java_se_11_developer.png;#F5F5F5;https://www.credly.com/badges/b9c93741-aedd-47b4-ab48-34a3fb76ec00;1
+jakarta-ee;Jakarta EE;JEE;java/jvm;/techstack/java_jakarta.png;#2C2C2C;https://jakarta.ee;1
+kotlin;Kotlin;KT;java/jvm, languages;/techstack/svg/kotlin.svg;#1C1C1E;https://kotlinlang.org/;1
+c;C;C;languages;/techstack/svg/c.svg;#4A4A4A;https://en.cppreference.com/w/c;1
+cpp;C++;C++;languages;/techstack/svg/cpp.svg;#00599C;https://isocpp.org/;1
+php;PHP;PHP;web, languages;/techstack/svg/php.svg;#777BB4;https://www.php.net/;1
+sql;SQL;SQL;languages;/techstack/svg/sql.svg;#ACACAC;https://www.iso.org/standard/63555.html;1
+solidity;Solidity;Sol;languages;/techstack/svg/solidity.svg;#F0F0F0;https://soliditylang.org/;1
+html5;HTML5;HTML;web;/techstack/svg/html5.svg;#FF5722;https://developer.mozilla.org/docs/Web/HTML;1
+css3;CSS3;CSS;web;/techstack/svg/css3.svg;#1572B6;https://developer.mozilla.org/docs/Web/CSS;1
+react;React;React;web;/techstack/svg/react.svg;#20232A;https://react.dev/;1
+angular;Angular;NG;web;/techstack/svg/angular.svg;#DD1B16;https://angular.io;1
+vuejs;Vue.js;Vue;web;/techstack/svg/vuejs.svg;#2C3E50;https://vuejs.org;1
+react-native;React Native;RN;web;/techstack/react-native.png;#1B1B1D;https://reactnative.dev/;1
+three-js;Three.js;3js;web;/techstack/svg/threejs.svg;#FFFFFF;https://threejs.org;1
+nextjs;Next.js;Next;web;/techstack/svg/next-js.svg;#FFFFFF;https://nextjs.org/;1
+ionic;Ionic;Ion;web;/techstack/svg/ionic.svg;#F8F8F8;https://ionicframework.com/;1
+nodejs;Node.js;Node;web, devops;/techstack/svg/node.js.svg;#ffffff;https://nodejs.org;1
+jquery;jQuery;jQ;web;/techstack/jquery.gif;#F8F8F8;https://jquery.com;1
+extjs;ExtJS;Ext;web;/techstack/extjs.png;#2C2C2C;https://www.sencha.com/products/extjs;1
+gwt;GWT;GWT;web, java/jvm;/techstack/svg/gwt.svg;#2C2C2C;http://www.gwtproject.org;1
+graphql;GraphQL;GQL;web;/techstack/svg/graphql.svg;#F8F8F8;https://graphql.org/;1
+spring;Spring;Spr;java/jvm;/techstack/svg/spring.svg;#F8F8F8;https://spring.io/;1
+spring-boot;Spring Boot;Boot;java/jvm;/techstack/spring_boot.png;#1A1A1A;https://spring.io/projects/spring-boot;1
+jsp;JSP;JSP;java/jvm;/techstack/svg/jsp.svg;#7A7A7A;https://jakarta.ee/specifications/pages/;1
+jsf;JSF;JSF;java/jvm;/techstack/jsf.png;#2C2C2C;https://jakarta.ee/specifications/faces/;1
+primefaces;PrimeFaces;PF;java/jvm, web;/techstack/primefaces-logo.png;#007AD9;https://www.primefaces.org;1
+hibernate;Hibernate;Hib;java/jvm;/techstack/svg/hibernate.svg;#F0F0F0;https://hibernate.org;1
+mysql;MySQL;MySQL;devops;/techstack/svg/mysql.svg;#1A1A1A;https://www.mysql.com;1
+oracle-db;Oracle DB;ORA;devops;/techstack/oracle_db.png;#302D2A;https://www.oracle.com/de/database/technologies;1
+mongodb;MongoDB;Mongo;devops;/techstack/svg/mongodb.svg;#F8F8F8;https://www.mongodb.com;1
+git;Git;Git;devops, tools;/techstack/svg/git.svg;#2A2A2A;https://git-scm.com;1
+svn;SVN;SVN;devops, tools;/techstack/svg/svn.svg;#809CC9;https://subversion.apache.org;1
+docker;Docker;Dock;devops;/techstack/svg/docker.svg;#2496ED;https://www.docker.com;1
+jenkins;Jenkins;Jenk;devops;/techstack/svg/jenkins.svg;#D33833;https://www.jenkins.io;1
+aws;AWS;AWS;devops, web;/techstack/svg/aws.svg;#FFFFFF;https://aws.amazon.com/;1
+firebase;Firebase;FB;devops, web;/techstack/svg/firebase.svg;#2C2C2C;https://firebase.google.com/;1
+openshift;OpenShift;OS;devops;/techstack/svg/openshift.svg;#F8F8F8;https://www.openshift.com;1
+maven;Apache Maven;Mvn;java/jvm, devops, tools;/techstack/apache_maven.png;#F0F0F0;https://maven.apache.org;1
+gradle;Gradle;Grad;java/jvm, devops, tools;/techstack/svg/gradle.svg;#F0F0F0;https://gradle.org/;1
+ant;Apache Ant;Ant;java/jvm, devops, tools;/techstack/svg/apache_ant.svg;#F0F0F0;https://ant.apache.org;1
+grunt;Grunt;Grnt;web, devops, tools;/techstack/svg/grunt.svg;#2C2C2C;https://gruntjs.com;1
+gulp;Gulp;Gulp;web, devops, tools;/techstack/svg/gulp.svg;#F8F8F8;https://gulpjs.com;1
+jest;Jest;Jest;quality, web;/techstack/svg/jest.svg;#C21325;https://jestjs.io/;1
+cypress;Cypress;Cy;quality, web;/techstack/svg/cypress.svg;#F8F8F8;https://cypress.io/;1
+playwright;Playwright;PW;quality, web;/techstack/svg/playwright.svg;#242526;https://playwright.dev;1
+selenium;Selenium;Se;quality, java/jvm;/techstack/selenium.png;#43B02A;https://www.selenium.dev;1
+junit;JUnit;JU;quality, java/jvm;/techstack/junit.png;#F8F8F8;https://junit.org/;1
+testng;TestNG;TNG;quality, java/jvm;/techstack/test-ng.png;#4A4A4A;https://testng.org/;1
+rest-assured;REST Assured;RA;quality, java/jvm;/techstack/svg/rest-assured.svg;#F8F8F8;https://rest-assured.io;1
+detox;Detox;Dtx;quality;/techstack/detox.png;#2C2C2C;https://wix.github.io/Detox/;1
+postman;Postman;PM;quality, tools;/techstack/postman.png;#1A1A1A;https://www.postman.com;1
+insomnia;Insomnia;Ins;quality, tools;/techstack/svg/insomnia.svg;#4000BF;https://insomnia.rest;1
+browserstack;BrowserStack;BS;quality;/techstack/svg/browserstack.svg;#2C2C2C;https://www.browserstack.com;1
+sonarqube;SonarQube;SQ;quality, devops;/techstack/svg/sonarqube.svg;#1A1A1A;https://www.sonarqube.org;1
+newrelic;New Relic;NR;quality, devops;/techstack/newrelic.png;#F8F8F8;https://newrelic.com/;1
+dynatrace;Dynatrace;DT;quality, devops;/techstack/svg/dynatrace.svg;#F8F8F8;https://www.dynatrace.com/;1
+sentry;Sentry;Sentry;quality, devops;/techstack/svg/sentry.svg;#754C87;https://sentry.io;1
+splunk;Splunk;Splk;quality, devops;/techstack/splunk.png;#FFFFFF;https://www.splunk.com;1
+whitesource;WhiteSource;WS;devops, quality;/techstack/svg/whitesource-software.svg;#F8F8F8;https://www.whitesourcesoftware.com;1
+swagger;Swagger;Swag;web, tools;/techstack/svg/swagger.svg;#2C2C2C;https://swagger.io;1
+vscode;VS Code;VSC;tools;/techstack/svg/vscode.svg;lightgrey;https://code.visualstudio.com;1
+intellij;IntelliJ IDEA;IJ;tools, java/jvm;/techstack/svg/jetbrains_intellij.svg;#1A1A1A;https://www.jetbrains.com/idea/;1
+webstorm;WebStorm;WS;tools, web;/techstack/svg/jetbrains_webstorm.svg;#1A1A1A;https://www.jetbrains.com/webstorm/;1
+eclipse;Eclipse;Ecl;tools, java/jvm;/techstack/svg/eclipse.svg;#F0F0F0;https://www.eclipse.org/ide;1
+wordpress;WordPress;WP;web;/techstack/svg/wordpress.svg;#FFFFFF;https://wordpress.com;1
+typo3;TYPO3;T3;web;/techstack/svg/typo3.svg;#2C2C2C;https://typo3.org;1
+contao;Contao;Cont;web;/techstack/contao.png;#213346;https://contao.org;1
