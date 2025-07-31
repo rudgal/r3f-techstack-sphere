@@ -1,69 +1,142 @@
-# React + TypeScript + Vite
+# Tech Stack Sphere
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<div align="center">
+  <p><em>Interactive 3D visualization built with React Three Fiber that showcases collections of logos on a rotating sphere or flat grid. Perfect for personal portfolios, company websites, or any project needing an engaging way to display technology stacks.</em></p>
 
-Currently, two official plugins are available:
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-7.0-646cff)](https://vitejs.dev/)
+[![Three.js](https://img.shields.io/badge/Three.js-r178-black)](https://threejs.org/)
+</div>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 🌐 **3D Sphere Visualization** - Technologies displayed on an interactive rotating sphere using Fibonacci distribution
+  for even spacing
+- 🔲 **Flat Grid View** - Alternative flat grid layout for easier browsing
+- 🏷️ **Category Filtering** - Filter technologies by categories (Frontend, Backend, Database, etc.)
+- ✨ **Smooth Transitions** - Animated transitions between sphere and flat views, and when filtering
+- 🎨 **Texture Atlas** - Efficient rendering using a single texture atlas for all technology icons
+- 🖱️ **Interactive Tiles** - Hover effects and click interactions for each technology
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Quick Start
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 1. Install dependencies
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Add your technologies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+Edit `src/data/techstack.csv` with your technology data:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```csv
+id;name;icon;categories;active
+react;React;/icons/react.png;Frontend,Library;1
+nodejs;Node.js;/icons/nodejs.png;Backend,Runtime;1
+typescript;TypeScript;/icons/typescript.png;Language;1
 ```
+
+### 3. Add icon files
+
+Place your technology icons in the `public/icons/` directory. Supported formats:
+
+- PNG
+- JPG/JPEG
+- SVG
+- GIF
+
+### 4. Run the development server
+
+```bash
+npm run dev
+```
+
+Visit `http://localhost:5173` to see the visualization in action!
+
+## 📦 NPM Scripts
+
+### Development
+
+#### `npm run dev`
+
+Starts the development server with hot module replacement.
+
+- Automatically generates `techstack.json` from CSV
+- Runs on `http://localhost:5173`
+
+### Build Scripts
+
+#### `npm run build:techstack`
+
+Converts the CSV file to JSON format. The CSV format makes it easy to maintain your technology list using any
+spreadsheet application.
+
+**Input**: `src/data/techstack.csv`
+
+- Semicolon-delimited CSV format
+- Only includes technologies where `active = 1`
+- Easy to edit in Excel, Google Sheets, or text editors
+
+**Output**: `src/data/techstack.json`
+
+#### `npm run build:atlas`
+
+Creates an optimized texture atlas from individual icon files for efficient GPU rendering.
+
+**Features**:
+
+- Combines all icons into a single WebP texture atlas
+- Generates UV mappings for shader-based rendering
+- Supports PNG, JPG, SVG, and GIF formats
+- Creates a 10x10 grid (up to 100 technologies)
+
+#### `npm run build`
+
+Builds the project for production:
+
+1. Generates techstack.json from CSV
+2. Creates texture atlas
+3. Runs TypeScript type checking
+4. Builds with Vite
+
+### Other Commands
+
+- `npm run lint` - Run ESLint for code quality
+- `npm run preview` - Preview production build locally
+
+## 🏗️ Project Structure
+
+```
+src/
+├── components/                       # React Three Fiber components
+│   ├── TechStackSphere.tsx           # Main sphere/grid component
+│   ├── Tile.tsx                      # Individual technology tile
+│   └── CategoryFilter.tsx            # Category filtering UI
+├── data/                             # Data files
+│   ├── techstack.csv                 # Source technology data
+│   ├── techstack.json                # Generated from CSV
+│   └── techstack-atlas-mapping.json  # Texture atlas UV mappings
+├── hooks/                            # Custom React hooks
+└── scripts/                          # Build scripts
+```
+
+## 🛠️ Technology Stack
+
+- **[React 19](https://react.dev/)** - UI library
+- **[React Three Fiber](https://docs.pmnd.rs/react-three-fiber/)** - React renderer for Three.js
+- **[Three.js](https://threejs.org/)** - 3D graphics library
+- **[TypeScript](https://www.typescriptlang.org/)** - Type safety
+- **[Vite](https://vitejs.dev/)** - Build tool
+- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS
+- **[Sharp](https://sharp.pixelplumbing.com/)** - Image processing for texture atlas
+- **[Leva](https://github.com/pmndrs/leva)** - Development GUI controls
+
+---
+
+<div align="center">
+  <p>Give this repo a ⭐ if you find it helpful!</p>
+</div>
+
+
