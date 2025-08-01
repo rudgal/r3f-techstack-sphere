@@ -3,7 +3,7 @@ export const CATEGORIES = [
   'java/jvm',
   'languages',
   'quality',
-  'devops',
+  'infrastructure',
   'tools',
 ] as const;
 

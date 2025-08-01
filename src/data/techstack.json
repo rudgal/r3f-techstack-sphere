@@ -231,7 +231,7 @@
       "abbr": "Node",
       "categories": [
         "web",
-        "devops"
+        "infrastructure"
       ],
       "icon": "/techstack/svg/node.js.svg",
       "backgroundColor": "#ffffff",
@@ -354,7 +354,7 @@
       "name": "MySQL",
       "abbr": "MySQL",
       "categories": [
-        "devops"
+        "infrastructure"
       ],
       "icon": "/techstack/svg/mysql.svg",
       "backgroundColor": "#1A1A1A",
@@ -365,7 +365,7 @@
       "name": "Oracle DB",
       "abbr": "ORA",
       "categories": [
-        "devops"
+        "infrastructure"
       ],
       "icon": "/techstack/oracle_db.png",
       "backgroundColor": "#302D2A",
@@ -376,7 +376,7 @@
       "name": "MongoDB",
       "abbr": "Mongo",
       "categories": [
-        "devops"
+        "infrastructure"
       ],
       "icon": "/techstack/svg/mongodb.svg",
       "backgroundColor": "#F8F8F8",
@@ -387,7 +387,7 @@
       "name": "Git",
       "abbr": "Git",
       "categories": [
-        "devops",
+        "infrastructure",
         "tools"
       ],
       "icon": "/techstack/svg/git.svg",
@@ -399,7 +399,7 @@
       "name": "SVN",
       "abbr": "SVN",
       "categories": [
-        "devops",
+        "infrastructure",
         "tools"
       ],
       "icon": "/techstack/svg/svn.svg",
@@ -411,7 +411,7 @@
       "name": "Docker",
       "abbr": "Dock",
       "categories": [
-        "devops"
+        "infrastructure"
       ],
       "icon": "/techstack/svg/docker.svg",
       "backgroundColor": "#2496ED",
@@ -422,7 +422,7 @@
       "name": "Jenkins",
       "abbr": "Jenk",
       "categories": [
-        "devops"
+        "infrastructure"
       ],
       "icon": "/techstack/svg/jenkins.svg",
       "backgroundColor": "#D33833",
@@ -433,7 +433,7 @@
       "name": "AWS",
       "abbr": "AWS",
       "categories": [
-        "devops",
+        "infrastructure",
         "web"
       ],
       "icon": "/techstack/svg/aws.svg",
@@ -445,7 +445,7 @@
       "name": "Firebase",
       "abbr": "FB",
       "categories": [
-        "devops",
+        "infrastructure",
         "web"
       ],
       "icon": "/techstack/svg/firebase.svg",
@@ -457,7 +457,7 @@
       "name": "OpenShift",
       "abbr": "OS",
       "categories": [
-        "devops"
+        "infrastructure"
       ],
       "icon": "/techstack/svg/openshift.svg",
       "backgroundColor": "#F8F8F8",
@@ -469,7 +469,7 @@
       "abbr": "Mvn",
       "categories": [
         "java/jvm",
-        "devops",
+        "infrastructure",
         "tools"
       ],
       "icon": "/techstack/apache_maven.png",
@@ -482,7 +482,7 @@
       "abbr": "Grad",
       "categories": [
         "java/jvm",
-        "devops",
+        "infrastructure",
         "tools"
       ],
       "icon": "/techstack/svg/gradle.svg",
@@ -495,7 +495,7 @@
       "abbr": "Ant",
       "categories": [
         "java/jvm",
-        "devops",
+        "infrastructure",
         "tools"
       ],
       "icon": "/techstack/svg/apache_ant.svg",
@@ -508,7 +508,7 @@
       "abbr": "Grnt",
       "categories": [
         "web",
-        "devops",
+        "infrastructure",
         "tools"
       ],
       "icon": "/techstack/svg/grunt.svg",
@@ -521,7 +521,7 @@
       "abbr": "Gulp",
       "categories": [
         "web",
-        "devops",
+        "infrastructure",
         "tools"
       ],
       "icon": "/techstack/svg/gulp.svg",
@@ -664,10 +664,10 @@
       "abbr": "SQ",
       "categories": [
         "quality",
-        "devops"
+        "infrastructure"
       ],
       "icon": "/techstack/svg/sonarqube.svg",
-      "backgroundColor": "#1A1A1A",
+      "backgroundColor": "#F3F3F3",
       "url": "https://www.sonarqube.org"
     },
     {
@@ -676,7 +676,7 @@
       "abbr": "NR",
       "categories": [
         "quality",
-        "devops"
+        "infrastructure"
       ],
       "icon": "/techstack/newrelic.png",
       "backgroundColor": "#F8F8F8",
@@ -688,7 +688,7 @@
       "abbr": "DT",
       "categories": [
         "quality",
-        "devops"
+        "infrastructure"
       ],
       "icon": "/techstack/svg/dynatrace.svg",
       "backgroundColor": "#F8F8F8",
@@ -700,7 +700,7 @@
       "abbr": "Sentry",
       "categories": [
         "quality",
-        "devops"
+        "infrastructure"
       ],
       "icon": "/techstack/svg/sentry.svg",
       "backgroundColor": "#754C87",
@@ -712,7 +712,7 @@
       "abbr": "Splk",
       "categories": [
         "quality",
-        "devops"
+        "infrastructure"
       ],
       "icon": "/techstack/splunk.png",
       "backgroundColor": "#FFFFFF",
@@ -723,7 +723,7 @@
       "name": "WhiteSource",
       "abbr": "WS",
       "categories": [
-        "devops",
+        "infrastructure",
         "quality"
       ],
       "icon": "/techstack/svg/whitesource-software.svg",

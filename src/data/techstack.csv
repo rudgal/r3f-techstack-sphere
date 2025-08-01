@@ -19,7 +19,7 @@ react-native;React Native;RN;web;/techstack/react-native.png;#1B1B1D;https://rea
 three-js;Three.js;3js;web;/techstack/svg/threejs.svg;#FFFFFF;https://threejs.org;1
 nextjs;Next.js;Next;web;/techstack/svg/next-js.svg;#FFFFFF;https://nextjs.org/;1
 ionic;Ionic;Ion;web;/techstack/svg/ionic.svg;#F8F8F8;https://ionicframework.com/;1
-nodejs;Node.js;Node;web, devops;/techstack/svg/node.js.svg;#ffffff;https://nodejs.org;1
+nodejs;Node.js;Node;web, infrastructure;/techstack/svg/node.js.svg;#ffffff;https://nodejs.org;1
 jquery;jQuery;jQ;web;/techstack/jquery.gif;#F8F8F8;https://jquery.com;1
 extjs;ExtJS;Ext;web;/techstack/extjs.png;#2C2C2C;https://www.sencha.com/products/extjs;1
 gwt;GWT;GWT;web, java/jvm;/techstack/svg/gwt.svg;#2C2C2C;http://www.gwtproject.org;1
@@ -30,21 +30,21 @@ jsp;JSP;JSP;java/jvm;/techstack/svg/jsp.svg;#7A7A7A;https://jakarta.ee/specifica
 jsf;JSF;JSF;java/jvm;/techstack/jsf.png;#2C2C2C;https://jakarta.ee/specifications/faces/;1
 primefaces;PrimeFaces;PF;java/jvm, web;/techstack/primefaces-logo.png;#007AD9;https://www.primefaces.org;1
 hibernate;Hibernate;Hib;java/jvm;/techstack/svg/hibernate.svg;#F0F0F0;https://hibernate.org;1
-mysql;MySQL;MySQL;devops;/techstack/svg/mysql.svg;#1A1A1A;https://www.mysql.com;1
-oracle-db;Oracle DB;ORA;devops;/techstack/oracle_db.png;#302D2A;https://www.oracle.com/de/database/technologies;1
-mongodb;MongoDB;Mongo;devops;/techstack/svg/mongodb.svg;#F8F8F8;https://www.mongodb.com;1
-git;Git;Git;devops, tools;/techstack/svg/git.svg;#2A2A2A;https://git-scm.com;1
-svn;SVN;SVN;devops, tools;/techstack/svg/svn.svg;#809CC9;https://subversion.apache.org;1
-docker;Docker;Dock;devops;/techstack/svg/docker.svg;#2496ED;https://www.docker.com;1
-jenkins;Jenkins;Jenk;devops;/techstack/svg/jenkins.svg;#D33833;https://www.jenkins.io;1
-aws;AWS;AWS;devops, web;/techstack/svg/aws.svg;#FFFFFF;https://aws.amazon.com/;1
-firebase;Firebase;FB;devops, web;/techstack/svg/firebase.svg;#2C2C2C;https://firebase.google.com/;1
-openshift;OpenShift;OS;devops;/techstack/svg/openshift.svg;#F8F8F8;https://www.openshift.com;1
-maven;Apache Maven;Mvn;java/jvm, devops, tools;/techstack/apache_maven.png;#F0F0F0;https://maven.apache.org;1
-gradle;Gradle;Grad;java/jvm, devops, tools;/techstack/svg/gradle.svg;#F0F0F0;https://gradle.org/;1
-ant;Apache Ant;Ant;java/jvm, devops, tools;/techstack/svg/apache_ant.svg;#F0F0F0;https://ant.apache.org;1
-grunt;Grunt;Grnt;web, devops, tools;/techstack/svg/grunt.svg;#2C2C2C;https://gruntjs.com;1
-gulp;Gulp;Gulp;web, devops, tools;/techstack/svg/gulp.svg;#F8F8F8;https://gulpjs.com;1
+mysql;MySQL;MySQL;infrastructure;/techstack/svg/mysql.svg;#1A1A1A;https://www.mysql.com;1
+oracle-db;Oracle DB;ORA;infrastructure;/techstack/oracle_db.png;#302D2A;https://www.oracle.com/de/database/technologies;1
+mongodb;MongoDB;Mongo;infrastructure;/techstack/svg/mongodb.svg;#F8F8F8;https://www.mongodb.com;1
+git;Git;Git;infrastructure, tools;/techstack/svg/git.svg;#2A2A2A;https://git-scm.com;1
+svn;SVN;SVN;infrastructure, tools;/techstack/svg/svn.svg;#809CC9;https://subversion.apache.org;1
+docker;Docker;Dock;infrastructure;/techstack/svg/docker.svg;#2496ED;https://www.docker.com;1
+jenkins;Jenkins;Jenk;infrastructure;/techstack/svg/jenkins.svg;#D33833;https://www.jenkins.io;1
+aws;AWS;AWS;infrastructure, web;/techstack/svg/aws.svg;#FFFFFF;https://aws.amazon.com/;1
+firebase;Firebase;FB;infrastructure, web;/techstack/svg/firebase.svg;#2C2C2C;https://firebase.google.com/;1
+openshift;OpenShift;OS;infrastructure;/techstack/svg/openshift.svg;#F8F8F8;https://www.openshift.com;1
+maven;Apache Maven;Mvn;java/jvm, infrastructure, tools;/techstack/apache_maven.png;#F0F0F0;https://maven.apache.org;1
+gradle;Gradle;Grad;java/jvm, infrastructure, tools;/techstack/svg/gradle.svg;#F0F0F0;https://gradle.org/;1
+ant;Apache Ant;Ant;java/jvm, infrastructure, tools;/techstack/svg/apache_ant.svg;#F0F0F0;https://ant.apache.org;1
+grunt;Grunt;Grnt;web, infrastructure, tools;/techstack/svg/grunt.svg;#2C2C2C;https://gruntjs.com;1
+gulp;Gulp;Gulp;web, infrastructure, tools;/techstack/svg/gulp.svg;#F8F8F8;https://gulpjs.com;1
 jest;Jest;Jest;quality, web;/techstack/svg/jest.svg;#C21325;https://jestjs.io/;1
 cypress;Cypress;Cy;quality, web;/techstack/svg/cypress.svg;#F8F8F8;https://cypress.io/;1
 playwright;Playwright;PW;quality, web;/techstack/svg/playwright.svg;#242526;https://playwright.dev;1
@@ -56,12 +56,12 @@ detox;Detox;Dtx;quality;/techstack/detox.png;#2C2C2C;https://wix.github.io/Detox
 postman;Postman;PM;quality, tools;/techstack/postman.png;#1A1A1A;https://www.postman.com;1
 insomnia;Insomnia;Ins;quality, tools;/techstack/svg/insomnia.svg;#4000BF;https://insomnia.rest;1
 browserstack;BrowserStack;BS;quality;/techstack/svg/browserstack.svg;#2C2C2C;https://www.browserstack.com;1
-sonarqube;SonarQube;SQ;quality, devops;/techstack/svg/sonarqube.svg;#1A1A1A;https://www.sonarqube.org;1
-newrelic;New Relic;NR;quality, devops;/techstack/newrelic.png;#F8F8F8;https://newrelic.com/;1
-dynatrace;Dynatrace;DT;quality, devops;/techstack/svg/dynatrace.svg;#F8F8F8;https://www.dynatrace.com/;1
-sentry;Sentry;Sentry;quality, devops;/techstack/svg/sentry.svg;#754C87;https://sentry.io;1
-splunk;Splunk;Splk;quality, devops;/techstack/splunk.png;#FFFFFF;https://www.splunk.com;1
-whitesource;WhiteSource;WS;devops, quality;/techstack/svg/whitesource-software.svg;#F8F8F8;https://www.whitesourcesoftware.com;1
+sonarqube;SonarQube;SQ;quality, infrastructure;/techstack/svg/sonarqube.svg;#F3F3F3;https://www.sonarqube.org;1
+newrelic;New Relic;NR;quality, infrastructure;/techstack/newrelic.png;#F8F8F8;https://newrelic.com/;1
+dynatrace;Dynatrace;DT;quality, infrastructure;/techstack/svg/dynatrace.svg;#F8F8F8;https://www.dynatrace.com/;1
+sentry;Sentry;Sentry;quality, infrastructure;/techstack/svg/sentry.svg;#754C87;https://sentry.io;1
+splunk;Splunk;Splk;quality, infrastructure;/techstack/splunk.png;#FFFFFF;https://www.splunk.com;1
+whitesource;WhiteSource;WS;infrastructure, quality;/techstack/svg/whitesource-software.svg;#F8F8F8;https://www.whitesourcesoftware.com;1
 swagger;Swagger;Swag;web, tools;/techstack/svg/swagger.svg;#2C2C2C;https://swagger.io;1
 vscode;VS Code;VSC;tools;/techstack/svg/vscode.svg;lightgrey;https://code.visualstudio.com;1
 intellij;IntelliJ IDEA;IJ;tools, java/jvm;/techstack/svg/jetbrains_intellij.svg;#1A1A1A;https://www.jetbrains.com/idea/;1

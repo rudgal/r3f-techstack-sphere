@@ -12,7 +12,7 @@ const CATEGORY_LABELS: Record<Category, string> = {
   'java/jvm': 'Java/JVM',
   languages: 'Languages',
   quality: 'Quality',
-  devops: 'DevOps',
+  infrastructure: 'Infrastructure',
   tools: 'Tools',
 };
 
