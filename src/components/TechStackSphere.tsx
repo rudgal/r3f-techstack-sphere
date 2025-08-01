@@ -170,7 +170,13 @@ export function TechStackSphere({
     if (viewMode === 'sphere') {
       animateRotationSpeed(delta);
       animateRadius(delta);
-      groupRef.current.rotation.y += delta * currentSpeedRef.current;
+      
+      // Normalize rotation speed based on sphere size
+      // Smaller spheres rotate faster to maintain consistent visual speed
+      const speedMultiplier = sphere.baseSphereRadius / currentRadiusRef.current;
+      const adjustedSpeed = currentSpeedRef.current * speedMultiplier;
+      
+      groupRef.current.rotation.y += delta * adjustedSpeed;
     } else {
       // Reset rotation smoothly when in flat view
       groupRef.current.rotation.y = THREE.MathUtils.lerp(
