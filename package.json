@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run build:techstack && vite --host",
+    "dev": "npm run build:techstack && npm run build:atlas && vite --host",
     "build": "npm run build:techstack && npm run build:atlas && tsc -b && vite build",
     "build:techstack": "node scripts/generateTechstackJson.js",
     "build:atlas": "node scripts/generateTextureAtlas.js",
@@ -39,7 +39,8 @@
     "sharp": "^0.34.3",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
-    "vite": "^7.0.4"
+    "vite": "^7.0.4",
+    "vite-plugin-html": "^3.2.2"
   },
   "overrides": {
     "r3f-perf": {
