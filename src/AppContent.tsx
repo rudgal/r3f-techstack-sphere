@@ -10,9 +10,11 @@ import { ViewToggle } from './components/ViewToggle';
 import type { Category } from './types/techstack';
 import { Leva } from 'leva';
 import { useAppConfig } from './hooks/useAppConfig';
+import { useTailwindBreakpoint } from './hooks/useTailwindBreakpoint';
 
 export function AppContent() {
   const { scene } = useAppConfig();
+  const { isMd } = useTailwindBreakpoint();
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
   );
@@ -33,7 +35,7 @@ export function AppContent() {
         flat={true}
         oneLineLabels={false}
         titleBar={true}
-        collapsed={false}
+        collapsed={!isMd || import.meta.env.PROD}
         theme={{
           sizes: {
             rootWidth: '340px',
@@ -81,11 +83,13 @@ export function AppContent() {
               position: [0, 0, 4.5],
             }}
           >
-            <Perf
-              showGraph={true}
-              chart={{ hz: 60, length: 240 }}
-              position="top-left"
-            />
+            {isMd && (
+              <Perf
+                showGraph={true}
+                chart={{ hz: 60, length: 240 }}
+                position="top-left"
+              />
+            )}
             <Experience
               selectedCategory={selectedCategory}
               viewMode={viewMode}
