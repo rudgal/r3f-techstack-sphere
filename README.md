@@ -1,6 +1,8 @@
 # Tech Stack Sphere
 
 <div align="center">
+  <img src="./src/assets/demo.gif" alt="Tech Stack Sphere Demo" width="100%" />
+  
   <p><em>Interactive 3D visualization built with React Three Fiber that showcases collections of logos on a rotating sphere or flat grid. Perfect for personal portfolios, company websites, or any project needing an engaging way to display technology stacks.</em></p>
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue)](https://www.typescriptlang.org/)
