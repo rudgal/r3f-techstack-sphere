@@ -124,12 +124,17 @@ export function Tile({
 
   // Use a group to better handle textures
   return (
-    <group ref={groupRef} rotation={rotation} visible={visible}>
+    <group
+      ref={groupRef}
+      rotation={rotation}
+      visible={visible}
+      raycast={visible ? undefined : () => null}
+    >
       {/* Main tile body */}
       <RoundedBox
-        onPointerOver={handlePointerOver}
-        onPointerOut={handlePointerOut}
-        onClick={handleClick}
+        onPointerOver={visible ? handlePointerOver : undefined}
+        onPointerOut={visible ? handlePointerOut : undefined}
+        onClick={visible ? handleClick : undefined}
         castShadow
         receiveShadow
         args={[tile.size, tile.size, tile.depth]}
@@ -148,7 +153,7 @@ export function Tile({
       {/* Hover label */}
       <HoverLabel
         label={technology.name}
-        visible={hovered}
+        visible={visible && hovered}
         position={[0, tile.size * 0.7, 0]}
       />
     </group>
