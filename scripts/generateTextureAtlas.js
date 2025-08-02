@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 // Configuration
 const CONFIG = {
   techstackJsonPath: path.join(__dirname, '../src/data/techstack.json'),
-  publicDir: path.join(__dirname, '../public'),
+  assetsDir: path.join(__dirname, '../src/assets'),
   atlasOutputDir: path.join(__dirname, '../public'),
   mappingOutputDir: path.join(__dirname, '../src/data'),
   atlasFilename: 'techstack-atlas.webp',
@@ -46,8 +46,8 @@ async function prepareTechnologyImages(technologies) {
       continue;
     }
 
-    // Convert icon path to absolute path
-    const iconPath = path.join(CONFIG.publicDir, tech.icon);
+    // Convert icon path to absolute path in src/assets
+    const iconPath = path.join(CONFIG.assetsDir, tech.icon);
 
     try {
       // Check if file exists

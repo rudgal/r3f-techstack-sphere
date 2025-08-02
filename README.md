@@ -35,14 +35,14 @@ Edit `src/data/techstack.csv` with your technology data:
 
 ```csv
 id;name;icon;categories;active
-react;React;/icons/react.png;Frontend,Library;1
-nodejs;Node.js;/icons/nodejs.png;Backend,Runtime;1
-typescript;TypeScript;/icons/typescript.png;Language;1
+react;React;techstack/svg/react.svg;Frontend,Library;1
+nodejs;Node.js;techstack/svg/node.js.svg;Backend,Runtime;1
+typescript;TypeScript;techstack/svg/typescript.svg;Language;1
 ```
 
 ### 3. Add icon files
 
-Place your technology icons in the `public/icons/` directory. Supported formats:
+Place your technology icons in the `src/assets/techstack/` directory. Supported formats:
 
 - PNG
 - JPG/JPEG
