@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -19,6 +19,14 @@ body {
   margin: 0;
   display: block;
   background-color: red;
+  /* Handle iOS Safari viewport */
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  min-height: 100dvh;
+}
+
+html {
+  height: -webkit-fill-available;
 }
 
 h1 {

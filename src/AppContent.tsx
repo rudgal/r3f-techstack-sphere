@@ -44,7 +44,7 @@ export function AppContent() {
           },
         }}
       />
-      <div className="relative h-screen w-screen">
+      <div className="relative h-[100dvh] w-screen">
         {/* UI Overlays */}
         <div className="pointer-events-none absolute inset-0 z-10">
           <CategoryFilter

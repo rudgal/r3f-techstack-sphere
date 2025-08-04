@@ -1,6 +1,6 @@
 .container {
   position: absolute;
-  bottom: 2rem;
+  bottom: max(2rem, env(safe-area-inset-bottom, 2rem) + 1rem);
   left: 50%;
   transform: translateX(-50%);
   pointer-events: auto;
@@ -26,7 +26,9 @@
   padding: 0.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
   position: relative;
 }
 
