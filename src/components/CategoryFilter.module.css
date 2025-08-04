@@ -1,41 +1,43 @@
+@import 'tailwindcss';
+
 .container {
   position: absolute;
-  top: 3rem;
   left: 50%;
   transform: translateX(-50%);
   pointer-events: auto;
+  width: 100%;
+  max-width: min(90vw, 800px);
+  @apply top-12 sm:top-8;
 }
 
 .buttons {
   display: flex;
   flex-direction: row;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
   justify-content: center;
-  white-space: nowrap;
+  align-items: center;
   list-style: none;
-  padding: 0;
   margin: 0;
+  @apply px-4;
 }
 
 .button {
-  padding: 12px;
+  position: relative;
   border: none;
   background: transparent;
   cursor: pointer;
-  font-size: 14px;
   font-weight: 500;
-  transition: all 0.3s ease;
-  color: #666;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  position: relative;
+  transition: all 0.3s ease;
+  color: #666;
+  white-space: nowrap;
+  @apply px-3 py-2 sm:px-3 sm:py-3;
+  @apply text-xs sm:text-sm;
 }
 
 .button:hover {
-  color: #ccc;
-}
-
-.button.selected {
   color: #ccc;
 }
 
@@ -55,4 +57,8 @@
 .button:hover::after,
 .button.selected::after {
   transform: translateX(-50%) scaleX(1);
+}
+
+.button.selected {
+  color: #ccc;
 }

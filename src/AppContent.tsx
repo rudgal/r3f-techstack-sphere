@@ -11,6 +11,7 @@ import type { Category } from './types/techstack';
 import { Leva } from 'leva';
 import { useAppConfig } from './hooks/useAppConfig';
 import { useTailwindBreakpoint } from './hooks/useTailwindBreakpoint';
+import { ResponsiveCamera } from './components/ResponsiveCamera';
 
 export function AppContent() {
   const { scene } = useAppConfig();
@@ -83,6 +84,7 @@ export function AppContent() {
               position: [0, 0, 4.5],
             }}
           >
+            <ResponsiveCamera />
             {isMd && (
               <Perf
                 showGraph={true}
