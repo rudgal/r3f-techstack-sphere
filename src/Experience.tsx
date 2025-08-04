@@ -49,12 +49,20 @@ export default function Experience({
           bottom={-1.5}
         />
       </directionalLight>
-      <ambientLight 
-        intensity={lighting.ambientLightIntensity} 
-        color={lighting.ambientLightColor} 
+      <ambientLight
+        intensity={lighting.ambientLightIntensity}
+        color={lighting.ambientLightColor}
       />
 
-      <OrbitControls enabled={scene.enableOrbitControls} />
+      <OrbitControls
+        enablePan={scene.enableOrbitControls}
+        enableRotate={scene.enableOrbitControls}
+        enableZoom={true}
+        minDistance={2}
+        maxDistance={12}
+        enableDamping={true}
+        dampingFactor={0.15}
+      />
 
       <Suspense fallback={null}>
         <PresentationControls
@@ -63,7 +71,7 @@ export default function Experience({
           global={true}
           cursor={false}
           snap={viewMode === 'flat'}
-          speed={1}
+          speed={1.3}
           // zoom={1.05} // seems to have very negative impact on performance
           rotation={[0, 0, 0]}
           polar={[-0.1, 0.2]}
