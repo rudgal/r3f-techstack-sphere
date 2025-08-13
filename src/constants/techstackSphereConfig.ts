@@ -54,8 +54,8 @@ export interface SceneConfig {
   showHelpers: boolean;
 }
 
-// Complete app configuration interface
-export interface AppConfig {
+// Complete TechstackSphere configuration interface
+export interface TechstackSphereConfig {
   tile: TileConfig;
   sphere: SphereConfig;
   flatView: FlatViewConfig;
@@ -65,7 +65,7 @@ export interface AppConfig {
 }
 
 // Default configuration values (current constants from the components)
-export const DEFAULT_CONFIG: AppConfig = {
+export const DEFAULT_TECHSTACK_SPHERE_CONFIG: TechstackSphereConfig = {
   scene: {
     enableOrbitControls: false,
     enableShadows: true,

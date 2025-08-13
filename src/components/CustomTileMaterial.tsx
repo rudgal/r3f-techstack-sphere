@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
-import { useAppConfig } from '../hooks/useAppConfig';
+import { useTechstackSphereConfig } from '../hooks/useTechstackSphereConfig.ts';
 
 interface CustomTileMaterialProps {
   map?: THREE.Texture | null;
@@ -18,7 +18,7 @@ export function CustomTileMaterial({
   transparent = false,
 }: CustomTileMaterialProps) {
   const materialRef = useRef<THREE.MeshStandardMaterial>(null);
-  const { tile } = useAppConfig();
+  const { tile } = useTechstackSphereConfig();
 
   const material = useMemo(() => {
     const mat = new THREE.MeshStandardMaterial({

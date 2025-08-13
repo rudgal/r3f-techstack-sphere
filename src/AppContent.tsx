@@ -9,12 +9,12 @@ import { CategoryFilter } from './components/CategoryFilter';
 import { ViewToggle } from './components/ViewToggle';
 import type { Category } from './types/techstack';
 import { Leva } from 'leva';
-import { useAppConfig } from './hooks/useAppConfig';
+import { useTechstackSphereConfig } from './hooks/useTechstackSphereConfig.ts';
 import { useTailwindBreakpoint } from './hooks/useTailwindBreakpoint';
 import { ResponsiveCamera } from './components/ResponsiveCamera';
 
 export function AppContent() {
-  const { scene } = useAppConfig();
+  const { scene } = useTechstackSphereConfig();
   const { isMd } = useTailwindBreakpoint();
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null

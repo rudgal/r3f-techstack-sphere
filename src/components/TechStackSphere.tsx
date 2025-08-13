@@ -5,8 +5,8 @@ import { Tile } from './Tile';
 import { useTechnologyTextures } from '../hooks/useTextureAtlas';
 import type { Category, Technology } from '../types/techstack';
 import techStackDataRaw from '../data/techstack.json';
-import { useAppConfig } from '../hooks/useAppConfig';
-import type { SphereConfig } from '../constants/appConfig';
+import { useTechstackSphereConfig } from '../hooks/useTechstackSphereConfig.ts';
+import type { SphereConfig } from '../constants/techstackSphereConfig.ts';
 
 const ALL_TECHNOLOGIES = techStackDataRaw.technologies as Technology[];
 
@@ -19,7 +19,7 @@ export function TechStackSphere({
   selectedCategory,
   viewMode,
 }: TechStackSphereProps) {
-  const { sphere, flatView, tile } = useAppConfig();
+  const { sphere, flatView, tile } = useTechstackSphereConfig();
   const groupRef = useRef<THREE.Group>(null);
   const hoveredTileIndexRef = useRef<number | null>(null);
   const currentSpeedRef = useRef(sphere.rotationSpeed);
@@ -170,12 +170,13 @@ export function TechStackSphere({
     if (viewMode === 'sphere') {
       animateRotationSpeed(delta);
       animateRadius(delta);
-      
+
       // Normalize rotation speed based on sphere size
       // Smaller spheres rotate faster to maintain consistent visual speed
-      const speedMultiplier = sphere.baseSphereRadius / currentRadiusRef.current;
+      const speedMultiplier =
+        sphere.baseSphereRadius / currentRadiusRef.current;
       const adjustedSpeed = currentSpeedRef.current * speedMultiplier;
-      
+
       groupRef.current.rotation.y += delta * adjustedSpeed;
     } else {
       // Reset rotation smoothly when in flat view

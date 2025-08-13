@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Tile } from './Tile';
 import { useTechnologyTextures } from '../hooks/useTextureAtlas';
-import { AppConfigProvider } from '../contexts/AppConfigProvider';
+import { TechstackSphereConfigProvider } from '../contexts/TechstackSphereConfigProvider.tsx';
 import * as THREE from 'three';
 import techstackData from '../data/techstack.json';
 import type { TechStackData } from '../types/techstack';
@@ -86,9 +86,9 @@ export function TileDebug() {
         camera={{ position: [0, 0, 2], fov: 75 }}
         style={{ background: '#222' }}
       >
-        <AppConfigProvider>
+        <TechstackSphereConfigProvider>
           <TileDebugScene selectedTechId={selectedTechId} />
-        </AppConfigProvider>
+        </TechstackSphereConfigProvider>
       </Canvas>
     </div>
   );

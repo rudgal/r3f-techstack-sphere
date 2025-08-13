@@ -1,6 +1,6 @@
 import './App.css';
 import { StrictMode } from 'react';
-import { AppConfigProvider } from './contexts/AppConfigProvider';
+import { TechstackSphereConfigProvider } from './contexts/TechstackSphereConfigProvider.tsx';
 import { AppContent } from './AppContent';
 import { TileDebug } from './components/TileDebug';
 
@@ -11,9 +11,9 @@ function App() {
 
   return (
     <StrictMode>
-      <AppConfigProvider>
+      <TechstackSphereConfigProvider>
         {isDebugMode ? <TileDebug /> : <AppContent />}
-      </AppConfigProvider>
+      </TechstackSphereConfigProvider>
     </StrictMode>
   );
 }

@@ -8,7 +8,7 @@ import { Suspense, useRef } from 'react';
 import type { Category } from './types/techstack';
 import type { DirectionalLight, OrthographicCamera } from 'three';
 import { CameraHelper, DirectionalLightHelper } from 'three';
-import { useAppConfig } from './hooks/useAppConfig';
+import { useTechstackSphereConfig } from './hooks/useTechstackSphereConfig.ts';
 
 interface ExperienceProps {
   selectedCategory: Category | null;
@@ -19,7 +19,7 @@ export default function Experience({
   selectedCategory,
   viewMode,
 }: ExperienceProps) {
-  const { scene, lighting } = useAppConfig();
+  const { scene, lighting } = useTechstackSphereConfig();
   const lightRef = useRef<DirectionalLight>(null!);
   const shadowCameraRef = useRef<OrthographicCamera>(null!);
 

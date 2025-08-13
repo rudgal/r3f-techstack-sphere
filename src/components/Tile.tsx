@@ -5,7 +5,7 @@ import type { Texture } from 'three';
 import * as THREE from 'three';
 import type { Technology } from '../types/techstack';
 import { HoverLabel } from './HoverLabel';
-import { useAppConfig } from '../hooks/useAppConfig';
+import { useTechstackSphereConfig } from '../hooks/useTechstackSphereConfig.ts';
 import { CustomTileMaterial } from './CustomTileMaterial';
 
 interface TileProps {
@@ -29,7 +29,7 @@ export function Tile({
   onHover,
   viewMode = 'sphere',
 }: TileProps) {
-  const { tile, animation } = useAppConfig();
+  const { tile, animation } = useTechstackSphereConfig();
   const groupRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
   const [currentScale, setCurrentScale] = useState(1);
