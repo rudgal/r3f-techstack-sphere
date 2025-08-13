@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Tile } from './Tile';
 import { useTechnologyTextures } from '../hooks/useTextureAtlas';
@@ -20,6 +20,7 @@ export function TechStackSphere({
   viewMode,
 }: TechStackSphereProps) {
   const { sphere, flatView, tile } = useTechstackSphereConfig();
+  const { viewport } = useThree();
   const groupRef = useRef<THREE.Group>(null);
   const hoveredTileIndexRef = useRef<number | null>(null);
   const currentSpeedRef = useRef(sphere.rotationSpeed);
@@ -43,7 +44,10 @@ export function TechStackSphere({
   // Calculate flat wall positions for visible technologies
   const flatWallPositions = useMemo(() => {
     const positions: THREE.Vector3[] = [];
-    const cols = Math.ceil(Math.sqrt(visibleTechnologies.length * 1.5)); // More columns than rows for better aspect ratio
+    const cols = evalOptimalNumberOfCols(
+      visibleTechnologies,
+      viewport.width / viewport.height
+    );
 
     visibleTechnologies.forEach((_, index) => {
       const col = index % cols;
@@ -59,7 +63,13 @@ export function TechStackSphere({
     });
 
     return positions;
-  }, [visibleTechnologies, flatView.wallSpacing, flatView.wallZ]);
+  }, [
+    visibleTechnologies,
+    viewport.width,
+    viewport.height,
+    flatView.wallSpacing,
+    flatView.wallZ,
+  ]);
 
   // Create content mapping: assign visible technologies to properly distributed positions
   const tileContentMapping = useMemo(() => {
@@ -316,4 +326,21 @@ function calculateTileRotation(normal: THREE.Vector3): THREE.Euler {
 
   rotation.setFromQuaternion(quaternion);
   return rotation;
+}
+
+function evalOptimalNumberOfCols(
+  visibleTechnologies: Technology[],
+  deviceAspectRatio: number
+) {
+  const colsFromNumberOfTechnologies = Math.ceil(
+    Math.sqrt(visibleTechnologies.length * 1.5)
+  );
+  const baseCols = 12;
+  const limitedAspectRatio = Math.max(
+    0.5,
+    Math.min(deviceAspectRatio + 0.1, 1)
+  );
+  const colsAspectRatio = Math.ceil(baseCols * limitedAspectRatio);
+  const cols = Math.min(colsAspectRatio, colsFromNumberOfTechnologies);
+  return cols;
 }
